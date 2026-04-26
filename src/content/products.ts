@@ -37,7 +37,7 @@ export const stage1Products: Stage1Product[] = [
     category: 'Data Integration',
     name: 'g8connect',
     focus: 'No-code data-to-API pipelines',
-    status: 'in-development',
+    status: 'live',
   },
   {
     category: 'Infrastructure',
@@ -74,6 +74,12 @@ export const stage1Products: Stage1Product[] = [
     name: 'g8vault',
     focus: 'Secrets management and key lifecycle',
     status: 'planned',
+  },
+  {
+    category: 'License Management',
+    name: 'g8key',
+    focus: 'Software licence tracking, allocation, and entitlement lifecycle',
+    status: 'in-development',
   },
 ];
 
