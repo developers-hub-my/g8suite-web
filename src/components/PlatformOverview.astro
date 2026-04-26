@@ -61,20 +61,35 @@ const toneClasses: Record<Tone, string> = {
       <p class="text-center text-sm font-semibold uppercase tracking-[0.18em] text-ink-400">
         The layered architecture
       </p>
-      <div class="mx-auto mt-8 max-w-4xl">
-        <div class="space-y-3">
-          {layers.map((layer) => (
-            <div class={`mx-auto ${layer.width}`}>
-              <div class={`flex items-center justify-between rounded-md border px-6 py-5 transition-colors ${toneClasses[layer.tone]}`}>
-                <span class="text-base font-semibold tracking-tight">{layer.label}</span>
-                <span class="text-xs font-medium uppercase tracking-wider opacity-70">{layer.tier}</span>
+
+      <div class="mt-10 grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
+        <figure class="order-2 lg:order-1 lg:col-span-4">
+          <img
+            src="/images/platform-stack.webp"
+            alt="An isometric line drawing of a stacked platform with a security shield at the apex — illustrating the layered g8suite architecture."
+            width="900"
+            height="1200"
+            loading="lazy"
+            decoding="async"
+            class="mx-auto h-auto w-full max-w-xs select-none lg:max-w-none"
+          />
+        </figure>
+
+        <div class="order-1 lg:order-2 lg:col-span-8">
+          <div class="space-y-3">
+            {layers.map((layer) => (
+              <div class={`mx-auto ${layer.width}`}>
+                <div class={`flex items-center justify-between rounded-md border px-4 py-4 transition-colors sm:px-6 sm:py-5 ${toneClasses[layer.tone]}`}>
+                  <span class="text-sm font-semibold tracking-tight sm:text-base">{layer.label}</span>
+                  <span class="hidden text-xs font-medium uppercase tracking-wider opacity-70 sm:inline">{layer.tier}</span>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+          <p class="mt-6 text-sm text-ink-600 lg:text-left">
+            Foundation feeds operations. Operations feed trust. Trust enables business.
+          </p>
         </div>
-        <p class="mt-6 text-center text-sm text-ink-600">
-          Foundation feeds operations. Operations feed trust. Trust enables business.
-        </p>
       </div>
     </div>
   </div>

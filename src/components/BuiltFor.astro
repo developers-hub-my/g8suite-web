@@ -33,11 +33,26 @@ const segments = [
 
 <section id="built-for" class="section bg-surface">
   <div class="container-page">
-    <SectionHeader
-      eyebrow="Built for"
-      title="Who g8suite is built for"
-      subtitle="Organisations where compliance isn't optional and identity sprawl is an active liability."
-    />
+    <div class="grid items-end gap-12 lg:grid-cols-12 lg:gap-16">
+      <div class="lg:col-span-8">
+        <SectionHeader
+          eyebrow="Built for"
+          title="Who g8suite is built for"
+          subtitle="Organisations where compliance isn't optional and identity sprawl is an active liability."
+        />
+      </div>
+      <figure class="order-last lg:order-none lg:col-span-4">
+        <img
+          src="/images/built-for-audience.webp"
+          alt="A line drawing of professionals representing the g8suite audience: government, finance, healthcare, defence, and industry leaders standing together."
+          width="900"
+          height="1200"
+          loading="lazy"
+          decoding="async"
+          class="mx-auto h-auto w-full max-w-sm select-none lg:max-w-none"
+        />
+      </figure>
+    </div>
 
     <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {segments.map((seg) => (
