@@ -73,7 +73,7 @@ The repo includes `netlify.toml` with build command, publish directory, security
 3. Netlify reads `netlify.toml`. Click **Deploy site**.
 4. Add the custom domain `g8suite.com` under **Domain management**.
 
-The CSP currently allows `https://unpkg.com` for the Alpine.js CDN. If Alpine moves to a bundled install, tighten the `script-src` accordingly.
+CSP: `script-src 'self' 'unsafe-inline'`. `'self'` covers Astro's hashed `/_astro/*.js` bundles; `'unsafe-inline'` is needed because Astro inlines small bundled `<script type="module">` blocks directly into HTML (the Nav script is below the inline threshold). No third-party scripts, no `'unsafe-eval'`, no CDN dependencies.
 
 ## Performance budget
 
@@ -84,13 +84,13 @@ Targets:
 - Best Practices = 100
 - SEO = 100
 
-Zero client-side JS by default. Alpine.js (≈15KB gzipped) loads `defer` for the mobile menu and sticky-nav scroll state only.
+Near-zero client-side JS. The only script is a small (~1KB) bundled vanilla JS handler in `Nav.astro` for the mobile menu and sticky-nav scroll state.
 
 ## Stack
 
 - **Astro v4** — static output, TypeScript strict
 - **Tailwind CSS v3** — design tokens in `tailwind.config.mjs`
-- **Alpine.js v3** — micro-interactivity (mobile menu, scroll state)
+- **Vanilla JS** in Astro `<script>` blocks — bundled by Astro for the mobile menu and scroll state
 - **astro-icon + @iconify-json/lucide** — inline SVG icons
 - **@fontsource-variable/inter** — self-hosted variable font
 

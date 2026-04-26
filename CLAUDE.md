@@ -12,7 +12,7 @@ Audience: enterprise decision-makers (government CIOs, bank CTOs, healthcare IT 
 
 - **Astro v4+** (TypeScript strict, `output: 'static'`)
 - **Tailwind CSS** via `@astrojs/tailwind`
-- **`.astro` components only** — no React/Vue/Svelte islands. Use **Alpine.js via CDN** for the few interactive bits (mobile menu, sticky nav scroll state, FAQ accordion).
+- **`.astro` components only** — no React/Vue/Svelte islands. For interactive bits (mobile menu, sticky nav scroll state) use **vanilla JS in Astro `<script>` blocks** — Astro bundles them as hashed external files so the CSP can stay tight (`script-src 'self'`, no `unsafe-eval`). Do not reintroduce Alpine.js — its CDN build evaluates expression strings as JS, which requires `'unsafe-eval'` and was previously broken.
 - **Icons:** Lucide via `lucide-static` inlined as Astro components (or `astro-icon` with the lucide pack).
 - **Fonts:** Self-host Inter via `@fontsource-variable/inter` with `font-display: swap`.
 - **Deploy:** Netlify (static), config in `netlify.toml`.
@@ -97,7 +97,7 @@ These rules override any default phrasing. Violations of (2), (3), or (5) are bu
 
 ## Netlify
 
-`netlify.toml` ships strict security headers (CSP, X-Frame-Options DENY, nosniff, Referrer-Policy, Permissions-Policy locking down camera/mic/geolocation) and immutable cache for `/assets/*`. The CSP allows `https://unpkg.com` for the Alpine.js CDN — if Alpine moves to a bundled install, tighten the CSP accordingly.
+`netlify.toml` ships strict security headers (CSP, X-Frame-Options DENY, nosniff, Referrer-Policy, Permissions-Policy locking down camera/mic/geolocation) and immutable cache for `/_astro/*` and `/assets/*`. CSP is `script-src 'self' 'unsafe-inline'`: `'self'` covers Astro's hashed `/_astro/*.js` bundles; `'unsafe-inline'` is required because Astro inlines small bundled `<script type="module">` blocks directly into HTML (the Nav script is below the inline threshold). All script content is our own bundled build — no third-party CDN, no `'unsafe-eval'`, no user input on the page.
 
 ## Out of scope (do not build)
 

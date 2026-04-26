@@ -9,10 +9,8 @@ const links = [
 ---
 
 <header
-  x-data="{ scrolled: false, open: false }"
-  x-init="window.addEventListener('scroll', () => scrolled = window.scrollY > 24, { passive: true })"
-  :class="scrolled || open ? 'bg-surface/95 border-slate-200 backdrop-blur supports-[backdrop-filter]:bg-surface/80' : 'bg-transparent border-transparent'"
-  class="fixed inset-x-0 top-0 z-40 border-b transition-colors duration-200"
+  data-nav
+  class="fixed inset-x-0 top-0 z-40 border-b border-transparent bg-transparent transition-colors duration-200"
 >
   <div class="container-page flex h-16 items-center justify-between lg:h-20">
     <a href="#top" class="text-lg font-bold tracking-tight text-navy-900" aria-label="g8suite home">
@@ -40,17 +38,43 @@ const links = [
 
     <button
       type="button"
+      data-nav-toggle
       class="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-md text-navy-900 transition-colors hover:bg-navy-900/5"
       aria-label="Toggle menu"
-      :aria-expanded="open.toString()"
-      @click="open = !open"
+      aria-expanded="false"
+      aria-controls="mobile-nav"
     >
-      <svg x-show="!open" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <svg
+        data-nav-icon-open
+        xmlns="http://www.w3.org/2000/svg"
+        width="22"
+        height="22"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
         <line x1="4" x2="20" y1="6" y2="6"></line>
         <line x1="4" x2="20" y1="12" y2="12"></line>
         <line x1="4" x2="20" y1="18" y2="18"></line>
       </svg>
-      <svg x-show="open" x-cloak xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <svg
+        data-nav-icon-close
+        class="hidden"
+        xmlns="http://www.w3.org/2000/svg"
+        width="22"
+        height="22"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
         <line x1="18" x2="6" y1="6" y2="18"></line>
         <line x1="6" x2="18" y1="6" y2="18"></line>
       </svg>
@@ -58,9 +82,9 @@ const links = [
   </div>
 
   <div
-    x-show="open"
-    x-cloak
-    x-transition.opacity
+    id="mobile-nav"
+    data-nav-menu
+    hidden
     class="lg:hidden border-t border-slate-200 bg-surface"
   >
     <nav aria-label="Mobile" class="container-page py-6">
@@ -69,21 +93,63 @@ const links = [
           <li>
             <a
               href={link.href}
+              data-nav-close
               class="block py-2 text-base font-medium text-ink-900 hover:text-navy-900"
-              @click="open = false"
             >
               {link.label}
             </a>
           </li>
         ))}
         <li class="pt-2">
-          <a href="#contact" class="btn-primary w-full" @click="open = false">Request a Demo</a>
+          <a href="#contact" data-nav-close class="btn-primary w-full">Request a Demo</a>
         </li>
       </ul>
     </nav>
   </div>
 </header>
 
-<style>
-  [x-cloak] { display: none !important; }
-</style>
+<script>
+  const header = document.querySelector<HTMLElement>('[data-nav]');
+  if (header) {
+    const toggleBtn = header.querySelector<HTMLButtonElement>('[data-nav-toggle]');
+    const menu = header.querySelector<HTMLElement>('[data-nav-menu]');
+    const iconOpen = header.querySelector<SVGElement>('[data-nav-icon-open]');
+    const iconClose = header.querySelector<SVGElement>('[data-nav-icon-close]');
+    const closers = header.querySelectorAll<HTMLAnchorElement>('[data-nav-close]');
+
+    const chromeOn = [
+      'bg-surface/95',
+      'border-slate-200',
+      'backdrop-blur',
+      'supports-[backdrop-filter]:bg-surface/80',
+    ];
+    const chromeOff = ['bg-transparent', 'border-transparent'];
+
+    let open = false;
+
+    const updateChrome = () => {
+      const scrolled = window.scrollY > 24;
+      if (scrolled || open) {
+        header.classList.add(...chromeOn);
+        header.classList.remove(...chromeOff);
+      } else {
+        header.classList.add(...chromeOff);
+        header.classList.remove(...chromeOn);
+      }
+    };
+
+    const setOpen = (value: boolean) => {
+      open = value;
+      toggleBtn?.setAttribute('aria-expanded', String(open));
+      menu?.toggleAttribute('hidden', !open);
+      iconOpen?.classList.toggle('hidden', open);
+      iconClose?.classList.toggle('hidden', !open);
+      updateChrome();
+    };
+
+    toggleBtn?.addEventListener('click', () => setOpen(!open));
+    closers.forEach((el) => el.addEventListener('click', () => setOpen(false)));
+    window.addEventListener('scroll', updateChrome, { passive: true });
+    updateChrome();
+  }
+</script>
