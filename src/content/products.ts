@@ -55,7 +55,7 @@ export const stage1Products: Stage1Product[] = [
     category: 'Observability',
     name: 'g8scope',
     focus: 'Metrics, logs, distributed traces, application observability',
-    status: 'live',
+    status: 'in-development',
   },
   {
     category: 'Automation',
