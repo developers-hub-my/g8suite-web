@@ -1,0 +1,78 @@
+@import '@fontsource-variable/inter/index.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-surface text-ink-900 font-sans;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  h1, h2, h3, h4 {
+    @apply text-navy-900 tracking-tight;
+  }
+
+  ::selection {
+    @apply bg-navy-900 text-white;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-navy-900 ring-offset-2 ring-offset-surface;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-7xl px-6 lg:px-8;
+  }
+
+  .section {
+    @apply py-20 lg:py-28;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-md bg-navy-900 px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-navy-700 focus-visible:ring-2 focus-visible:ring-navy-900 focus-visible:ring-offset-2;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-md border border-navy-900/20 bg-transparent px-5 py-3 text-sm font-medium text-navy-900 transition-colors hover:border-navy-900 hover:bg-navy-900/5 focus-visible:ring-2 focus-visible:ring-navy-900 focus-visible:ring-offset-2;
+  }
+
+  .pill {
+    @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium;
+  }
+
+  .pill-live {
+    @apply pill bg-accent-green/10 text-accent-green;
+  }
+
+  .pill-dev {
+    @apply pill bg-sky-100 text-navy-700;
+  }
+
+  .pill-planned {
+    @apply pill bg-slate-100 text-ink-600;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

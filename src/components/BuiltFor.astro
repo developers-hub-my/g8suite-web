@@ -1,0 +1,52 @@
+---
+import { Icon } from 'astro-icon/components';
+import SectionHeader from '~/components/ui/SectionHeader.astro';
+
+const segments = [
+  {
+    icon: 'lucide:landmark',
+    title: 'Government Agencies',
+    body: 'Federal and state agencies running citizen services, internal operations, and regulated programmes — under sovereignty mandates that cloud-only vendors cannot satisfy.',
+  },
+  {
+    icon: 'lucide:building-2',
+    title: 'Banks & Financial Institutions',
+    body: 'Tier-1 and tier-2 banks, takaful and insurance providers, and capital markets firms operating under central bank and regulator scrutiny.',
+  },
+  {
+    icon: 'lucide:stethoscope',
+    title: 'Healthcare Providers',
+    body: 'Hospitals, group practices, and national health systems where patient data residency, identity, and audit are statutory obligations.',
+  },
+  {
+    icon: 'lucide:shield',
+    title: 'Defence & Security',
+    body: 'Defence ministries, security services, and critical national infrastructure operators that require air-gapped deployments and cleared supply chains.',
+  },
+  {
+    icon: 'lucide:building',
+    title: 'Regulated Mid-Market',
+    body: 'Energy, utilities, telecommunications, and regulated industrials — the organisations that quietly run a country and quietly carry the same compliance burden as the largest banks.',
+  },
+];
+---
+
+<section id="built-for" class="section bg-surface">
+  <div class="container-page">
+    <SectionHeader
+      eyebrow="Built for"
+      title="Who g8suite is built for"
+      subtitle="Organisations where compliance isn't optional and identity sprawl is an active liability."
+    />
+
+    <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {segments.map((seg) => (
+        <article class="group flex h-full flex-col rounded-lg border border-slate-200 bg-surface p-7 transition-colors hover:border-navy-900/40">
+          <Icon name={seg.icon} class="h-6 w-6 text-navy-700" aria-hidden="true" />
+          <h3 class="mt-5 text-lg font-semibold text-navy-900">{seg.title}</h3>
+          <p class="mt-3 text-sm leading-relaxed text-ink-600">{seg.body}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

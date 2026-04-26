@@ -1,0 +1,48 @@
+---
+import SectionHeader from '~/components/ui/SectionHeader.astro';
+import ProductCard from '~/components/ui/ProductCard.astro';
+import { stage2Waves } from '~/content/products';
+---
+
+<section id="stage-2" class="section bg-surface">
+  <div class="container-page">
+    <SectionHeader
+      eyebrow="Stage 2 — Business Operations"
+      title="Business Operations coverage — Stage 2"
+      subtitle="Six products across three delivery waves — each consuming the mature Stage 1 foundation."
+    />
+
+    <div class="mt-14 space-y-6">
+      {stage2Waves.map((wave) => (
+        <div class="grid gap-6 rounded-lg border border-slate-200 bg-surface-soft p-6 lg:grid-cols-12 lg:gap-8 lg:p-8">
+          <div class="lg:col-span-3">
+            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-sky-400">{wave.timeframe}</p>
+            <h3 class="mt-2 text-2xl font-semibold text-navy-900">{wave.label}</h3>
+            <p class="mt-2 text-sm text-ink-600">
+              {wave.products.length} {wave.products.length === 1 ? 'product' : 'products'}
+            </p>
+          </div>
+          <div class="grid gap-4 sm:grid-cols-2 lg:col-span-9 lg:grid-cols-3">
+            {wave.products.map((product) => (
+              <ProductCard
+                name={product.name}
+                description={product.description}
+                status={product.status}
+                note={product.note}
+              />
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-12 rounded-md border border-navy-900/10 bg-navy-900 p-8 text-white">
+      <p class="text-base leading-relaxed lg:text-lg">
+        Shared identity through <span class="font-mono text-sky-400">G8ID</span>. Shared audit through <span class="font-mono text-sky-400">g8audit</span>. Shared workflow through <span class="font-mono text-sky-400">g8flow</span>.
+      </p>
+      <p class="mt-2 text-base leading-relaxed text-sky-100 lg:text-lg">
+        One spine. Six new capabilities.
+      </p>
+    </div>
+  </div>
+</section>

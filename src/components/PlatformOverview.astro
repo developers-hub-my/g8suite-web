@@ -1,0 +1,81 @@
+---
+import SectionHeader from '~/components/ui/SectionHeader.astro';
+
+const pillars = [
+  {
+    title: 'One Platform',
+    body: 'A single, coherent system replacing dozens of disconnected tools — designed and built as one suite, not assembled from acquisitions.',
+  },
+  {
+    title: 'One Vendor',
+    body: 'One contract. One support relationship. One accountability chain. No more 2am triage across half a dozen vendor portals.',
+  },
+  {
+    title: 'One Source of Truth',
+    body: 'Deployed inside your perimeter. Answerable to you — not a cloud provider. Identity, audit, and operations live where your data lives.',
+  },
+];
+
+type Tone = 'apex' | 'upper' | 'middle' | 'base';
+
+interface Layer {
+  label: string;
+  tier: string;
+  tone: Tone;
+  width: string;
+}
+
+const layers: Layer[] = [
+  { label: 'Business Operations', tier: 'Apex', tone: 'apex', width: 'w-1/2' },
+  { label: 'Audit · Secrets · Infrastructure', tier: 'Trust plane', tone: 'upper', width: 'w-3/4' },
+  { label: 'Workflow · Observability · Compliance', tier: 'Operations plane', tone: 'middle', width: 'w-11/12' },
+  { label: 'Identity · APIs · Data · Security', tier: 'Foundation', tone: 'base', width: 'w-full' },
+];
+
+const toneClasses: Record<Tone, string> = {
+  apex: 'bg-navy-900 text-white border-navy-900',
+  upper: 'bg-navy-700 text-white border-navy-700',
+  middle: 'bg-sky-400/20 text-navy-900 border-sky-400/40',
+  base: 'bg-surface text-navy-900 border-slate-200',
+};
+---
+
+<section id="platform" class="section bg-surface-soft">
+  <div class="container-page">
+    <SectionHeader
+      eyebrow="The platform"
+      title="g8suite replaces the sprawl with one platform."
+      subtitle="We're building the operating system for organisations that refuse to compromise on sovereignty."
+    />
+
+    <div class="mt-14 grid gap-6 md:grid-cols-3">
+      {pillars.map((pillar) => (
+        <div class="rounded-lg bg-sky-100/60 p-8">
+          <h3 class="text-xl font-semibold text-navy-900">{pillar.title}</h3>
+          <p class="mt-3 text-base leading-relaxed text-ink-600">{pillar.body}</p>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-20">
+      <p class="text-center text-sm font-semibold uppercase tracking-[0.18em] text-ink-400">
+        The layered architecture
+      </p>
+      <div class="mx-auto mt-8 max-w-4xl">
+        <div class="space-y-3">
+          {layers.map((layer) => (
+            <div class={`mx-auto ${layer.width}`}>
+              <div class={`flex items-center justify-between rounded-md border px-6 py-5 transition-colors ${toneClasses[layer.tone]}`}>
+                <span class="text-base font-semibold tracking-tight">{layer.label}</span>
+                <span class="text-xs font-medium uppercase tracking-wider opacity-70">{layer.tier}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+        <p class="mt-6 text-center text-sm text-ink-600">
+          Foundation feeds operations. Operations feed trust. Trust enables business.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

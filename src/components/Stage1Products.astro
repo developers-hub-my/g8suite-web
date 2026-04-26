@@ -1,0 +1,58 @@
+---
+import SectionHeader from '~/components/ui/SectionHeader.astro';
+import { stage1Products, statusLabel } from '~/content/products';
+---
+
+<section id="products" class="section bg-surface-soft">
+  <div class="container-page">
+    <SectionHeader
+      eyebrow="Stage 1 — IT Operations"
+      title="IT Operations coverage — Stage 1"
+      subtitle="Nine products. One integrated platform."
+    />
+
+    <div class="mt-12 hidden overflow-hidden rounded-lg border border-slate-200 bg-surface md:block">
+      <table class="w-full text-left text-sm">
+        <thead class="bg-surface-soft">
+          <tr>
+            <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-ink-400">Category</th>
+            <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-ink-400">Product</th>
+            <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-ink-400">Focus</th>
+            <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-ink-400">Status</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100">
+          {stage1Products.map((p) => (
+            <tr class="transition-colors hover:bg-surface-soft">
+              <td class="px-6 py-5 text-ink-600">{p.category}</td>
+              <td class="px-6 py-5">
+                <span class="font-mono text-base font-semibold text-navy-900">{p.name}</span>
+              </td>
+              <td class="px-6 py-5 text-ink-600">{p.focus}</td>
+              <td class="px-6 py-5">
+                <span class={p.status === 'live' ? 'pill-live' : p.status === 'in-development' ? 'pill-dev' : 'pill-planned'}>
+                  {statusLabel[p.status]}
+                </span>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mt-12 grid gap-4 md:hidden">
+      {stage1Products.map((p) => (
+        <article class="rounded-lg border border-slate-200 bg-surface p-5">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-base font-semibold text-navy-900">{p.name}</span>
+            <span class={p.status === 'live' ? 'pill-live' : p.status === 'in-development' ? 'pill-dev' : 'pill-planned'}>
+              {statusLabel[p.status]}
+            </span>
+          </div>
+          <p class="mt-1 text-xs font-semibold uppercase tracking-wider text-ink-400">{p.category}</p>
+          <p class="mt-3 text-sm leading-relaxed text-ink-600">{p.focus}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

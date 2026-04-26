@@ -1,0 +1,51 @@
+---
+import SectionHeader from '~/components/ui/SectionHeader.astro';
+
+const differentiators = [
+  {
+    title: 'On-Premise, Air-Gappable, Your Infrastructure',
+    body: 'Deployed inside your perimeter. Runs disconnected from the public internet when your operating doctrine demands it. No phone-home telemetry. No vendor backdoors.',
+  },
+  {
+    title: 'One Vendor, One Contract, One Support Relationship',
+    body: 'A single accountable counterparty for the entire operations stack. One contract to negotiate, one SLA to enforce, one number to call when something matters.',
+  },
+  {
+    title: 'Governance-First Architecture',
+    body: 'Identity governance, audit, and policy enforcement are not bolted on. They are the spine. Every product on the suite inherits them by default.',
+  },
+  {
+    title: 'Growing With Your Organisation',
+    body: 'Start with the products you need today. Add the rest as your operating model matures. The platform scales horizontally because every product shares the same foundation.',
+  },
+  {
+    title: 'Priced Per Deployment, Not Per User',
+    body: 'No per-seat tax that punishes growth. No surprise bills when your headcount changes. One predictable platform fee per deployment.',
+  },
+];
+---
+
+<section id="differentiators" class="section bg-surface-soft">
+  <div class="container-page">
+    <SectionHeader
+      eyebrow="Differentiators"
+      title="What makes g8suite different"
+      subtitle="Five differentiators that no point-tool vendor can match — because they require a platform to deliver."
+    />
+
+    <div class="mt-14 grid gap-5 lg:grid-cols-6">
+      {differentiators.slice(0, 3).map((item) => (
+        <article class="rounded-lg border border-sky-100 bg-sky-100/50 p-7 lg:col-span-2">
+          <h3 class="text-lg font-semibold text-navy-900">{item.title}</h3>
+          <p class="mt-3 text-sm leading-relaxed text-ink-600">{item.body}</p>
+        </article>
+      ))}
+      {differentiators.slice(3).map((item) => (
+        <article class="rounded-lg border border-sky-100 bg-sky-100/50 p-7 lg:col-span-3">
+          <h3 class="text-lg font-semibold text-navy-900">{item.title}</h3>
+          <p class="mt-3 text-sm leading-relaxed text-ink-600">{item.body}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

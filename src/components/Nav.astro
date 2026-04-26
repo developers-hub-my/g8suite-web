@@ -1,0 +1,89 @@
+---
+const links = [
+  { href: '#platform', label: 'Platform' },
+  { href: '#products', label: 'Products' },
+  { href: '#architecture', label: 'Architecture' },
+  { href: '#roadmap', label: 'Roadmap' },
+  { href: '#contact', label: 'Contact' },
+];
+---
+
+<header
+  x-data="{ scrolled: false, open: false }"
+  x-init="window.addEventListener('scroll', () => scrolled = window.scrollY > 24, { passive: true })"
+  :class="scrolled || open ? 'bg-surface/95 border-slate-200 backdrop-blur supports-[backdrop-filter]:bg-surface/80' : 'bg-transparent border-transparent'"
+  class="fixed inset-x-0 top-0 z-40 border-b transition-colors duration-200"
+>
+  <div class="container-page flex h-16 items-center justify-between lg:h-20">
+    <a href="#top" class="flex items-center gap-2 text-lg font-semibold tracking-tight text-navy-900">
+      <span class="font-mono text-sky-400">g8</span>suite
+    </a>
+
+    <nav aria-label="Primary" class="hidden lg:block">
+      <ul class="flex items-center gap-8">
+        {links.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class="text-sm font-medium text-ink-900 transition-colors hover:text-navy-900"
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="hidden lg:block">
+      <a href="#contact" class="btn-primary">Request a Demo</a>
+    </div>
+
+    <button
+      type="button"
+      class="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-md text-navy-900 transition-colors hover:bg-navy-900/5"
+      aria-label="Toggle menu"
+      :aria-expanded="open.toString()"
+      @click="open = !open"
+    >
+      <svg x-show="!open" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="4" x2="20" y1="6" y2="6"></line>
+        <line x1="4" x2="20" y1="12" y2="12"></line>
+        <line x1="4" x2="20" y1="18" y2="18"></line>
+      </svg>
+      <svg x-show="open" x-cloak xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="18" x2="6" y1="6" y2="18"></line>
+        <line x1="6" x2="18" y1="6" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+
+  <div
+    x-show="open"
+    x-cloak
+    x-transition.opacity
+    class="lg:hidden border-t border-slate-200 bg-surface"
+  >
+    <nav aria-label="Mobile" class="container-page py-6">
+      <ul class="flex flex-col gap-4">
+        {links.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class="block py-2 text-base font-medium text-ink-900 hover:text-navy-900"
+              @click="open = false"
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
+        <li class="pt-2">
+          <a href="#contact" class="btn-primary w-full" @click="open = false">Request a Demo</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  [x-cloak] { display: none !important; }
+</style>

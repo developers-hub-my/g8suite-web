@@ -1,0 +1,84 @@
+---
+import '~/styles/global.css';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  ogImage?: string;
+}
+
+const {
+  title = 'g8suite — The Sovereign Enterprise Operations Platform',
+  description = 'One platform. Your whole operation. Your rules. g8suite is the sovereign, on-premise enterprise operations platform built for governments, banks, healthcare, and regulated organisations across ASEAN and MENA.',
+  canonical = Astro.url.href,
+  ogImage = '/og-image.png',
+} = Astro.props;
+
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://g8suite.com';
+const absoluteOg = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
+
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Developers Hub Sdn Bhd',
+  alternateName: 'g8suite',
+  url: siteUrl,
+  logo: `${siteUrl}/favicon.svg`,
+  description,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Johor Bahru',
+    addressCountry: 'MY',
+  },
+  contactPoint: {
+    '@type': 'ContactPoint',
+    email: 'hello@devhub.my',
+    contactType: 'sales',
+    areaServed: ['MY', 'SG', 'AE', 'SA'],
+    availableLanguage: ['English'],
+  },
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0A1F44" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={absoluteOg} />
+    <meta property="og:site_name" content="g8suite" />
+    <meta property="og:locale" content="en_GB" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={absoluteOg} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} is:inline />
+
+    <script src="https://unpkg.com/alpinejs@3.14.8/dist/cdn.min.js" defer is:inline></script>
+  </head>
+  <body class="min-h-screen antialiased">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-navy-900 focus:px-4 focus:py-2 focus:text-white"
+    >
+      Skip to main content
+    </a>
+    <slot />
+  </body>
+</html>

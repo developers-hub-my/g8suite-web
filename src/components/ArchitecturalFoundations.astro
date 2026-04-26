@@ -1,0 +1,50 @@
+---
+import SectionHeader from '~/components/ui/SectionHeader.astro';
+import PrincipleCard from '~/components/ui/PrincipleCard.astro';
+
+const principles = [
+  {
+    title: 'Sovereignty',
+    description: 'Every product runs inside your perimeter. No phone-home telemetry, no external dependencies, no shared multi-tenant surfaces.',
+  },
+  {
+    title: 'Shared Identity',
+    description: 'One identity model — governed through G8ID — flows through every product. No federated stitching, no per-tool user directories.',
+  },
+  {
+    title: 'Shared Audit',
+    description: 'Every action across every product writes to one unified audit trail through g8audit. One source of evidence for every regulator.',
+  },
+  {
+    title: 'Shared Workflow',
+    description: 'Approvals, escalations, and orchestrations flow through g8flow. Cross-product processes are first-class, not custom integration work.',
+  },
+  {
+    title: 'Event-Driven Integration',
+    description: 'Products communicate over a typed event spine, not point-to-point integrations. Adding a product extends the suite without breaking it.',
+  },
+];
+---
+
+<section id="architecture" class="section bg-surface-soft">
+  <div class="container-page">
+    <SectionHeader
+      eyebrow="Architectural foundations"
+      title="Architectural foundations — why the suite holds together"
+      subtitle="Five principles every product observes. These make g8suite a true suite — not six products sharing a logo."
+    />
+
+    <div class="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+      {principles.map((p, i) => (
+        <PrincipleCard index={i + 1} title={p.title} description={p.description} />
+      ))}
+    </div>
+
+    <div class="mt-12 rounded-r-md border-l-4 border-accent-green bg-accent-green/5 p-6">
+      <p class="text-base leading-relaxed text-navy-900 lg:text-lg">
+        <span class="mr-2 font-semibold text-accent-green">✓</span>
+        These five principles are non-negotiable. Every product that joins the suite must observe all five — or it doesn't join the suite.
+      </p>
+    </div>
+  </div>
+</section>
