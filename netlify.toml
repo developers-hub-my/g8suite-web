@@ -11,8 +11,10 @@
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
     # 'unsafe-inline' for script-src is needed because Astro inlines small bundled
     # <script type="module"> blocks directly into the HTML (mobile menu + scroll state).
-    # All script content is from our own bundled build — no user input on the page.
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:;"
+    # static.cloudflareinsights.com + cloudflareinsights.com allow Cloudflare Web
+    # Analytics (auto-injected when the site is fronted by Cloudflare).
+    # All other script content is from our own bundled build — no user input on the page.
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; connect-src 'self' https://cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:;"
 
 [[headers]]
   for = "/assets/*"
