@@ -1,37 +1,108 @@
 ---
+import { stage1Products, stage2Waves } from '~/content/products';
+
 const year = new Date().getFullYear();
+
+const stage2Names = stage2Waves.flatMap((w) => w.products.map((p) => p.name));
+
+const platformLinks = [
+  { href: '#problem', label: 'Why g8suite' },
+  { href: '#platform', label: 'The platform' },
+  { href: '#differentiators', label: 'Differentiators' },
+  { href: '#architecture', label: 'Architecture' },
+  { href: '#roadmap', label: 'Roadmap' },
+];
+
+const companyLinks = [
+  { href: 'mailto:hello@devhub.my', label: 'Contact' },
+  { href: 'mailto:hello@devhub.my?subject=g8suite%20partner%20enquiry', label: 'Partnerships' },
+  { href: '/privacy', label: 'Privacy' },
+  { href: '/terms', label: 'Terms' },
+];
 ---
 
 <footer class="border-t border-slate-200 bg-surface-soft">
-  <div class="container-page py-12">
-    <div class="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
-      <div>
-        <a href="#top" class="text-lg font-bold tracking-tight text-navy-900" aria-label="g8suite home">
+  <div class="container-page py-16">
+    <div class="grid gap-12 lg:grid-cols-12">
+      <div class="lg:col-span-4">
+        <a href="#top" class="text-xl font-bold tracking-tight text-navy-900" aria-label="g8suite home">
           <span class="text-sky-400">g8</span><span>suite</span>
         </a>
-        <p class="mt-3 text-sm text-ink-600">
-          Developers Hub Sdn Bhd<br />
-          Johor Bahru, Malaysia
+        <p class="mt-5 max-w-xs text-sm leading-relaxed text-ink-600">
+          The sovereign enterprise operations platform. Built by Developers Hub Sdn Bhd for regulated organisations.
         </p>
-        <p class="mt-4 text-sm font-semibold text-navy-900">
+        <p class="mt-6 text-sm font-semibold text-navy-900">
           Sovereign. Integrated. Yours.
         </p>
+        <address class="mt-6 text-sm not-italic text-ink-600">
+          Developers Hub Sdn Bhd<br />
+          Johor Bahru, Malaysia<br />
+          <a href="mailto:hello@devhub.my" class="mt-2 inline-block font-medium text-navy-900 hover:text-navy-700">
+            hello@devhub.my
+          </a>
+        </address>
       </div>
 
-      <nav aria-label="Footer">
-        <ul class="flex flex-wrap items-center gap-6 text-sm text-ink-600">
-          <li><a href="#platform" class="hover:text-navy-900">Platform</a></li>
-          <li><a href="#products" class="hover:text-navy-900">Products</a></li>
-          <li><a href="#architecture" class="hover:text-navy-900">Architecture</a></li>
-          <li><a href="#contact" class="hover:text-navy-900">Contact</a></li>
-          <li><a href="/privacy" class="hover:text-navy-900">Privacy</a></li>
-          <li><a href="/terms" class="hover:text-navy-900">Terms</a></li>
+      <nav aria-label="Platform" class="lg:col-span-2">
+        <p class="text-xs font-semibold uppercase tracking-wider text-ink-400">Platform</p>
+        <ul class="mt-4 space-y-2.5">
+          {platformLinks.map((link) => (
+            <li>
+              <a href={link.href} class="text-sm text-ink-600 transition-colors hover:text-navy-900">
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <nav aria-label="Stage 1 products" class="lg:col-span-3">
+        <p class="text-xs font-semibold uppercase tracking-wider text-ink-400">Stage 1 — IT Operations</p>
+        <ul class="mt-4 grid grid-cols-2 gap-x-4 gap-y-2.5">
+          {stage1Products.map((p) => (
+            <li>
+              <a href="#products" class="font-mono text-sm text-ink-600 transition-colors hover:text-navy-900">
+                {p.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <nav aria-label="Stage 2 products" class="lg:col-span-2">
+        <p class="text-xs font-semibold uppercase tracking-wider text-ink-400">Stage 2 — Business</p>
+        <ul class="mt-4 space-y-2.5">
+          {stage2Names.map((name) => (
+            <li>
+              <a href="#stage-2" class="font-mono text-sm text-ink-600 transition-colors hover:text-navy-900">
+                {name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <nav aria-label="Company" class="lg:col-span-1">
+        <p class="text-xs font-semibold uppercase tracking-wider text-ink-400">Company</p>
+        <ul class="mt-4 space-y-2.5">
+          {companyLinks.map((link) => (
+            <li>
+              <a href={link.href} class="text-sm text-ink-600 transition-colors hover:text-navy-900">
+                {link.label}
+              </a>
+            </li>
+          ))}
         </ul>
       </nav>
     </div>
 
-    <div class="mt-10 border-t border-slate-200 pt-6 text-xs text-ink-400">
-      © {year} Developers Hub Sdn Bhd. All rights reserved.
+    <div class="mt-14 flex flex-col items-start gap-3 border-t border-slate-200 pt-8 md:flex-row md:items-center md:justify-between">
+      <p class="text-xs text-ink-400">
+        © {year} Developers Hub Sdn Bhd. All rights reserved.
+      </p>
+      <p class="text-xs text-ink-400">
+        Built in Johor Bahru — for organisations that own their stack.
+      </p>
     </div>
   </div>
 </footer>

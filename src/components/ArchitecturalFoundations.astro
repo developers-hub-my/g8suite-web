@@ -1,6 +1,5 @@
 ---
 import SectionHeader from '~/components/ui/SectionHeader.astro';
-import PrincipleCard from '~/components/ui/PrincipleCard.astro';
 
 const principles = [
   {
@@ -30,20 +29,34 @@ const principles = [
   <div class="container-page">
     <SectionHeader
       eyebrow="Architectural foundations"
-      title="Architectural foundations — why the suite holds together"
+      title="Why the suite holds together."
       subtitle="Five principles every product observes. These make g8suite a true suite — not six products sharing a logo."
     />
 
-    <div class="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-      {principles.map((p, i) => (
-        <PrincipleCard index={i + 1} title={p.title} description={p.description} />
-      ))}
-    </div>
+    <ol class="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+      {principles.map((p, i) => {
+        const padded = String(i + 1).padStart(2, '0');
+        return (
+          <li class="flex h-full flex-col rounded-xl border border-slate-200 bg-surface p-6 transition-all hover:-translate-y-0.5 hover:border-navy-900/30 hover:shadow-elevated">
+            <div class="flex items-baseline justify-between">
+              <span class="font-mono text-3xl font-bold leading-none text-sky-400">{padded}</span>
+              <span class="h-px flex-1 ml-3 bg-slate-200"></span>
+            </div>
+            <h3 class="mt-5 text-base font-semibold text-navy-900">{p.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-ink-600">{p.description}</p>
+          </li>
+        );
+      })}
+    </ol>
 
-    <div class="mt-12 rounded-r-md border-l-4 border-accent-green bg-accent-green/5 p-6">
-      <p class="text-base leading-relaxed text-navy-900 lg:text-lg">
-        <span class="mr-2 font-semibold text-accent-green">✓</span>
-        These five principles are non-negotiable. Every product that joins the suite must observe all five — or it doesn't join the suite.
+    <div class="mt-10 rounded-r-xl border-l-4 border-accent-green bg-accent-green/5 p-7 lg:p-8">
+      <p class="flex items-start gap-3 text-base leading-relaxed text-navy-900 lg:text-lg">
+        <svg class="mt-1 h-5 w-5 flex-shrink-0 text-accent-green" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M4 10l4 4 8-8" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <span>
+          These five principles are non-negotiable. Every product that joins the suite must observe all five — or it doesn't join the suite.
+        </span>
       </p>
     </div>
   </div>
