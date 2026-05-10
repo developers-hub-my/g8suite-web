@@ -1,17 +1,20 @@
 ---
-const realities = [
-  {
-    stat: 'Fifty vendors',
-    body: 'A single regulated organisation routinely runs more than fifty disconnected SaaS tools — each with its own identity, its own audit log, its own contract.',
-  },
-  {
-    stat: 'Every department buys its own tool',
-    body: 'Procurement happens department by department. No-one owns the integration cost. No-one owns the access governance debt that piles up underneath.',
-  },
-  {
-    stat: '2am incidents',
-    body: 'When something goes wrong, the call goes to whichever vendor answers fastest. Accountability is split across half a dozen support contracts.',
-  },
+const without = [
+  'Fifty disconnected SaaS tools, each with its own login',
+  'Identity scattered across every vendor directory',
+  'Audit trails that don\'t reconcile across systems',
+  'Access governance debt nobody owns',
+  'Half a dozen support contracts at 2am',
+  'Compliance posture only as strong as the weakest vendor',
+];
+
+const withG8 = [
+  'One integrated platform, one operations model',
+  'Identity governed once through G8ID',
+  'Unified audit trail through g8audit',
+  'Joiner-mover-leaver wired through the spine',
+  'One vendor, one contract, one accountability chain',
+  'Compliance posture inherited by every product',
 ];
 ---
 
@@ -23,41 +26,125 @@ const realities = [
       </p>
       <h2 class="text-3xl font-semibold leading-tight tracking-tight sm:text-4xl lg:text-5xl">
         Most organisations don't have a software problem.<br class="hidden sm:block" />
-        They have a software sprawl problem.
+        They have a software <span class="text-sky-400">sprawl</span> problem.
       </h2>
+      <p class="mt-5 max-w-2xl text-lg leading-relaxed text-ink-600">
+        Two decades of procurement-led tool adoption left regulated organisations with seams nobody owns and a compliance posture that's only as strong as the weakest vendor on the stack.
+      </p>
     </header>
 
-    <div class="mt-16 grid gap-12 lg:grid-cols-2 lg:gap-20">
-      <div>
-        <h3 class="text-sm font-semibold uppercase tracking-wider text-ink-400">
-          The reality today
-        </h3>
-        <ul class="mt-6 space-y-6">
-          {realities.map((item) => (
-            <li class="border-l-2 border-navy-900 pl-5">
-              <p class="text-lg font-semibold text-navy-900">{item.stat}</p>
-              <p class="mt-2 text-base leading-relaxed text-ink-600">{item.body}</p>
+    <div class="mt-16 grid gap-6 lg:grid-cols-2 lg:gap-8">
+      <article class="relative overflow-hidden rounded-xl border border-slate-200 bg-surface-soft p-7 lg:p-9">
+        <div class="flex items-center justify-between">
+          <p class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-ink-400">
+            <span class="inline-flex h-5 w-5 items-center justify-center rounded-full border border-slate-300 text-ink-400">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <path d="M2 2l6 6M8 2l-6 6" stroke-linecap="round" />
+              </svg>
+            </span>
+            Without g8suite
+          </p>
+          <span class="text-xs font-medium text-ink-400">Today's reality</span>
+        </div>
+        <h3 class="mt-4 text-xl font-semibold text-navy-900">Tool sprawl, vendor sprawl, audit sprawl</h3>
+
+        <!-- Fragmentation diagram -->
+        <svg
+          viewBox="0 0 360 160"
+          class="mt-6 h-auto w-full"
+          aria-hidden="true"
+        >
+          <g stroke="#94A3B8" stroke-width="1" fill="none">
+            {[...Array(20).keys()].map((i) => {
+              const x1 = (i * 17 + 10) % 340 + 10;
+              const y1 = (i * 41) % 130 + 15;
+              const x2 = ((i + 7) * 19) % 340 + 10;
+              const y2 = ((i + 3) * 37) % 130 + 15;
+              return <line x1={x1} y1={y1} x2={x2} y2={y2} stroke-dasharray="2 3" opacity="0.5" />;
+            })}
+          </g>
+          <g>
+            {[...Array(14).keys()].map((i) => {
+              const x = (i * 27 + 18) % 340 + 8;
+              const y = (i * 43) % 130 + 15;
+              return (
+                <g>
+                  <rect x={x} y={y} width="32" height="18" rx="3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1" />
+                </g>
+              );
+            })}
+          </g>
+        </svg>
+
+        <ul class="mt-6 space-y-3">
+          {without.map((item) => (
+            <li class="flex items-start gap-3 text-sm leading-relaxed text-ink-600">
+              <svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-ink-400" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+                <path d="M4 4l8 8M12 4l-8 8" stroke-linecap="round" />
+              </svg>
+              <span>{item}</span>
             </li>
           ))}
         </ul>
-      </div>
+      </article>
 
-      <div>
-        <h3 class="text-sm font-semibold uppercase tracking-wider text-ink-400">
-          The diagnosis
-        </h3>
-        <div class="mt-6 space-y-5 text-base leading-relaxed text-ink-600">
-          <p>
-            This is not a technical problem. It is an organisational one. Software sprawl is the natural outcome of two decades of procurement-led tool adoption: every team picks the best point solution, no-one is accountable for the seams between them.
+      <article class="relative overflow-hidden rounded-xl border border-navy-900/15 bg-navy-900 p-7 text-white lg:p-9">
+        <div class="flex items-center justify-between">
+          <p class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-sky-400">
+            <span class="inline-flex h-5 w-5 items-center justify-center rounded-full bg-accent-green/15 text-accent-green">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+                <path d="M2 5.5l2 2L8 3" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
+            With g8suite
           </p>
-          <p>
-            The result is identity that lives in fifty places, audit trails that don't reconcile, and a compliance posture that is only as strong as the weakest vendor on the stack. For regulated organisations, that posture is no longer defensible.
-          </p>
-          <p class="border-l-2 border-sky-400 pl-5 text-lg font-medium text-navy-900">
-            The answer is not more integrations. The answer is consolidation on a platform built for sovereignty from the ground up.
-          </p>
+          <span class="text-xs font-medium text-sky-100/80">One platform</span>
         </div>
-      </div>
+        <h3 class="mt-4 text-xl font-semibold text-white">One spine. One audit. One vendor.</h3>
+
+        <!-- Consolidation diagram -->
+        <svg
+          viewBox="0 0 360 160"
+          class="mt-6 h-auto w-full"
+          aria-hidden="true"
+        >
+          <!-- Central hub -->
+          <rect x="150" y="60" width="60" height="40" rx="6" fill="#1E3A6F" stroke="#7BB3E8" stroke-width="1" />
+          <text x="180" y="84" text-anchor="middle" font-size="10" font-family="ui-monospace, monospace" fill="#7BB3E8" font-weight="600">SPINE</text>
+
+          <!-- Orbit nodes -->
+          {[
+            { x: 40, y: 30 },
+            { x: 320, y: 30 },
+            { x: 40, y: 130 },
+            { x: 320, y: 130 },
+            { x: 30, y: 80 },
+            { x: 330, y: 80 },
+          ].map((p) => (
+            <g>
+              <line x1="180" y1="80" x2={p.x + 16} y2={p.y + 9} stroke="#7BB3E8" stroke-width="1" stroke-dasharray="2 3" opacity="0.7" />
+              <rect x={p.x} y={p.y} width="32" height="18" rx="3" fill="#FFFFFF" stroke="#7BB3E8" stroke-width="1" />
+            </g>
+          ))}
+        </svg>
+
+        <ul class="mt-6 space-y-3">
+          {withG8.map((item) => (
+            <li class="flex items-start gap-3 text-sm leading-relaxed text-sky-100/90">
+              <svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-accent-green" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+                <path d="M3 8l3.5 3.5L13 4" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </article>
+    </div>
+
+    <div class="mt-12 rounded-xl border-l-4 border-sky-400 bg-sky-100/40 p-7 lg:p-8">
+      <p class="text-base leading-relaxed text-navy-900 lg:text-lg">
+        The answer is not more integrations. The answer is consolidation on a platform built for sovereignty from the ground up.
+      </p>
     </div>
   </div>
 </section>

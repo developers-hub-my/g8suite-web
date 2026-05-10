@@ -1,11 +1,18 @@
 ---
-const links = [
-  { href: '#platform', label: 'Platform' },
-  { href: '#products', label: 'Products' },
+import { stage1Products, stage2Waves, statusLabel } from '~/content/products';
+
+const primaryLinks = [
+  { href: '#problem', label: 'Why g8suite' },
   { href: '#architecture', label: 'Architecture' },
   { href: '#roadmap', label: 'Roadmap' },
-  { href: '#contact', label: 'Contact' },
 ];
+
+const stage2Products = stage2Waves.flatMap((w) =>
+  w.products.map((p) => ({ ...p, wave: w.label }))
+);
+
+const pillClass = (status: 'live' | 'in-development' | 'planned') =>
+  status === 'live' ? 'pill-live' : status === 'in-development' ? 'pill-dev' : 'pill-planned';
 ---
 
 <header
@@ -18,12 +25,35 @@ const links = [
     </a>
 
     <nav aria-label="Primary" class="hidden lg:block">
-      <ul class="flex items-center gap-8">
-        {links.map((link) => (
+      <ul class="flex items-center gap-1">
+        <li class="relative" data-mega>
+          <button
+            type="button"
+            data-mega-toggle
+            class="inline-flex items-center gap-1.5 rounded-md px-3 py-2 text-sm font-medium text-ink-900 transition-colors hover:bg-navy-900/5 hover:text-navy-900 focus-visible:bg-navy-900/5 focus-visible:text-navy-900"
+            aria-expanded="false"
+            aria-controls="mega-platform"
+            aria-haspopup="true"
+          >
+            Platform
+            <svg
+              data-mega-chevron
+              class="h-3.5 w-3.5 transition-transform"
+              viewBox="0 0 14 14"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.75"
+              aria-hidden="true"
+            >
+              <path d="M3.5 5.5L7 9l3.5-3.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+        </li>
+        {primaryLinks.map((link) => (
           <li>
             <a
               href={link.href}
-              class="text-sm font-medium text-ink-900 transition-colors hover:text-navy-900"
+              class="rounded-md px-3 py-2 text-sm font-medium text-ink-900 transition-colors hover:bg-navy-900/5 hover:text-navy-900"
             >
               {link.label}
             </a>
@@ -81,26 +111,150 @@ const links = [
     </button>
   </div>
 
+  <!-- Desktop mega-menu panel -->
+  <div
+    id="mega-platform"
+    data-mega-panel
+    hidden
+    class="absolute inset-x-0 top-full border-b border-slate-200 bg-surface/95 backdrop-blur supports-[backdrop-filter]:bg-surface/85 shadow-elevated"
+  >
+    <div class="container-page py-10">
+      <div class="grid gap-12 lg:grid-cols-12">
+        <div class="lg:col-span-3">
+          <p class="text-xs font-semibold uppercase tracking-[0.18em] text-sky-400">The platform</p>
+          <h3 class="mt-3 text-xl font-semibold leading-tight text-navy-900">
+            One operations platform.<br />Two stages. One spine.
+          </h3>
+          <p class="mt-4 text-sm leading-relaxed text-ink-600">
+            Stage 1 is the IT operations spine. Stage 2 rides it with business operations.
+          </p>
+          <a
+            href="#platform"
+            data-mega-close
+            class="mt-6 inline-flex items-center gap-2 text-sm font-medium text-navy-900 hover:text-navy-700"
+          >
+            Explore the platform
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <path d="M2 7h10M8 3l4 4-4 4" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </a>
+        </div>
+
+        <div class="lg:col-span-5">
+          <p class="text-xs font-semibold uppercase tracking-wider text-ink-400">
+            Stage 1 — IT Operations
+          </p>
+          <ul class="mt-4 grid grid-cols-2 gap-x-6 gap-y-2.5">
+            {stage1Products.map((p) => (
+              <li>
+                <a
+                  href="#products"
+                  data-mega-close
+                  class="group flex items-center justify-between gap-3 rounded-md px-2 py-1.5 -mx-2 transition-colors hover:bg-surface-soft"
+                >
+                  <span class="font-mono text-sm font-semibold text-navy-900">{p.name}</span>
+                  <span class={pillClass(p.status)}>{statusLabel[p.status]}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="lg:col-span-4">
+          <p class="text-xs font-semibold uppercase tracking-wider text-ink-400">
+            Stage 2 — Business Operations
+          </p>
+          <ul class="mt-4 grid grid-cols-1 gap-y-2.5">
+            {stage2Products.map((p) => (
+              <li>
+                <a
+                  href="#stage-2"
+                  data-mega-close
+                  class="group flex items-center justify-between gap-3 rounded-md px-2 py-1.5 -mx-2 transition-colors hover:bg-surface-soft"
+                >
+                  <span class="font-mono text-sm font-semibold text-navy-900">{p.name}</span>
+                  <span class={pillClass(p.status)}>{statusLabel[p.status]}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
   <div
     id="mobile-nav"
     data-nav-menu
     hidden
-    class="lg:hidden border-t border-slate-200 bg-surface"
+    class="lg:hidden border-t border-slate-200 bg-surface max-h-[calc(100vh-4rem)] overflow-y-auto"
   >
     <nav aria-label="Mobile" class="container-page py-6">
-      <ul class="flex flex-col gap-4">
-        {links.map((link) => (
+      <details class="group border-b border-slate-200 pb-3" data-mobile-disclosure>
+        <summary class="flex cursor-pointer list-none items-center justify-between py-2 text-base font-medium text-ink-900 group-open:text-navy-900">
+          Platform
+          <svg
+            class="h-4 w-4 transition-transform group-open:rotate-180"
+            viewBox="0 0 14 14"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.75"
+            aria-hidden="true"
+          >
+            <path d="M3.5 5.5L7 9l3.5-3.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </summary>
+        <div class="mt-3 space-y-5">
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-wider text-ink-400">Stage 1</p>
+            <ul class="mt-2 grid grid-cols-2 gap-x-4 gap-y-2">
+              {stage1Products.map((p) => (
+                <li>
+                  <a
+                    href="#products"
+                    data-nav-close
+                    class="flex items-center justify-between gap-2 py-1 text-sm"
+                  >
+                    <span class="font-mono font-semibold text-navy-900">{p.name}</span>
+                    <span class={pillClass(p.status)}>{statusLabel[p.status]}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-wider text-ink-400">Stage 2</p>
+            <ul class="mt-2 grid grid-cols-2 gap-x-4 gap-y-2">
+              {stage2Products.map((p) => (
+                <li>
+                  <a
+                    href="#stage-2"
+                    data-nav-close
+                    class="flex items-center justify-between gap-2 py-1 text-sm"
+                  >
+                    <span class="font-mono font-semibold text-navy-900">{p.name}</span>
+                    <span class={pillClass(p.status)}>{statusLabel[p.status]}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </details>
+      <ul class="mt-2 flex flex-col">
+        {primaryLinks.map((link) => (
           <li>
             <a
               href={link.href}
               data-nav-close
-              class="block py-2 text-base font-medium text-ink-900 hover:text-navy-900"
+              class="block border-b border-slate-200 py-3 text-base font-medium text-ink-900 hover:text-navy-900"
             >
               {link.label}
             </a>
           </li>
         ))}
-        <li class="pt-2">
+        <li class="pt-5">
           <a href="#contact" data-nav-close class="btn-primary w-full">Request a Demo</a>
         </li>
       </ul>
@@ -117,6 +271,12 @@ const links = [
     const iconClose = header.querySelector<SVGElement>('[data-nav-icon-close]');
     const closers = header.querySelectorAll<HTMLAnchorElement>('[data-nav-close]');
 
+    const megaWrap = header.querySelector<HTMLElement>('[data-mega]');
+    const megaToggle = header.querySelector<HTMLButtonElement>('[data-mega-toggle]');
+    const megaPanel = header.querySelector<HTMLElement>('[data-mega-panel]');
+    const megaChevron = header.querySelector<SVGElement>('[data-mega-chevron]');
+    const megaClosers = header.querySelectorAll<HTMLAnchorElement>('[data-mega-close]');
+
     const chromeOn = [
       'bg-surface/95',
       'border-slate-200',
@@ -125,11 +285,12 @@ const links = [
     ];
     const chromeOff = ['bg-transparent', 'border-transparent'];
 
-    let open = false;
+    let mobileOpen = false;
+    let megaOpen = false;
 
     const updateChrome = () => {
       const scrolled = window.scrollY > 24;
-      if (scrolled || open) {
+      if (scrolled || mobileOpen || megaOpen) {
         header.classList.add(...chromeOn);
         header.classList.remove(...chromeOff);
       } else {
@@ -138,17 +299,47 @@ const links = [
       }
     };
 
-    const setOpen = (value: boolean) => {
-      open = value;
-      toggleBtn?.setAttribute('aria-expanded', String(open));
-      menu?.toggleAttribute('hidden', !open);
-      iconOpen?.classList.toggle('hidden', open);
-      iconClose?.classList.toggle('hidden', !open);
+    const setMobile = (value: boolean) => {
+      mobileOpen = value;
+      toggleBtn?.setAttribute('aria-expanded', String(value));
+      menu?.toggleAttribute('hidden', !value);
+      iconOpen?.classList.toggle('hidden', value);
+      iconClose?.classList.toggle('hidden', !value);
       updateChrome();
     };
 
-    toggleBtn?.addEventListener('click', () => setOpen(!open));
-    closers.forEach((el) => el.addEventListener('click', () => setOpen(false)));
+    const setMega = (value: boolean) => {
+      megaOpen = value;
+      megaToggle?.setAttribute('aria-expanded', String(value));
+      megaPanel?.toggleAttribute('hidden', !value);
+      megaChevron?.classList.toggle('rotate-180', value);
+      updateChrome();
+    };
+
+    toggleBtn?.addEventListener('click', () => setMobile(!mobileOpen));
+    closers.forEach((el) => el.addEventListener('click', () => setMobile(false)));
+
+    megaToggle?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      setMega(!megaOpen);
+    });
+    megaClosers.forEach((el) => el.addEventListener('click', () => setMega(false)));
+
+    document.addEventListener('click', (e) => {
+      if (!megaOpen) return;
+      const target = e.target as Node;
+      if (!megaWrap?.contains(target) && !megaPanel?.contains(target)) {
+        setMega(false);
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (megaOpen) setMega(false);
+        if (mobileOpen) setMobile(false);
+      }
+    });
+
     window.addEventListener('scroll', updateChrome, { passive: true });
     updateChrome();
   }
