@@ -1,12 +1,53 @@
 @import '@fontsource-variable/inter/index.css';
+@import '@fontsource-variable/archivo/wdth.css';
+@import '@fontsource/ibm-plex-mono/400.css';
+@import '@fontsource/ibm-plex-mono/500.css';
+@import '@fontsource/ibm-plex-mono/600.css';
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ── Semantic theme tokens (RGB channels; flip under .dark) ─────────── */
 @layer base {
   :root {
     color-scheme: light;
+    --bg: 252 252 250;          /* page ground — barely-warm white */
+    --soft: 244 246 249;        /* alternating band / subtle fill */
+    --card: 255 255 255;        /* raised card */
+    --card-2: 241 245 249;      /* nested / hover surface */
+    --line: 214 220 227;        /* hairline */
+    --line-strong: 184 192 203; /* stronger hairline */
+    --text: 10 22 40;           /* primary text (sovereign navy ink) */
+    --text-muted: 71 85 105;    /* secondary text */
+    --text-faint: 113 126 143;  /* captions / labels */
+    --brass: 59 89 152;         /* accent = navy-500 (original brand blue) */
+    --brass-soft: 30 58 111;    /* hover — navy-700, deeper */
+    --on-brass: 255 255 255;    /* text on an accent fill */
+    --green: 5 150 105;         /* the single non-negotiable callout */
+    --grid: 10 22 40;           /* blueprint grid line (used at low alpha) */
+    --grid-alpha: 0.05;
+    --shadow: 10 22 40;
+  }
+
+  .dark {
+    color-scheme: dark;
+    --bg: 10 22 40;             /* deep sovereign navy */
+    --soft: 15 33 56;
+    --card: 15 33 56;
+    --card-2: 22 41 74;
+    --line: 34 64 106;
+    --line-strong: 44 78 126;
+    --text: 242 245 250;
+    --text-muted: 198 208 222;
+    --text-faint: 148 163 183;
+    --brass: 123 179 232;       /* accent = sky-400 (bright blue on navy) */
+    --brass-soft: 158 200 240;
+    --on-brass: 10 22 40;
+    --green: 52 211 153;
+    --grid: 255 255 255;
+    --grid-alpha: 0.035;
+    --shadow: 0 0 0;
   }
 
   html {
@@ -17,20 +58,28 @@
   }
 
   body {
-    @apply bg-surface text-ink-900 font-sans;
+    @apply bg-bg text-body font-sans;
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
   }
 
-  h1, h2, h3, h4 {
-    @apply text-navy-900 tracking-tight;
+  /* The [hidden] attribute must beat Tailwind display utilities (flex/grid) so
+     JS filtering (`toggleAttribute('hidden', …)`) actually hides elements. */
+  [hidden] {
+    display: none !important;
+  }
+
+  /* Display type: Archivo grotesk at normal width — characterful, not stretched. */
+  h1, h2, h3 {
+    @apply font-display text-body;
   }
 
   ::selection {
-    @apply bg-navy-900 text-white;
+    background: rgb(var(--brass));
+    color: rgb(var(--on-brass));
   }
 
   :focus-visible {
-    @apply outline-none ring-2 ring-navy-900 ring-offset-2 ring-offset-surface;
+    @apply outline-none ring-2 ring-brass ring-offset-2 ring-offset-bg;
   }
 }
 
@@ -43,28 +92,89 @@
     @apply py-20 lg:py-28;
   }
 
+  /* ── Labels ──────────────────────────────────────────────────────── */
+
+  /* Eyebrow: normal-case sans with a small brass tick — readable, no spacing. */
+  .eyebrow {
+    @apply inline-flex items-center gap-2.5 text-sm font-semibold text-brass;
+  }
+  .eyebrow::before {
+    content: '';
+    @apply inline-block h-2.5 w-2.5 shrink-0 bg-brass;
+    clip-path: polygon(0 0, 100% 0, 100% 100%);
+  }
+
+  /* Small caption/label — normal case, normal spacing. */
+  .mono-label {
+    @apply text-[13px] font-medium text-faint;
+  }
+
+  /* Technical identifier (product codes, coordinates) — monospace. */
+  .code {
+    @apply font-mono text-[13px] text-brass;
+  }
+
+  /* ── Perimeter frame ─────────────────────────────────────────────── */
+  /* The signature: content sits inside a surveyed boundary with corner ticks. */
+  .perimeter {
+    @apply relative border border-line;
+  }
+  .perimeter::before,
+  .perimeter::after,
+  .perimeter > .corner-bl,
+  .perimeter > .corner-br {
+    content: '';
+    @apply pointer-events-none absolute h-3.5 w-3.5 border-brass;
+  }
+  .perimeter::before { @apply -top-px -left-px border-t-2 border-l-2; }
+  .perimeter::after  { @apply -top-px -right-px border-t-2 border-r-2; }
+  .perimeter > .corner-bl { @apply -bottom-px -left-px border-b-2 border-l-2; }
+  .perimeter > .corner-br { @apply -bottom-px -right-px border-b-2 border-r-2; }
+
+  /* ── Buttons ─────────────────────────────────────────────────────── */
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-md bg-navy-900 px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-navy-700 focus-visible:ring-2 focus-visible:ring-navy-900 focus-visible:ring-offset-2;
+    @apply inline-flex items-center justify-center gap-2 rounded-md border border-brass bg-brass px-6 py-3 text-sm font-semibold text-brass-on transition-colors hover:bg-brass-soft hover:border-brass-soft focus-visible:ring-2 focus-visible:ring-brass focus-visible:ring-offset-2;
   }
-
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 rounded-md border border-navy-900/20 bg-transparent px-5 py-3 text-sm font-medium text-navy-900 transition-colors hover:border-navy-900 hover:bg-navy-900/5 focus-visible:ring-2 focus-visible:ring-navy-900 focus-visible:ring-offset-2;
+    @apply inline-flex items-center justify-center gap-2 rounded-md border border-line-strong bg-transparent px-6 py-3 text-sm font-semibold text-body transition-colors hover:border-brass hover:bg-brass/[0.06] focus-visible:ring-2 focus-visible:ring-brass focus-visible:ring-offset-2;
   }
 
+  /* ── Spine markers (Identity · Audit · Workflow) ─────────────────── */
+  .spine-tick {
+    @apply relative pl-4 text-sm;
+  }
+  .spine-tick::before {
+    content: '';
+    @apply absolute left-0 top-1/2 h-1.5 w-1.5 -translate-y-1/2 bg-brass;
+  }
+
+  /* ── Status pills (products collection) ──────────────────────────── */
   .pill {
-    @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium;
+    @apply inline-flex items-center gap-1.5 rounded border px-2 py-0.5 text-[11px] font-semibold;
+  }
+  .pill-live     { @apply pill border-green/50 bg-green/10 text-green; }
+  .pill-dev,
+  .pill-upcoming { @apply pill border-brass/50 bg-brass/10 text-brass; }
+  .pill-progress { @apply pill border-amber-500/50 bg-amber-500/10 text-amber-600 dark:text-amber-300; }
+  .pill-planned,
+  .pill-roadmap  { @apply pill border-line-strong bg-soft text-muted; }
+  .pill-brd      { @apply pill border-line-strong bg-card-2 text-muted; }
+
+  .filter-chip {
+    @apply inline-flex items-center rounded-md border border-line bg-card px-3 py-1 text-sm font-medium text-muted transition-colors hover:border-brass hover:text-body focus-visible:ring-2 focus-visible:ring-brass focus-visible:ring-offset-2;
+  }
+  .filter-chip[aria-pressed='true'] {
+    @apply border-brass bg-brass text-brass-on hover:text-brass-on;
   }
 
-  .pill-live {
-    @apply pill bg-accent-green/10 text-accent-green;
-  }
-
-  .pill-dev {
-    @apply pill bg-sky-100 text-navy-700;
-  }
-
-  .pill-planned {
-    @apply pill bg-slate-100 text-ink-600;
+  /* Blueprint grid ground — theme-aware via CSS vars. */
+  .grid-ground {
+    background-image:
+      linear-gradient(to right, rgb(var(--grid) / var(--grid-alpha)) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(var(--grid) / var(--grid-alpha)) 1px, transparent 1px);
+    background-size: 56px 56px;
+    -webkit-mask-image: radial-gradient(120% 90% at 50% 0%, #000 55%, transparent 100%);
+    mask-image: radial-gradient(120% 90% at 50% 0%, #000 55%, transparent 100%);
   }
 }
 

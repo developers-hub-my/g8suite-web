@@ -1,16 +1,23 @@
 ---
-import { stage1Products, stage2Waves } from '~/content/products';
+import { getProducts } from '~/lib/products';
+import { stageLabel } from '~/lib/taxonomy';
 
 const year = new Date().getFullYear();
 
-const stage2Names = stage2Waves.flatMap((w) => w.products.map((p) => p.name));
+const products = await getProducts();
+
+// Products grouped by stage — reads as a structured lineup, not a wall of codes.
+const stageGroups = ([1, 2, 3] as const).map((s) => ({
+  label: stageLabel[s],
+  items: products.filter((p) => p.stage === s),
+}));
 
 const platformLinks = [
-  { href: '#problem', label: 'Why g8suite' },
-  { href: '#platform', label: 'The platform' },
-  { href: '#differentiators', label: 'Differentiators' },
-  { href: '#architecture', label: 'Architecture' },
-  { href: '#roadmap', label: 'Roadmap' },
+  { href: '/products', label: 'All products' },
+  { href: '/#problem', label: 'Why g8suite' },
+  { href: '/#platform', label: 'The platform' },
+  { href: '/#built-for', label: 'Who it\'s for' },
+  { href: '/#differentiators', label: 'Differentiators' },
 ];
 
 const companyLinks = [
@@ -21,34 +28,34 @@ const companyLinks = [
 ];
 ---
 
-<footer class="border-t border-slate-200 bg-surface-soft">
+<footer class="border-t border-line bg-soft">
   <div class="container-page py-16">
-    <div class="grid gap-12 lg:grid-cols-12">
+    <div class="grid gap-x-8 gap-y-12 lg:grid-cols-12">
       <div class="lg:col-span-4">
-        <a href="#top" class="text-xl font-bold tracking-tight text-navy-900" aria-label="g8suite home">
-          <span class="text-sky-400">g8</span><span>suite</span>
+        <a href="/" class="inline-flex" aria-label="g8suite home">
+          <span class="font-display text-xl font-bold tracking-tight text-body">g8suite</span>
         </a>
-        <p class="mt-5 max-w-xs text-sm leading-relaxed text-ink-600">
+        <p class="mt-5 max-w-xs text-sm leading-relaxed text-muted">
           The sovereign enterprise operations platform. Built by Developers Hub Sdn Bhd for regulated organisations.
         </p>
-        <p class="mt-6 text-sm font-semibold text-navy-900">
+        <p class="mt-6 text-sm font-semibold text-body">
           Sovereign. Integrated. Yours.
         </p>
-        <address class="mt-6 text-sm not-italic text-ink-600">
+        <address class="mt-6 text-sm not-italic text-muted">
           Developers Hub Sdn Bhd<br />
           Johor Bahru, Malaysia<br />
-          <a href="mailto:hello@devhub.my" class="mt-2 inline-block font-medium text-navy-900 hover:text-navy-700">
+          <a href="mailto:hello@devhub.my" class="mt-2 inline-block font-medium text-body hover:text-brass">
             hello@devhub.my
           </a>
         </address>
       </div>
 
       <nav aria-label="Platform" class="lg:col-span-2">
-        <p class="text-xs font-semibold uppercase tracking-wider text-ink-400">Platform</p>
+        <p class="text-xs font-semibold uppercase tracking-wider text-faint">Platform</p>
         <ul class="mt-4 space-y-2.5">
           {platformLinks.map((link) => (
             <li>
-              <a href={link.href} class="text-sm text-ink-600 transition-colors hover:text-navy-900">
+              <a href={link.href} class="text-sm text-muted transition-colors hover:text-brass">
                 {link.label}
               </a>
             </li>
@@ -56,51 +63,48 @@ const companyLinks = [
         </ul>
       </nav>
 
-      <nav aria-label="Stage 1 products" class="lg:col-span-3">
-        <p class="text-xs font-semibold uppercase tracking-wider text-ink-400">Stage 1 — IT Operations</p>
-        <ul class="mt-4 grid grid-cols-2 gap-x-4 gap-y-2.5">
-          {stage1Products.map((p) => (
-            <li>
-              <a href="#products" class="font-mono text-sm text-ink-600 transition-colors hover:text-navy-900">
-                {p.name}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-
-      <nav aria-label="Stage 2 products" class="lg:col-span-2">
-        <p class="text-xs font-semibold uppercase tracking-wider text-ink-400">Stage 2 — Business</p>
-        <ul class="mt-4 space-y-2.5">
-          {stage2Names.map((name) => (
-            <li>
-              <a href="#stage-2" class="font-mono text-sm text-ink-600 transition-colors hover:text-navy-900">
-                {name}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-
-      <nav aria-label="Company" class="lg:col-span-1">
-        <p class="text-xs font-semibold uppercase tracking-wider text-ink-400">Company</p>
+      <nav aria-label="Company" class="lg:col-span-2">
+        <p class="text-xs font-semibold uppercase tracking-wider text-faint">Company</p>
         <ul class="mt-4 space-y-2.5">
           {companyLinks.map((link) => (
             <li>
-              <a href={link.href} class="text-sm text-ink-600 transition-colors hover:text-navy-900">
+              <a href={link.href} class="text-sm text-muted transition-colors hover:text-brass">
                 {link.label}
               </a>
             </li>
           ))}
         </ul>
       </nav>
+
+      <nav aria-label="Products" class="lg:col-span-4">
+        <div class="flex items-baseline justify-between gap-4">
+          <p class="text-xs font-semibold uppercase tracking-wider text-faint">Products</p>
+          <a href="/products" class="text-xs font-medium text-body hover:text-brass">All products →</a>
+        </div>
+        <div class="mt-4 space-y-5">
+          {stageGroups.map((group) => (
+            <div>
+              <p class="text-xs font-medium text-faint">{group.label}</p>
+              <ul class="mt-2 flex flex-wrap gap-x-3 gap-y-1.5">
+                {group.items.map((p) => (
+                  <li>
+                    <a href={`/products/${p.code}`} class="font-mono text-sm text-muted transition-colors hover:text-brass">
+                      {p.code}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </nav>
     </div>
 
-    <div class="mt-14 flex flex-col items-start gap-3 border-t border-slate-200 pt-8 md:flex-row md:items-center md:justify-between">
-      <p class="text-xs text-ink-400">
+    <div class="mt-14 flex flex-col items-start gap-3 border-t border-line pt-8 md:flex-row md:items-center md:justify-between">
+      <p class="text-xs text-faint">
         © {year} Developers Hub Sdn Bhd. All rights reserved.
       </p>
-      <p class="text-xs text-ink-400">
+      <p class="text-xs text-faint">
         Built in Johor Bahru — for organisations that own their stack.
       </p>
     </div>

@@ -1,40 +1,36 @@
 /** @type {import('tailwindcss').Config} */
+
+// Semantic tokens are RGB-channel CSS variables (defined in global.css). This
+// wrapper lets Tailwind inject alpha (e.g. bg-brass/40) while the values flip
+// between light and dark themes via the `.dark` class on <html>.
+const v = (name) => `rgb(var(${name}) / <alpha-value>)`;
+
 export default {
+  darkMode: 'class',
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   theme: {
     extend: {
       colors: {
-        navy: {
-          900: '#0A1F44',
-          700: '#1E3A6F',
-          500: '#3B5998',
-        },
-        sky: {
-          400: '#7BB3E8',
-          100: '#DCE9F5',
-        },
-        ink: {
-          900: '#0F172A',
-          600: '#475569',
-          400: '#94A3B8',
-        },
-        surface: {
-          DEFAULT: '#FFFFFF',
-          soft: '#F8FAFC',
-          card: '#F1F5F9',
-        },
-        accent: {
-          green: '#10B981',
-        },
+        bg: v('--bg'),
+        soft: v('--soft'),
+        card: { DEFAULT: v('--card'), 2: v('--card-2') },
+        line: { DEFAULT: v('--line'), strong: v('--line-strong') },
+        body: v('--text'),
+        muted: v('--text-muted'),
+        faint: v('--text-faint'),
+        brass: { DEFAULT: v('--brass'), soft: v('--brass-soft'), on: v('--on-brass') },
+        green: v('--green'),
       },
       fontFamily: {
         sans: ['"Inter Variable"', 'Inter', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
+        display: ['"Archivo Variable"', 'Archivo', 'system-ui', 'sans-serif'],
+        mono: ['"IBM Plex Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
       },
       maxWidth: {
         '7xl': '80rem',
       },
       boxShadow: {
-        elevated: '0 4px 20px -8px rgba(10, 31, 68, 0.10)',
+        elevated: '0 6px 28px -12px rgb(var(--shadow) / 0.5)',
       },
     },
   },

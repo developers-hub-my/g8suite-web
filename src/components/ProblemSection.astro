@@ -13,73 +13,69 @@ const withG8 = [
   'Identity governed once through G8ID',
   'Unified audit trail through g8audit',
   'Joiner-mover-leaver wired through the spine',
-  'One vendor, one contract, one accountability chain',
+  'One accountable partnership — one contract, one SLA',
   'Compliance posture inherited by every product',
+];
+
+// Consolidation diagram nodes — products converging on the shared spine.
+const orbit = [
+  { x: 20, y: 24, l: 'g8stack' }, { x: 276, y: 24, l: 'g8hr' },
+  { x: 20, y: 76, l: 'g8shield' }, { x: 276, y: 76, l: 'g8desk' },
+  { x: 20, y: 128, l: 'g8vault' }, { x: 276, y: 128, l: 'g8crm' },
 ];
 ---
 
-<section id="problem" class="section bg-surface">
+<section id="problem" class="section">
   <div class="container-page">
     <header class="max-w-4xl">
-      <p class="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-sky-400">
-        The problem
-      </p>
-      <h2 class="text-3xl font-semibold leading-tight tracking-tight sm:text-4xl lg:text-5xl">
+      <p class="eyebrow mb-4">The problem</p>
+      <h2 class="text-3xl font-semibold leading-[1.1] text-body sm:text-4xl lg:text-5xl">
         Most organisations don't have a software problem.<br class="hidden sm:block" />
-        They have a software <span class="text-sky-400">sprawl</span> problem.
+        They have a software <span class="text-brass">sprawl</span> problem.
       </h2>
-      <p class="mt-5 max-w-2xl text-lg leading-relaxed text-ink-600">
+      <p class="mt-5 max-w-2xl text-lg leading-relaxed text-muted">
         Two decades of procurement-led tool adoption left regulated organisations with seams nobody owns and a compliance posture that's only as strong as the weakest vendor on the stack.
       </p>
     </header>
 
     <div class="mt-16 grid gap-6 lg:grid-cols-2 lg:gap-8">
-      <article class="relative overflow-hidden rounded-xl border border-slate-200 bg-surface-soft p-7 lg:p-9">
+      <article class="relative overflow-hidden border border-line bg-card p-7 lg:p-9">
         <div class="flex items-center justify-between">
-          <p class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-ink-400">
-            <span class="inline-flex h-5 w-5 items-center justify-center rounded-full border border-slate-300 text-ink-400">
+          <p class="inline-flex items-center gap-2.5 text-sm font-semibold text-faint">
+            <span class="inline-flex h-5 w-5 items-center justify-center rounded-full border border-line-strong">
               <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
                 <path d="M2 2l6 6M8 2l-6 6" stroke-linecap="round" />
               </svg>
             </span>
             Without g8suite
           </p>
-          <span class="text-xs font-medium text-ink-400">Today's reality</span>
+          <span class="text-sm text-faint">Today's reality</span>
         </div>
-        <h3 class="mt-4 text-xl font-semibold text-navy-900">Tool sprawl, vendor sprawl, audit sprawl</h3>
+        <h3 class="mt-4 text-xl font-semibold text-body">Tool sprawl, vendor sprawl, audit sprawl</h3>
 
-        <!-- Fragmentation diagram -->
-        <svg
-          viewBox="0 0 360 160"
-          class="mt-6 h-auto w-full"
-          aria-hidden="true"
-        >
-          <g stroke="#94A3B8" stroke-width="1" fill="none">
+        <svg viewBox="0 0 360 160" class="mt-6 h-auto w-full text-faint" aria-hidden="true">
+          <g class="stroke-current" stroke-width="1" fill="none">
             {[...Array(20).keys()].map((i) => {
               const x1 = (i * 17 + 10) % 340 + 10;
               const y1 = (i * 41) % 130 + 15;
               const x2 = ((i + 7) * 19) % 340 + 10;
               const y2 = ((i + 3) * 37) % 130 + 15;
-              return <line x1={x1} y1={y1} x2={x2} y2={y2} stroke-dasharray="2 3" opacity="0.5" />;
+              return <line x1={x1} y1={y1} x2={x2} y2={y2} stroke-dasharray="2 3" opacity="0.4" />;
             })}
           </g>
-          <g>
+          <g class="fill-soft stroke-current" stroke-width="1">
             {[...Array(14).keys()].map((i) => {
               const x = (i * 27 + 18) % 340 + 8;
               const y = (i * 43) % 130 + 15;
-              return (
-                <g>
-                  <rect x={x} y={y} width="32" height="18" rx="3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1" />
-                </g>
-              );
+              return <rect x={x} y={y} width="32" height="18" rx="2" />;
             })}
           </g>
         </svg>
 
         <ul class="mt-6 space-y-3">
           {without.map((item) => (
-            <li class="flex items-start gap-3 text-sm leading-relaxed text-ink-600">
-              <svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-ink-400" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+            <li class="flex items-start gap-3 text-sm leading-relaxed text-muted">
+              <svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-faint" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
                 <path d="M4 4l8 8M12 4l-8 8" stroke-linecap="round" />
               </svg>
               <span>{item}</span>
@@ -88,50 +84,38 @@ const withG8 = [
         </ul>
       </article>
 
-      <article class="relative overflow-hidden rounded-xl border border-navy-900/15 bg-navy-900 p-7 text-white lg:p-9">
+      <article class="relative overflow-hidden border-2 border-brass/40 bg-card-2 p-7 lg:p-9">
         <div class="flex items-center justify-between">
-          <p class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-sky-400">
-            <span class="inline-flex h-5 w-5 items-center justify-center rounded-full bg-accent-green/15 text-accent-green">
+          <p class="inline-flex items-center gap-2.5 text-sm font-semibold text-brass">
+            <span class="inline-flex h-5 w-5 items-center justify-center rounded-full bg-green/15 text-green">
               <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
                 <path d="M2 5.5l2 2L8 3" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
             </span>
             With g8suite
           </p>
-          <span class="text-xs font-medium text-sky-100/80">One platform</span>
+          <span class="text-sm text-muted">One platform</span>
         </div>
-        <h3 class="mt-4 text-xl font-semibold text-white">One spine. One audit. One vendor.</h3>
+        <h3 class="mt-4 text-xl font-semibold text-body">One spine. One audit. One partnership.</h3>
 
-        <!-- Consolidation diagram -->
-        <svg
-          viewBox="0 0 360 160"
-          class="mt-6 h-auto w-full"
-          aria-hidden="true"
-        >
-          <!-- Central hub -->
-          <rect x="150" y="60" width="60" height="40" rx="6" fill="#1E3A6F" stroke="#7BB3E8" stroke-width="1" />
-          <text x="180" y="84" text-anchor="middle" font-size="10" font-family="ui-monospace, monospace" fill="#7BB3E8" font-weight="600">SPINE</text>
-
-          <!-- Orbit nodes -->
-          {[
-            { x: 40, y: 30 },
-            { x: 320, y: 30 },
-            { x: 40, y: 130 },
-            { x: 320, y: 130 },
-            { x: 30, y: 80 },
-            { x: 330, y: 80 },
-          ].map((p) => (
+        <svg viewBox="0 0 360 180" class="mt-6 h-auto w-full" aria-hidden="true">
+          {orbit.map((n) => (
+            <line x1="180" y1="90" x2={n.x < 180 ? n.x + 64 : n.x} y2={n.y + 14} class="stroke-brass" stroke-width="1" stroke-dasharray="2 3" opacity="0.55" />
+          ))}
+          <rect x="140" y="66" width="80" height="48" rx="6" class="fill-bg stroke-brass" stroke-width="1.5" />
+          <text x="180" y="94" text-anchor="middle" font-size="12" font-family="ui-monospace, monospace" class="fill-brass" font-weight="700">SPINE</text>
+          {orbit.map((n) => (
             <g>
-              <line x1="180" y1="80" x2={p.x + 16} y2={p.y + 9} stroke="#7BB3E8" stroke-width="1" stroke-dasharray="2 3" opacity="0.7" />
-              <rect x={p.x} y={p.y} width="32" height="18" rx="3" fill="#FFFFFF" stroke="#7BB3E8" stroke-width="1" />
+              <rect x={n.x} y={n.y} width="64" height="28" rx="4" class="fill-card stroke-brass" stroke-width="1" />
+              <text x={n.x + 32} y={n.y + 18} text-anchor="middle" font-size="11" font-family="ui-monospace, monospace" class="fill-body">{n.l}</text>
             </g>
           ))}
         </svg>
 
         <ul class="mt-6 space-y-3">
           {withG8.map((item) => (
-            <li class="flex items-start gap-3 text-sm leading-relaxed text-sky-100/90">
-              <svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-accent-green" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+            <li class="flex items-start gap-3 text-sm leading-relaxed text-body">
+              <svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-green" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
                 <path d="M3 8l3.5 3.5L13 4" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
               <span>{item}</span>
@@ -141,8 +125,8 @@ const withG8 = [
       </article>
     </div>
 
-    <div class="mt-12 rounded-xl border-l-4 border-sky-400 bg-sky-100/40 p-7 lg:p-8">
-      <p class="text-base leading-relaxed text-navy-900 lg:text-lg">
+    <div class="mt-12 border-l-2 border-brass bg-brass/[0.06] p-7 lg:p-8">
+      <p class="text-base leading-relaxed text-body lg:text-lg">
         The answer is not more integrations. The answer is consolidation on a platform built for sovereignty from the ground up.
       </p>
     </div>

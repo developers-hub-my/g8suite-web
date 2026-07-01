@@ -32,7 +32,7 @@ No test suite is in scope for v1.
 
 ## Architecture
 
-Single-page marketing site. One route (`src/pages/index.astro`) composes 13 sections in order via `.astro` components. Section order is intentional — it walks an enterprise buyer from problem → platform → fit → differentiation → product surface → architecture → roadmap → CTA. Do not reorder without a copy reason.
+The home route (`src/pages/index.astro`) composes the marketing sections in order via `.astro` components. Section order is intentional — it walks an enterprise buyer from problem → platform → fit → differentiation → product surface → architecture → roadmap → CTA. Do not reorder without a copy reason. Alongside it, the **products collection** drives a lineup index (`/products`) and one detail page per product (`/products/[code]`).
 
 ```
 src/
@@ -40,41 +40,59 @@ src/
 │   ├── Nav.astro, Footer.astro, Hero.astro
 │   ├── ProblemSection.astro, PlatformOverview.astro, BuiltFor.astro
 │   ├── Differentiators.astro, TwoStageStrategy.astro
-│   ├── Stage1Products.astro, Stage2Products.astro
+│   ├── Stage1Products.astro, Stage2Products.astro   # homepage lineup — read the collection
 │   ├── ArchitecturalFoundations.astro, Roadmap.astro, CTA.astro
-│   └── ui/  → SectionHeader, ProductCard, PrincipleCard
+│   └── ui/  → SectionHeader, PrincipleCard
+├── content/
+│   ├── config.ts               # Zod schema for the `products` collection
+│   └── products/<code>.md      # one file per product — single source of truth (25 files)
+├── lib/
+│   ├── taxonomy.ts             # stage/status/tier/deployment/engine → label + badge maps
+│   └── products.ts             # getProducts() / getStageProducts() — the shared fetch
 ├── layouts/BaseLayout.astro    # SEO + JSON-LD Organization schema lives here
-├── pages/index.astro
-├── content/products.ts         # typed product data — single source of truth
+├── pages/
+│   ├── index.astro
+│   └── products/index.astro, products/[slug].astro
 └── styles/global.css
 ```
 
-**Product data is centralised** in `src/content/products.ts`. The Stage 1 products table and Stage 2 wave layout both read from it — never hard-code product names/status in components.
+**Product data is a typed Astro content collection.** One Markdown file per product under `src/content/products/`, validated by the Zod schema in `src/content/config.ts`; the filename **is** the `code` **is** the slug. Nav, Footer, `Stage1Products`, `Stage2Products` and both `/products` pages all read it via `src/lib/products.ts` — never hard-code product names/status in components, and add a product by dropping in a Markdown file (no template edits). The build fails on any schema violation. See `documentation/products.md` for the full content-model spec.
 
-**Two-stage product model** (this is the spine of the page):
-- **Stage 1 (IT Operations, Yrs 1–3):** G8ID, g8stack, g8connect, g8deck, g8shield, g8scope, g8flow, g8audit, g8vault.
-- **Stage 2 (Business Operations, Yrs 3–7):** g8hr, g8docs, g8procure, g8crm, g8desk, g8finance — across three Waves.
-- **Live today:** G8ID, g8stack, g8desk, g8scope. Mark with a green "Live" pill. Others: "In development" or "Planned".
-- Note `g8desk` is technically a Stage 2 product but already live — flag it accordingly in Stage2Products.
+**Three-stage product model** (25 products):
+- **Stage 1 · IT Operations (16):** g8stack, g8connect, g8id, g8shield, g8vault, g8key, g8scope, g8monitor, g8deck, g8flow, g8work, g8test, g8mail, g8audit, g8board, g8desk.
+- **Stage 2 · Business Operations (5):** g8hr, g8finance, g8docs, g8procure, g8crm.
+- **Stage 3 · Industry Applications (4):** g8member, g8gather (gatherhub), g8pos (warung.my), g8research (kajian.space) — composed on the spine, sold standalone under their own brands.
+- **Status** is one of `live | upcoming | in_progress | roadmap | brd`; the detail-page **tier** (Full/Preview/Interest) and every badge derive from it — never store a separate tier. `live` gets the green pill.
+- **g8desk** is live and classified as a **Stage 1** service-management product (it was previously sequenced under business operations).
+- **External-brand products** (`alias` + `domain`: g8scope→nadi.pro, g8mail→waumail.my, g8gather→gatherhub.app, g8pos→warung.my, g8research→kajian.space) **link out** to their own domain from their detail page — never redirect inward, so brand equity stays with them. `g8scope` is the observability product delivered as the **nadi.pro** app.
+- **Pricing is never displayed.** The `pricing` frontmatter field is internal record only; every price surface renders "Contact us for more details" (enterprise sales motion).
 
-## Design system
+## Design system — "Sovereign Instrument"
 
-Brand tokens live in `tailwind.config.mjs` — extend, don't override Tailwind defaults.
+The site runs a **light-default theme with an opt-in dark mode toggle** (nav sun/moon button; choice persisted to `localStorage.theme`; a no-flash `is:inline` init script sits in `BaseLayout` `<head>`). Light is the credible "official face" for gov/bank/defence buyers; dark is the console alternative.
+
+**Tokens are semantic CSS variables, not raw palette classes.** They live as RGB channels in `src/styles/global.css` (`:root` = light, `.dark` = overrides) and are mapped in `tailwind.config.mjs` via `rgb(var(--x) / <alpha-value>)`, so opacity modifiers (`bg-brass/40`) work and every value flips per theme. **Write each component once with semantic classes — do NOT scatter `dark:` variants.** SVG diagrams use `fill-*/stroke-*` utilities so they theme automatically.
 
 ```
-navy: 900 #0A1F44 / 700 #1E3A6F / 500 #3B5998
-sky:  400 #7BB3E8 / 100 #DCE9F5
-ink:  900 #0F172A / 600 #475569 / 400 #94A3B8
-surface: DEFAULT #FFFFFF / soft #F8FAFC / card #F1F5F9
-accent.green #10B981   # used only for the "non-negotiable" callout
+Semantic class → --var        light            dark
+bg            → --bg          #FCFCFA          #0A1628 (deep navy)
+soft         → --soft         #F4F6F9          #0F2138   (alt band / fills)
+card / card-2→ --card/-2      #FFFFFF / #F1F5F9  #0F2138 / #16294A
+line / -strong→ --line/-strong hairlines
+body / muted / faint → text primary / secondary / caption
+brass        → --brass        #3B5998 (navy-500) #7BB3E8 (sky-400)   ← the accent
+brass-soft/on→ hover / text-on-accent
+green        → --green        #059669          #34D399   (non-negotiable ONLY)
 ```
 
-- Predominantly white/soft surfaces, navy as the anchor. Sky-400 used **sparingly** (the tagline, accent rules).
-- Section rhythm: `py-20 lg:py-28`. Container: `max-w-7xl px-6 lg:px-8`.
-- Borders over shadows: `border-slate-200`. When elevation is needed: `shadow-sm` or `shadow-[0_4px_20px_-8px_rgba(10,31,68,0.1)]`.
-- Headings: `tracking-tight`, semibold/bold, weighty.
-- Illustrations are **inline SVG line-art** (geometric, navy strokes, sky-400 accents). **No stock photos. No AI imagery.** The layered architecture diagram in `PlatformOverview` is the page's strongest visual moment — build it as inline SVG.
-- Honour `prefers-reduced-motion`. No gradients except ≤5% opacity on hero background.
+- **Accent is the brand blue family, never gold/brown.** `brass` is a legacy token *name* only — its value is navy-blue on light, sky-blue on dark. Predominantly white/navy on light; navy ground + sky accent on dark.
+- **Typography is normal — no wide letter-spacing, no spaced-out uppercase labels** (an explicit, firm user preference). Fonts (self-hosted): **Archivo** (`font-display`, normal width — not stretched) for headings, **Inter** (`font-sans`) for body, **IBM Plex Mono** (`font-mono`, via `.code`) *only* for real data (product codes, coordinates). Use the `.eyebrow` class (normal-case sans + small accent tick) for section eyebrows.
+- **Signature:** the `.perimeter` frame (hairline border + accent corner ticks) wraps the Hero and CTA as bookends; the Identity·Audit·Workflow **spine** motif recurs. A faint themed blueprint grid (`.grid-ground`) sits behind the hero.
+- Section rhythm: `py-20 lg:py-28` (`.section`). Container: `.container-page` (`max-w-7xl px-6 lg:px-8`).
+- Borders over shadows: `border-line`. Elevation: `shadow-elevated` (theme-aware via `--shadow`).
+- Illustrations are **inline SVG line-art** (monochrome fills via `fill-card/soft/card-2/line`, accent via `fill-brass`/`stroke-brass`, apex/spine highlighted in the accent). **No stock photos. No AI imagery.**
+- Honour `prefers-reduced-motion`. No gradients except a ≤8% accent radial on the hero background.
+- **Favicon** (`public/favicon.svg`) is the **`g8`** monogram only; the full **`g8suite`** wordmark is the primary logo (Nav + Footer).
 
 ## Content tone — non-negotiable
 

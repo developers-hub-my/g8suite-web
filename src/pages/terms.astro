@@ -1,0 +1,125 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Nav from '~/components/Nav.astro';
+import Footer from '~/components/Footer.astro';
+
+const updated = 'July 2026';
+---
+
+<BaseLayout
+  title="Terms of Use — g8suite"
+  description="The terms governing use of the g8suite marketing website, operated by Developers Hub Sdn Bhd."
+>
+  <Nav />
+  <main id="main" class="pt-24 lg:pt-28">
+    <div class="container-page pb-24">
+      <nav aria-label="Breadcrumb" class="py-5 text-sm text-faint">
+        <a href="/" class="hover:text-body">Home</a>
+        <span class="mx-2" aria-hidden="true">/</span>
+        <span class="text-muted">Terms</span>
+      </nav>
+
+      <header class="max-w-3xl">
+        <p class="eyebrow mb-4">Legal</p>
+        <h1 class="text-3xl font-semibold text-body sm:text-4xl">Terms of Use</h1>
+        <p class="mt-4 text-sm text-faint">Last updated: {updated}</p>
+      </header>
+
+      <div class="mt-12 max-w-3xl space-y-10 text-base leading-relaxed text-muted">
+        <section>
+          <p>
+            These terms govern your use of this website (the g8suite marketing site), operated by
+            <strong class="text-body">Developers Hub Sdn Bhd</strong>. By using the site, you agree to them.
+            If you do not agree, please do not use the site.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-lg font-semibold text-body">About this site</h2>
+          <p class="mt-4">
+            This site is provided for general information about g8suite and Developers Hub Sdn Bhd. Nothing
+            on it is a binding offer, a warranty of any product's suitability, or professional advice.
+            Product details and availability may change; any engagement is governed by a separate written
+            agreement.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-lg font-semibold text-body">Intellectual property</h2>
+          <p class="mt-4">
+            The content, design, and marks on this site — including "g8suite" and the g8-family product
+            names — belong to Developers Hub Sdn Bhd or its licensors. You may view and share the content
+            for informational purposes, but you may not copy, republish, or use it commercially without our
+            written permission.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-lg font-semibold text-body">Acceptable use</h2>
+          <p class="mt-4">
+            You agree not to misuse the site — for example by attempting to disrupt it, gain unauthorised
+            access, scrape it at scale, or use it unlawfully.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-lg font-semibold text-body">Pricing &amp; product information</h2>
+          <p class="mt-4">
+            Pricing is not published on this site. Product descriptions are indicative and provided for
+            orientation; specific terms, scope, and pricing are confirmed directly through our enterprise
+            sales process.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-lg font-semibold text-body">Third-party links</h2>
+          <p class="mt-4">
+            Some products are delivered under their own brands and link out to external domains. We are not
+            responsible for the content or practices of third-party sites.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-lg font-semibold text-body">No warranty</h2>
+          <p class="mt-4">
+            The site is provided "as is" and "as available", without warranties of any kind, whether express
+            or implied, to the fullest extent permitted by law.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-lg font-semibold text-body">Limitation of liability</h2>
+          <p class="mt-4">
+            To the fullest extent permitted by law, Developers Hub Sdn Bhd will not be liable for any
+            indirect or consequential loss arising from your use of, or inability to use, this site.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-lg font-semibold text-body">Governing law</h2>
+          <p class="mt-4">
+            These terms are governed by the laws of Malaysia, and the courts of Malaysia have jurisdiction
+            over any dispute relating to the site.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-lg font-semibold text-body">Changes</h2>
+          <p class="mt-4">
+            We may update these terms from time to time. Continued use of the site after a change means you
+            accept the updated terms.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-lg font-semibold text-body">Contact</h2>
+          <p class="mt-4">
+            Developers Hub Sdn Bhd, Johor Bahru, Malaysia —
+            <a href="mailto:hello@devhub.my" class="font-medium text-brass hover:underline">hello@devhub.my</a>.
+          </p>
+        </section>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>

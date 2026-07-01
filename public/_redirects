@@ -1,0 +1,6 @@
+# Standalone product domains and legacy paths → canonical product pages.
+# External-brand apps (g8gather/gatherhub.app, g8pos/warung.my, g8mail/waumail.my,
+# g8research/kajian.space, g8scope/nadi.pro) deliberately DO NOT redirect inward —
+# their detail pages link OUT to retain brand equity.
+
+g8desk.com/*        https://g8suite.com/products/g8desk    301!

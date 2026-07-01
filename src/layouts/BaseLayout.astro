@@ -46,8 +46,19 @@ const orgSchema = {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0A1F44" />
+    <meta name="theme-color" content="#FCFCFA" />
     <meta name="generator" content={Astro.generator} />
+
+    {/* No-flash theme init — light is the default face; dark only when chosen. */}
+    <script is:inline>
+      (function () {
+        try {
+          if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.classList.add('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
 
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -73,7 +84,7 @@ const orgSchema = {
   <body class="min-h-screen antialiased">
     <a
       href="#main"
-      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-navy-900 focus:px-4 focus:py-2 focus:text-white"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-brass focus:px-4 focus:py-2 focus:text-brass-on"
     >
       Skip to main content
     </a>

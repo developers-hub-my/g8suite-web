@@ -1,59 +1,27 @@
 ---
-import { stage1Products, stage2Waves, statusLabel } from '~/content/products';
-
 const primaryLinks = [
-  { href: '#problem', label: 'Why g8suite' },
-  { href: '#architecture', label: 'Architecture' },
-  { href: '#roadmap', label: 'Roadmap' },
+  { href: '/products', label: 'Platform' },
+  { href: '/#problem', label: 'Why g8suite' },
+  { href: '/#built-for', label: 'Who it\'s for' },
 ];
-
-const stage2Products = stage2Waves.flatMap((w) =>
-  w.products.map((p) => ({ ...p, wave: w.label }))
-);
-
-const pillClass = (status: 'live' | 'in-development' | 'planned') =>
-  status === 'live' ? 'pill-live' : status === 'in-development' ? 'pill-dev' : 'pill-planned';
 ---
 
 <header
   data-nav
   class="fixed inset-x-0 top-0 z-40 border-b border-transparent bg-transparent transition-colors duration-200"
 >
-  <div class="container-page flex h-16 items-center justify-between lg:h-20">
-    <a href="#top" class="text-lg font-bold tracking-tight text-navy-900" aria-label="g8suite home">
-      <span class="text-sky-400">g8</span><span>suite</span>
+  <div class="container-page flex h-16 items-center justify-between lg:h-[76px]">
+    <a href="/" class="inline-flex items-center" aria-label="g8suite home">
+      <span class="font-display text-[20px] font-bold leading-none tracking-tight text-body">g8suite</span>
     </a>
 
     <nav aria-label="Primary" class="hidden lg:block">
       <ul class="flex items-center gap-1">
-        <li class="relative" data-mega>
-          <button
-            type="button"
-            data-mega-toggle
-            class="inline-flex items-center gap-1.5 rounded-md px-3 py-2 text-sm font-medium text-ink-900 transition-colors hover:bg-navy-900/5 hover:text-navy-900 focus-visible:bg-navy-900/5 focus-visible:text-navy-900"
-            aria-expanded="false"
-            aria-controls="mega-platform"
-            aria-haspopup="true"
-          >
-            Platform
-            <svg
-              data-mega-chevron
-              class="h-3.5 w-3.5 transition-transform"
-              viewBox="0 0 14 14"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.75"
-              aria-hidden="true"
-            >
-              <path d="M3.5 5.5L7 9l3.5-3.5" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-          </button>
-        </li>
         {primaryLinks.map((link) => (
           <li>
             <a
               href={link.href}
-              class="rounded-md px-3 py-2 text-sm font-medium text-ink-900 transition-colors hover:bg-navy-900/5 hover:text-navy-900"
+              class="rounded-md px-3 py-2 text-[15px] font-medium text-muted transition-colors hover:text-body"
             >
               {link.label}
             </a>
@@ -62,124 +30,57 @@ const pillClass = (status: 'live' | 'in-development' | 'planned') =>
       </ul>
     </nav>
 
-    <div class="hidden lg:block">
-      <a href="#contact" class="btn-primary">Request a Demo</a>
+    <div class="hidden items-center gap-2 lg:flex">
+      <button
+        type="button"
+        data-theme-toggle
+        class="inline-flex h-10 w-10 items-center justify-center rounded-md border border-line text-muted transition-colors hover:border-brass hover:text-body"
+        aria-label="Toggle colour theme"
+      >
+        <svg data-theme-icon-sun class="hidden h-5 w-5 dark:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+        </svg>
+        <svg data-theme-icon-moon class="block h-5 w-5 dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
+        </svg>
+      </button>
+      <a href="/#contact" class="btn-primary">Request a Demo</a>
     </div>
 
-    <button
-      type="button"
-      data-nav-toggle
-      class="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-md text-navy-900 transition-colors hover:bg-navy-900/5"
-      aria-label="Toggle menu"
-      aria-expanded="false"
-      aria-controls="mobile-nav"
-    >
-      <svg
-        data-nav-icon-open
-        xmlns="http://www.w3.org/2000/svg"
-        width="22"
-        height="22"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        aria-hidden="true"
+    <div class="flex items-center gap-2 lg:hidden">
+      <button
+        type="button"
+        data-theme-toggle
+        class="inline-flex h-10 w-10 items-center justify-center rounded-md border border-line text-muted transition-colors hover:border-brass hover:text-body"
+        aria-label="Toggle colour theme"
       >
-        <line x1="4" x2="20" y1="6" y2="6"></line>
-        <line x1="4" x2="20" y1="12" y2="12"></line>
-        <line x1="4" x2="20" y1="18" y2="18"></line>
-      </svg>
-      <svg
-        data-nav-icon-close
-        class="hidden"
-        xmlns="http://www.w3.org/2000/svg"
-        width="22"
-        height="22"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        aria-hidden="true"
+        <svg class="hidden h-5 w-5 dark:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+        </svg>
+        <svg class="block h-5 w-5 dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
+        </svg>
+      </button>
+      <button
+        type="button"
+        data-nav-toggle
+        class="inline-flex h-10 w-10 items-center justify-center rounded-md border border-line text-body transition-colors hover:border-brass"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
       >
-        <line x1="18" x2="6" y1="6" y2="18"></line>
-        <line x1="6" x2="18" y1="6" y2="18"></line>
-      </svg>
-    </button>
-  </div>
-
-  <!-- Desktop mega-menu panel -->
-  <div
-    id="mega-platform"
-    data-mega-panel
-    hidden
-    class="absolute inset-x-0 top-full border-b border-slate-200 bg-surface/95 backdrop-blur supports-[backdrop-filter]:bg-surface/85 shadow-elevated"
-  >
-    <div class="container-page py-10">
-      <div class="grid gap-12 lg:grid-cols-12">
-        <div class="lg:col-span-3">
-          <p class="text-xs font-semibold uppercase tracking-[0.18em] text-sky-400">The platform</p>
-          <h3 class="mt-3 text-xl font-semibold leading-tight text-navy-900">
-            One operations platform.<br />Two stages. One spine.
-          </h3>
-          <p class="mt-4 text-sm leading-relaxed text-ink-600">
-            Stage 1 is the IT operations spine. Stage 2 rides it with business operations.
-          </p>
-          <a
-            href="#platform"
-            data-mega-close
-            class="mt-6 inline-flex items-center gap-2 text-sm font-medium text-navy-900 hover:text-navy-700"
-          >
-            Explore the platform
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-              <path d="M2 7h10M8 3l4 4-4 4" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-          </a>
-        </div>
-
-        <div class="lg:col-span-5">
-          <p class="text-xs font-semibold uppercase tracking-wider text-ink-400">
-            Stage 1 — IT Operations
-          </p>
-          <ul class="mt-4 grid grid-cols-2 gap-x-6 gap-y-2.5">
-            {stage1Products.map((p) => (
-              <li>
-                <a
-                  href="#products"
-                  data-mega-close
-                  class="group flex items-center justify-between gap-3 rounded-md px-2 py-1.5 -mx-2 transition-colors hover:bg-surface-soft"
-                >
-                  <span class="font-mono text-sm font-semibold text-navy-900">{p.name}</span>
-                  <span class={pillClass(p.status)}>{statusLabel[p.status]}</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div class="lg:col-span-4">
-          <p class="text-xs font-semibold uppercase tracking-wider text-ink-400">
-            Stage 2 — Business Operations
-          </p>
-          <ul class="mt-4 grid grid-cols-1 gap-y-2.5">
-            {stage2Products.map((p) => (
-              <li>
-                <a
-                  href="#stage-2"
-                  data-mega-close
-                  class="group flex items-center justify-between gap-3 rounded-md px-2 py-1.5 -mx-2 transition-colors hover:bg-surface-soft"
-                >
-                  <span class="font-mono text-sm font-semibold text-navy-900">{p.name}</span>
-                  <span class={pillClass(p.status)}>{statusLabel[p.status]}</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
+        <svg data-nav-icon-open xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true">
+          <line x1="4" x2="20" y1="7" y2="7"></line>
+          <line x1="4" x2="20" y1="12" y2="12"></line>
+          <line x1="4" x2="20" y1="17" y2="17"></line>
+        </svg>
+        <svg data-nav-icon-close class="hidden" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true">
+          <line x1="18" x2="6" y1="6" y2="18"></line>
+          <line x1="6" x2="18" y1="6" y2="18"></line>
+        </svg>
+      </button>
     </div>
   </div>
 
@@ -188,74 +89,23 @@ const pillClass = (status: 'live' | 'in-development' | 'planned') =>
     id="mobile-nav"
     data-nav-menu
     hidden
-    class="lg:hidden border-t border-slate-200 bg-surface max-h-[calc(100vh-4rem)] overflow-y-auto"
+    class="lg:hidden border-t border-line bg-bg max-h-[calc(100vh-4rem)] overflow-y-auto"
   >
     <nav aria-label="Mobile" class="container-page py-6">
-      <details class="group border-b border-slate-200 pb-3" data-mobile-disclosure>
-        <summary class="flex cursor-pointer list-none items-center justify-between py-2 text-base font-medium text-ink-900 group-open:text-navy-900">
-          Platform
-          <svg
-            class="h-4 w-4 transition-transform group-open:rotate-180"
-            viewBox="0 0 14 14"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.75"
-            aria-hidden="true"
-          >
-            <path d="M3.5 5.5L7 9l3.5-3.5" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-        </summary>
-        <div class="mt-3 space-y-5">
-          <div>
-            <p class="text-xs font-semibold uppercase tracking-wider text-ink-400">Stage 1</p>
-            <ul class="mt-2 grid grid-cols-2 gap-x-4 gap-y-2">
-              {stage1Products.map((p) => (
-                <li>
-                  <a
-                    href="#products"
-                    data-nav-close
-                    class="flex items-center justify-between gap-2 py-1 text-sm"
-                  >
-                    <span class="font-mono font-semibold text-navy-900">{p.name}</span>
-                    <span class={pillClass(p.status)}>{statusLabel[p.status]}</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <p class="text-xs font-semibold uppercase tracking-wider text-ink-400">Stage 2</p>
-            <ul class="mt-2 grid grid-cols-2 gap-x-4 gap-y-2">
-              {stage2Products.map((p) => (
-                <li>
-                  <a
-                    href="#stage-2"
-                    data-nav-close
-                    class="flex items-center justify-between gap-2 py-1 text-sm"
-                  >
-                    <span class="font-mono font-semibold text-navy-900">{p.name}</span>
-                    <span class={pillClass(p.status)}>{statusLabel[p.status]}</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </details>
-      <ul class="mt-2 flex flex-col">
+      <ul class="flex flex-col">
         {primaryLinks.map((link) => (
           <li>
             <a
               href={link.href}
               data-nav-close
-              class="block border-b border-slate-200 py-3 text-base font-medium text-ink-900 hover:text-navy-900"
+              class="block border-b border-line py-3 text-base font-medium text-muted hover:text-body"
             >
               {link.label}
             </a>
           </li>
         ))}
         <li class="pt-5">
-          <a href="#contact" data-nav-close class="btn-primary w-full">Request a Demo</a>
+          <a href="/#contact" data-nav-close class="btn-primary w-full">Request a Demo</a>
         </li>
       </ul>
     </nav>
@@ -271,26 +121,19 @@ const pillClass = (status: 'live' | 'in-development' | 'planned') =>
     const iconClose = header.querySelector<SVGElement>('[data-nav-icon-close]');
     const closers = header.querySelectorAll<HTMLAnchorElement>('[data-nav-close]');
 
-    const megaWrap = header.querySelector<HTMLElement>('[data-mega]');
-    const megaToggle = header.querySelector<HTMLButtonElement>('[data-mega-toggle]');
-    const megaPanel = header.querySelector<HTMLElement>('[data-mega-panel]');
-    const megaChevron = header.querySelector<SVGElement>('[data-mega-chevron]');
-    const megaClosers = header.querySelectorAll<HTMLAnchorElement>('[data-mega-close]');
-
     const chromeOn = [
-      'bg-surface/95',
-      'border-slate-200',
+      'bg-bg/95',
+      'border-line',
       'backdrop-blur',
-      'supports-[backdrop-filter]:bg-surface/80',
+      'supports-[backdrop-filter]:bg-bg/80',
     ];
     const chromeOff = ['bg-transparent', 'border-transparent'];
 
     let mobileOpen = false;
-    let megaOpen = false;
 
     const updateChrome = () => {
       const scrolled = window.scrollY > 24;
-      if (scrolled || mobileOpen || megaOpen) {
+      if (scrolled || mobileOpen) {
         header.classList.add(...chromeOn);
         header.classList.remove(...chromeOff);
       } else {
@@ -308,39 +151,27 @@ const pillClass = (status: 'live' | 'in-development' | 'planned') =>
       updateChrome();
     };
 
-    const setMega = (value: boolean) => {
-      megaOpen = value;
-      megaToggle?.setAttribute('aria-expanded', String(value));
-      megaPanel?.toggleAttribute('hidden', !value);
-      megaChevron?.classList.toggle('rotate-180', value);
-      updateChrome();
-    };
-
     toggleBtn?.addEventListener('click', () => setMobile(!mobileOpen));
     closers.forEach((el) => el.addEventListener('click', () => setMobile(false)));
 
-    megaToggle?.addEventListener('click', (e) => {
-      e.stopPropagation();
-      setMega(!megaOpen);
-    });
-    megaClosers.forEach((el) => el.addEventListener('click', () => setMega(false)));
-
-    document.addEventListener('click', (e) => {
-      if (!megaOpen) return;
-      const target = e.target as Node;
-      if (!megaWrap?.contains(target) && !megaPanel?.contains(target)) {
-        setMega(false);
-      }
-    });
-
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        if (megaOpen) setMega(false);
-        if (mobileOpen) setMobile(false);
-      }
+      if (e.key === 'Escape' && mobileOpen) setMobile(false);
     });
 
     window.addEventListener('scroll', updateChrome, { passive: true });
     updateChrome();
+
+    // Theme toggle — persists choice; light is the default face.
+    const themeBtns = document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]');
+    const meta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
+    themeBtns.forEach((btn) =>
+      btn.addEventListener('click', () => {
+        const isDark = document.documentElement.classList.toggle('dark');
+        try {
+          localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        } catch (e) {}
+        if (meta) meta.setAttribute('content', isDark ? '#0A1628' : '#FCFCFA');
+      }),
+    );
   }
 </script>
