@@ -16,7 +16,7 @@ const counts = {
 // whatever is live today. Keeps the homepage a teaser, not a full catalogue.
 const featured = products.filter((p) => p.featured);
 const live = products.filter((p) => displayStatus(p.status) === 'live');
-const flagship = (featured.length >= 3 ? featured : live).slice(0, 4);
+const flagship = (featured.length >= 3 ? featured : live).slice(0, 6);
 
 const stats = [
   { k: 'Products', v: counts.total, tone: 'text-body' },
@@ -48,7 +48,7 @@ const stats = [
       </div>
     </div>
 
-    <div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {flagship.map((p) => {
         const ds = displayStatus(p.status);
         return (

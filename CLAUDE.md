@@ -45,7 +45,7 @@ src/
 │   └── ui/  → SectionHeader, PrincipleCard
 ├── content/
 │   ├── config.ts               # Zod schema for the `products` collection
-│   └── products/<code>.md      # one file per product — single source of truth (25 files)
+│   └── products/<code>.md      # one file per product — single source of truth (26 files)
 ├── lib/
 │   ├── taxonomy.ts             # stage/status/tier/deployment/engine → label + badge maps
 │   └── products.ts             # getProducts() / getStageProducts() — the shared fetch
@@ -58,9 +58,9 @@ src/
 
 **Product data is a typed Astro content collection.** One Markdown file per product under `src/content/products/`, validated by the Zod schema in `src/content/config.ts`; the filename **is** the `code` **is** the slug. Nav, Footer, `Stage1Products`, `Stage2Products` and both `/products` pages all read it via `src/lib/products.ts` — never hard-code product names/status in components, and add a product by dropping in a Markdown file (no template edits). The build fails on any schema violation. See `documentation/products.md` for the full content-model spec.
 
-**Three-stage product model** (25 products):
+**Three-stage product model** (26 products):
 - **Stage 1 · IT Operations (16):** g8stack, g8connect, g8id, g8shield, g8vault, g8key, g8scope, g8monitor, g8deck, g8flow, g8work, g8test, g8mail, g8audit, g8board, g8desk.
-- **Stage 2 · Business Operations (5):** g8hr, g8finance, g8docs, g8procure, g8crm.
+- **Stage 2 · Business Operations (6):** g8hr, g8finance, g8docs, g8procure, g8crm, g8cdp.
 - **Stage 3 · Industry Applications (4):** g8member, g8gather (gatherhub), g8pos (warung.my), g8research (kajian.space) — composed on the spine, sold standalone under their own brands.
 - **Status** is one of `live | upcoming | in_progress | roadmap | brd`; the detail-page **tier** (Full/Preview/Interest) and every badge derive from it — never store a separate tier. `live` gets the green pill.
 - **g8desk** is live and classified as a **Stage 1** service-management product (it was previously sequenced under business operations).
