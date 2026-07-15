@@ -10,19 +10,15 @@ const without = [
 
 const withG8 = [
   'One integrated platform, one operations model',
-  'Identity governed once through G8ID',
-  'Unified audit trail through g8audit',
-  'Joiner-mover-leaver wired through the spine',
+  'One identity model across every product',
+  'One unified audit trail that actually reconciles',
+  'Joiner-mover-leaver wired across the whole suite',
   'One accountable partnership — one contract, one SLA',
-  'Compliance posture inherited by every product',
+  'Compliance posture shared by every product',
 ];
 
-// Consolidation diagram nodes — products converging on the shared spine.
-const orbit = [
-  { x: 20, y: 24, l: 'g8stack' }, { x: 276, y: 24, l: 'g8hr' },
-  { x: 20, y: 76, l: 'g8shield' }, { x: 276, y: 76, l: 'g8desk' },
-  { x: 20, y: 128, l: 'g8vault' }, { x: 276, y: 128, l: 'g8crm' },
-];
+// Consolidation diagram — products consolidated into one suite.
+const stacked = ['g8stack', 'g8shield', 'g8vault', 'g8hr', 'g8desk', 'g8crm'];
 ---
 
 <section id="problem" class="section">
@@ -96,20 +92,22 @@ const orbit = [
           </p>
           <span class="text-sm text-muted">One platform</span>
         </div>
-        <h3 class="mt-4 text-xl font-semibold text-body">One spine. One audit. One partnership.</h3>
+        <h3 class="mt-4 text-xl font-semibold text-body">One platform. One audit. One partnership.</h3>
 
         <svg viewBox="0 0 360 180" class="mt-6 h-auto w-full" aria-hidden="true">
-          {orbit.map((n) => (
-            <line x1="180" y1="90" x2={n.x < 180 ? n.x + 64 : n.x} y2={n.y + 14} class="stroke-brass" stroke-width="1" stroke-dasharray="2 3" opacity="0.55" />
-          ))}
-          <rect x="140" y="66" width="80" height="48" rx="6" class="fill-bg stroke-brass" stroke-width="1.5" />
-          <text x="180" y="94" text-anchor="middle" font-size="12" font-family="ui-monospace, monospace" class="fill-brass" font-weight="700">SPINE</text>
-          {orbit.map((n) => (
-            <g>
-              <rect x={n.x} y={n.y} width="64" height="28" rx="4" class="fill-card stroke-brass" stroke-width="1" />
-              <text x={n.x + 32} y={n.y + 18} text-anchor="middle" font-size="11" font-family="ui-monospace, monospace" class="fill-body">{n.l}</text>
-            </g>
-          ))}
+          {stacked.map((l, i) => {
+            const x = 8 + (i % 3) * 118;
+            const y = i < 3 ? 12 : 60;
+            return (
+              <g>
+                <rect x={x} y={y} width="104" height="28" rx="4" class="fill-card stroke-brass" stroke-width="1" />
+                <text x={x + 52} y={y + 18} text-anchor="middle" font-size="11" font-family="ui-monospace, monospace" class="fill-body">{l}</text>
+                <line x1={x + 52} y1={y + 28} x2={x + 52} y2="118" class="stroke-brass" stroke-width="1" stroke-dasharray="2 3" opacity="0.55" />
+              </g>
+            );
+          })}
+          <rect x="8" y="118" width="344" height="46" rx="5" class="fill-bg stroke-brass" stroke-width="1.5" />
+          <text x="180" y="147" text-anchor="middle" font-size="12" font-family="ui-monospace, monospace" class="fill-brass" font-weight="700">g8suite</text>
         </svg>
 
         <ul class="mt-6 space-y-3">

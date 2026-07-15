@@ -1,7 +1,7 @@
 ---
 code: g8crm
 title: Customer relationships
-tagline: Customer and stakeholder relationships on the shared identity spine.
+tagline: Customer and stakeholder relationships on the shared identity model.
 stage: 2
 category: Customer Relationships
 status: in_progress
@@ -15,4 +15,4 @@ spine: [g8id, g8audit]
 ---
 
 g8crm manages customer and stakeholder relationships on the shared identity
-spine, inside your perimeter.
+model, inside your perimeter.

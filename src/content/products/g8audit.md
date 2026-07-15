@@ -15,6 +15,6 @@ capabilities:
 spine: [g8id]
 ---
 
-g8audit is the audit backbone of the suite — every significant action across the
-products emits to it, giving one tamper-evident record for compliance and
+g8audit is the audit layer of the suite — every significant action across the
+products is recorded here, giving one tamper-evident record for compliance and
 investigation, held inside your perimeter.

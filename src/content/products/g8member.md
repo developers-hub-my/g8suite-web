@@ -16,5 +16,5 @@ spine: [g8id, g8audit]
 <!-- TODO: replace with approved marketing copy. Structural facts only from
      spec §9; capabilities left empty pending sign-off — do not invent claims. -->
 
-g8member manages membership for member-based organisations, composed on the
-suite spine and sold standalone.
+g8member manages membership for member-based organisations, built in the
+suite and sold standalone.

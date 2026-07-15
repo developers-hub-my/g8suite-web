@@ -18,4 +18,4 @@ note: "Live ahead of sequencing — previously grouped under business operations
 ---
 
 g8desk runs service desk and ticketing across the organisation with SLA
-tracking, on the shared identity spine. Already live and in production.
+tracking, on the shared identity model. Already live and in production.

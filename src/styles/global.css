@@ -139,11 +139,11 @@
     @apply inline-flex items-center justify-center gap-2 rounded-md border border-line-strong bg-transparent px-6 py-3 text-sm font-semibold text-body transition-colors hover:border-brass hover:bg-brass/[0.06] focus-visible:ring-2 focus-visible:ring-brass focus-visible:ring-offset-2;
   }
 
-  /* ── Spine markers (Identity · Audit · Workflow) ─────────────────── */
-  .spine-tick {
+  /* ── Foundation markers (Identity · Audit · Workflow) ────────────── */
+  .base-tick {
     @apply relative pl-4 text-sm;
   }
-  .spine-tick::before {
+  .base-tick::before {
     content: '';
     @apply absolute left-0 top-1/2 h-1.5 w-1.5 -translate-y-1/2 bg-brass;
   }

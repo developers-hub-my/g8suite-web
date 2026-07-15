@@ -61,7 +61,7 @@ src/
 **Three-stage product model** (26 products):
 - **Stage 1 · IT Operations (16):** g8stack, g8connect, g8id, g8shield, g8vault, g8key, g8scope, g8monitor, g8deck, g8flow, g8work, g8test, g8mail, g8audit, g8board, g8desk.
 - **Stage 2 · Business Operations (6):** g8hr, g8finance, g8docs, g8procure, g8crm, g8cdp.
-- **Stage 3 · Industry Applications (4):** g8member, g8gather (gatherhub), g8pos (warung.my), g8research (kajian.space) — composed on the spine, sold standalone under their own brands.
+- **Stage 3 · Industry Applications (4):** g8member, g8gather (gatherhub), g8pos (warung.my), g8research (kajian.space) — built in the suite, sold standalone under their own brands.
 - **Status** is one of `live | upcoming | in_progress | roadmap | brd`; the detail-page **tier** (Full/Preview/Interest) and every badge derive from it — never store a separate tier. `live` gets the green pill.
 - **g8desk** is live and classified as a **Stage 1** service-management product (it was previously sequenced under business operations).
 - **External-brand products** (`alias` + `domain`: g8scope→nadi.pro, g8mail→waumail.my, g8gather→gatherhub.app, g8pos→warung.my, g8research→kajian.space) **link out** to their own domain from their detail page — never redirect inward, so brand equity stays with them. `g8scope` is the observability product delivered as the **nadi.pro** app.
@@ -87,10 +87,12 @@ green        → --green        #059669          #34D399   (non-negotiable ONLY)
 
 - **Accent is the brand blue family, never gold/brown.** `brass` is a legacy token *name* only — its value is navy-blue on light, sky-blue on dark. Predominantly white/navy on light; navy ground + sky accent on dark.
 - **Typography is normal — no wide letter-spacing, no spaced-out uppercase labels** (an explicit, firm user preference). Fonts (self-hosted): **Archivo** (`font-display`, normal width — not stretched) for headings, **Inter** (`font-sans`) for body, **IBM Plex Mono** (`font-mono`, via `.code`) *only* for real data (product codes, coordinates). Use the `.eyebrow` class (normal-case sans + small accent tick) for section eyebrows.
-- **Signature:** the `.perimeter` frame (hairline border + accent corner ticks) wraps the Hero and CTA as bookends; the Identity·Audit·Workflow **spine** motif recurs. A faint themed blueprint grid (`.grid-ground`) sits behind the hero.
+- **Signature:** the `.perimeter` frame (hairline border + accent corner ticks) wraps the Hero and CTA as bookends. A faint themed blueprint grid (`.grid-ground`) sits behind the hero.
+- **Never use the word "spine"** (explicit, firm user preference — swept out deliberately), and never replace it with "foundation", "core", "backbone", or any equivalent. The whole central-dependency metaphor is rejected, not just its name.
+- **Never frame g8suite as resting on 3 core services.** Do not present g8id/g8audit/g8flow as a mandatory core, do not say products "rely on", "stand on", "inherit from", or "orbit" them, and do not draw a base/hub with products attached. The user explicitly disagrees with this framing. **Positioning is generic and holistic:** g8suite is one ecosystem of {total} products across IT, business and industry operations; identity, audit and workflow are **capabilities every product shares** because it was built as one suite — described generically ("one identity model", "one audit trail"), not routed through three product names. The `spine[]` frontmatter field is a legacy internal name only; it renders as "Works with" and is never shown to users.
 - Section rhythm: `py-20 lg:py-28` (`.section`). Container: `.container-page` (`max-w-7xl px-6 lg:px-8`).
 - Borders over shadows: `border-line`. Elevation: `shadow-elevated` (theme-aware via `--shadow`).
-- Illustrations are **inline SVG line-art** (monochrome fills via `fill-card/soft/card-2/line`, accent via `fill-brass`/`stroke-brass`, apex/spine highlighted in the accent). **No stock photos. No AI imagery.**
+- Illustrations are **inline SVG line-art** (monochrome fills via `fill-card/soft/card-2/line`, accent via `fill-brass`/`stroke-brass`, apex highlighted in the accent). **No stock photos. No AI imagery.**
 - Honour `prefers-reduced-motion`. No gradients except a ≤8% accent radial on the hero background.
 - **Favicon** (`public/favicon.svg`) is the **`g8`** monogram only; the full **`g8suite`** wordmark is the primary logo (Nav + Footer).
 

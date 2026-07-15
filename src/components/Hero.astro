@@ -6,16 +6,17 @@ const products = await getProducts();
 const total = products.length;
 const liveCount = products.filter((p) => displayStatus(p.status) === 'live').length;
 
-const spine = [
-  { label: 'Identity', sub: 'g8id', note: 'Governance, not login' },
-  { label: 'Audit', sub: 'g8audit', note: 'Every action, recorded' },
-  { label: 'Workflow', sub: 'g8flow', note: 'One operations model' },
-];
+// Coverage, derived from the collection — the whole ecosystem, not a core.
+const domains = [
+  { label: 'IT Operations', note: 'The software your organisation runs on', stage: 1 },
+  { label: 'Business Operations', note: 'How the organisation runs, day to day', stage: 2 },
+  { label: 'Industry Applications', note: 'Built for your sector, on your terms', stage: 3 },
+].map((d) => ({ ...d, count: products.filter((p) => p.stage === d.stage).length }));
 
 const readout = [
   { k: 'Deployment', v: 'On-prem / air-gapped' },
-  { k: 'The spine', v: 'Identity · Audit · Workflow' },
-  { k: 'Coverage', v: 'IT & business operations' },
+  { k: 'Ecosystem', v: `${total} products, one suite` },
+  { k: 'Coverage', v: 'IT, business & industry' },
 ];
 ---
 
@@ -56,10 +57,9 @@ const readout = [
           </h1>
 
           <p class="mt-7 max-w-xl text-lg leading-relaxed text-muted">
-            The complete operations ecosystem for regulated organisations — identity,
-            audit and workflow at the core, with {total} products spanning IT, business and
-            industry operations. One sovereign suite inside your perimeter, not a
-            patchwork of vendors.
+            The complete operations ecosystem for regulated organisations — {total} products
+            spanning IT, business and industry operations, designed and built as one
+            suite. Sovereign inside your perimeter, not a patchwork of vendors.
           </p>
 
           <div class="mt-9 flex flex-col gap-3 sm:flex-row">
@@ -68,27 +68,27 @@ const readout = [
           </div>
         </div>
 
-        <!-- Right: the spine, rendered as a stacked instrument -->
+        <!-- Right: the coverage of the ecosystem, rendered as an instrument -->
         <div class="lg:col-span-5">
           <div class="border border-line bg-card">
             <div class="flex items-center justify-between border-b border-line px-4 py-3">
-              <span class="text-sm font-semibold text-body">The Spine</span>
-              <span class="mono-label">3 core services</span>
+              <span class="text-sm font-semibold text-body">The Ecosystem</span>
+              <span class="mono-label">{total} products</span>
             </div>
             <ul>
-              {spine.map((s, i) => (
+              {domains.map((d, i) => (
                 <li class={`flex items-center gap-4 px-4 py-4 ${i > 0 ? 'border-t border-line' : ''}`}>
-                  <span class="spine-tick pl-4"></span>
+                  <span class="base-tick pl-4"></span>
                   <div class="min-w-0 flex-1">
-                    <p class="font-display text-lg font-semibold leading-none text-body">{s.label}</p>
-                    <p class="mt-1.5 text-[13px] text-muted">{s.note}</p>
+                    <p class="font-display text-lg font-semibold leading-none text-body">{d.label}</p>
+                    <p class="mt-1.5 text-[13px] text-muted">{d.note}</p>
                   </div>
-                  <span class="code">{s.sub}</span>
+                  <span class="code">{d.count}</span>
                 </li>
               ))}
             </ul>
             <div class="border-t border-line bg-soft px-4 py-3">
-              <span class="mono-label">Everything else orbits this — inside your perimeter</span>
+              <span class="mono-label">Adopt what you need — inside your perimeter</span>
             </div>
           </div>
         </div>
@@ -108,7 +108,7 @@ const readout = [
     <div class="mt-12 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 border-t border-line pt-8 text-sm text-muted">
       <span><strong class="font-semibold text-body">{liveCount} products</strong> live in production</span>
       <span class="text-line-strong" aria-hidden="true">·</span>
-      <span>Core led by <span class="font-mono text-brass">G8ID</span></span>
+      <span>Across IT, business &amp; industry operations</span>
       <span class="text-line-strong" aria-hidden="true">·</span>
       <span>Engaged across government, banking &amp; healthcare</span>
       <span class="text-line-strong" aria-hidden="true">·</span>

@@ -19,5 +19,5 @@ spine: [g8id, g8audit]
 
 g8stack manages consumers, services, routes, and rate limits with central
 governance layered on top. It runs entirely inside your perimeter — the
-integration backbone of the suite, not a hosted gateway you rent. Admin
-identity flows through G8ID; every action emits to g8audit.
+integration layer of the suite, not a hosted gateway you rent. Admin identity
+uses the shared identity model; every action writes to the shared audit trail.

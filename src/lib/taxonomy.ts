@@ -19,9 +19,9 @@ export const stageLabel: Record<Stage, string> = {
 };
 
 export const stageBlurb: Record<Stage, string> = {
-  1: 'The run-side spine — everything else consumes it.',
-  2: 'Business operations built on the mature spine.',
-  3: 'Industry-oriented apps composed on the spine, sold standalone.',
+  1: 'The run-side of the ecosystem — infrastructure and IT operations.',
+  2: 'Business operations, built as part of the same suite.',
+  3: 'Industry-oriented apps built in the suite, sold standalone.',
 };
 
 export const statusLabel: Record<ProductStatus, string> = {
