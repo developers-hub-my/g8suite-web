@@ -1,5 +1,8 @@
 ---
 import SectionHeader from '~/components/ui/SectionHeader.astro';
+import { getProducts } from '~/lib/products';
+
+const total = (await getProducts()).length;
 
 const pillars = [
   {
@@ -21,8 +24,8 @@ const pillars = [
   <div class="container-page">
     <SectionHeader
       eyebrow="The platform"
-      title="g8suite replaces the sprawl with one platform."
-      subtitle="An operating system for organisations that refuse to compromise on sovereignty — built as one suite from the ground up."
+      title="One suite that completes your operations ecosystem."
+      subtitle={`Identity, audit and workflow at the core; ${total} products across IT, business and industry operations on top. Everything your organisation runs on — built as one, not assembled from a dozen vendors.`}
     />
 
     <div class="mt-14 grid gap-6 md:grid-cols-3">

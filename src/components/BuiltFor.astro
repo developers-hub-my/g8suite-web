@@ -6,27 +6,32 @@ const segments = [
   {
     icon: 'lucide:landmark',
     title: 'Government',
-    body: 'Federal and state agencies running citizen services and regulated programmes under sovereignty mandates that cloud-only vendors cannot satisfy.',
+    reason: 'Meet sovereignty mandates cloud-only vendors can’t.',
+    body: 'Run citizen services and regulated programmes on infrastructure you control — data stays in-country, inside your perimeter.',
   },
   {
     icon: 'lucide:building-2',
     title: 'Banks & Finance',
-    body: 'Tier-1 and tier-2 banks, takaful and insurance, and capital markets firms operating under central bank and regulator scrutiny.',
+    reason: 'One audit trail your regulator can trust.',
+    body: 'Unified identity governance and audit across the whole stack — built for central-bank and regulator scrutiny.',
   },
   {
     icon: 'lucide:stethoscope',
     title: 'Healthcare',
-    body: 'Hospitals, group practices, and national health systems where data residency, identity, and audit are statutory obligations.',
+    reason: 'Keep patient data in-jurisdiction.',
+    body: 'Data residency, identity and audit are statutory here — handled by default across every product, not bolted on.',
   },
   {
     icon: 'lucide:shield',
     title: 'Defence & Security',
-    body: 'Defence ministries, security services, and critical national infrastructure operators that require air-gapped deployments and cleared supply chains.',
+    reason: 'Run fully disconnected.',
+    body: 'Air-gap-capable, with no phone-home telemetry and cleared supply chains for critical national infrastructure.',
   },
   {
     icon: 'lucide:building',
     title: 'Regulated Mid-Market',
-    body: 'Energy, utilities, telecommunications, and regulated industrials — quietly running a country, quietly carrying the same compliance burden.',
+    reason: 'The same compliance, without the vendor patchwork.',
+    body: 'Energy, utilities, telco and industrials get one integrated suite to govern instead of a dozen disconnected tools.',
   },
 ];
 ---
@@ -34,28 +39,29 @@ const segments = [
 <section id="built-for" class="section">
   <div class="container-page">
     <SectionHeader
-      eyebrow="Built for"
-      title="Organisations where compliance isn't optional."
-      subtitle="g8suite is built for the operating contexts where identity sprawl is an active liability, not a tolerable inconvenience."
+      eyebrow="Who it's for"
+      title="Every regulated industry has its reason to choose."
+      subtitle="g8suite completes the digital ecosystem each sector needs — with the controls their regulators demand, inside their own perimeter."
     />
 
-    <div class="mt-14 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-5">
+    <div class="mt-14 grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:grid-cols-5">
       {segments.map((seg) => (
-        <article class="group flex h-full flex-col bg-card p-7 transition-colors hover:bg-soft">
-          <span class="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-brass/10 text-brass transition-colors group-hover:bg-brass group-hover:text-brass-on">
+        <article class="group flex h-full flex-col bg-card p-6 transition-colors hover:bg-soft">
+          <span class="inline-flex h-10 w-10 items-center justify-center rounded-md bg-brass/10 text-brass transition-colors group-hover:bg-brass group-hover:text-brass-on">
             <Icon name={seg.icon} class="h-5 w-5" aria-hidden="true" />
           </span>
           <h3 class="mt-5 text-base font-semibold text-body">{seg.title}</h3>
+          <p class="mt-2.5 text-sm font-semibold leading-snug text-body">{seg.reason}</p>
           <p class="mt-2 text-sm leading-relaxed text-muted">{seg.body}</p>
         </article>
       ))}
     </div>
 
-    <div class="mt-10 flex flex-col items-start justify-between gap-3 rounded-2xl border border-line bg-soft p-6 md:flex-row md:items-center">
+    <div class="mt-10 flex flex-col items-start justify-between gap-3 border border-line bg-soft p-6 md:flex-row md:items-center">
       <p class="text-sm text-muted">
-        ASEAN · MENA · regulated mid-market — the markets where data sovereignty is mandated, not aspirational.
+        One ecosystem across IT, business and industry operations — governed to the standard your sector is held to, not a generic baseline.
       </p>
-      <a href="#contact" class="inline-flex items-center gap-1.5 text-sm font-medium text-body hover:text-brass">
+      <a href="#contact" class="inline-flex shrink-0 items-center gap-1.5 text-sm font-medium text-body hover:text-brass">
         Talk about your context
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
           <path d="M2 7h10M8 3l4 4-4 4" stroke-linecap="round" stroke-linejoin="round" />

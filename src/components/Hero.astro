@@ -1,4 +1,11 @@
 ---
+import { getProducts } from '~/lib/products';
+import { displayStatus } from '~/lib/taxonomy';
+
+const products = await getProducts();
+const total = products.length;
+const liveCount = products.filter((p) => displayStatus(p.status) === 'live').length;
+
 const spine = [
   { label: 'Identity', sub: 'g8id', note: 'Governance, not login' },
   { label: 'Audit', sub: 'g8audit', note: 'Every action, recorded' },
@@ -49,10 +56,10 @@ const readout = [
           </h1>
 
           <p class="mt-7 max-w-xl text-lg leading-relaxed text-muted">
-            g8suite is the sovereign enterprise operations platform for organisations
-            where compliance isn't optional and identity sprawl is an active liability.
-            One platform, deployed inside your perimeter — answerable to you, not a
-            cloud provider.
+            The complete operations ecosystem for regulated organisations — identity,
+            audit and workflow at the core, with {total} products spanning IT, business and
+            industry operations. One sovereign suite inside your perimeter, not a
+            patchwork of vendors.
           </p>
 
           <div class="mt-9 flex flex-col gap-3 sm:flex-row">
@@ -98,10 +105,14 @@ const readout = [
       </dl>
     </div>
 
-    <div class="mt-14 flex items-center gap-6">
-      <span class="h-px flex-1 bg-line"></span>
-      <p class="mono-label text-center">Trusted infrastructure for regulated organisations</p>
-      <span class="h-px flex-1 bg-line"></span>
+    <div class="mt-12 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 border-t border-line pt-8 text-sm text-muted">
+      <span><strong class="font-semibold text-body">{liveCount} products</strong> live in production</span>
+      <span class="text-line-strong" aria-hidden="true">·</span>
+      <span>Core led by <span class="font-mono text-brass">G8ID</span></span>
+      <span class="text-line-strong" aria-hidden="true">·</span>
+      <span>Engaged across government, banking &amp; healthcare</span>
+      <span class="text-line-strong" aria-hidden="true">·</span>
+      <span>Built by Developers Hub Sdn Bhd, Johor Bahru</span>
     </div>
   </div>
 </section>
