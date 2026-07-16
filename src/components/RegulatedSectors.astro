@@ -1,0 +1,184 @@
+---
+import { Icon } from 'astro-icon/components';
+
+interface Sector {
+  icon: string;
+  title: string;
+  anchor: string;
+  tag: string;
+  pressure: string;
+  response: string;
+  controls: string[];
+}
+
+const sectors: Sector[] = [
+  {
+    icon: 'lucide:landmark',
+    title: 'Government',
+    anchor: 'government',
+    tag: 'Sovereignty',
+    pressure:
+      'Citizen data cannot sit on a foreign cloud, and every access to it may be questioned in public. Data-localisation mandates make control of the underlying infrastructure non-negotiable, not a preference.',
+    response:
+      'Run citizen services and regulated programmes entirely in-country, on infrastructure you control. Nothing leaves your perimeter, and every action against a citizen record is written to one audit trail you can answer for.',
+    controls: [
+      'Data stays in-country',
+      'In-perimeter, air-gap capable',
+      'Every citizen-record access audited',
+      'Governed, provable access',
+    ],
+  },
+  {
+    icon: 'lucide:building-2',
+    title: 'Banking & Finance',
+    anchor: 'banking',
+    tag: 'Audit & access',
+    pressure:
+      'Your regulator can ask, at any time, who was able to approve what — and expect a trail that reconciles across every system. Operational-resilience and vendor-concentration rules raise the bar again.',
+    response:
+      'One identity model with access certification and joiner-mover-leaver, and one audit trail that reconciles across the whole stack — inside your perimeter, so the regulator’s data-handling questions have a single answer.',
+    controls: [
+      'Audit that reconciles across systems',
+      'Access certification & segregation of duties',
+      'IGA-grade identity governance',
+      'Runs inside your perimeter',
+    ],
+  },
+  {
+    icon: 'lucide:stethoscope',
+    title: 'Healthcare',
+    anchor: 'healthcare',
+    tag: 'Residency',
+    pressure:
+      'Patient data residency is statutory, access to records must be logged and defensible, and the systems cannot go dark. Privacy law treats every record view as an event you must account for.',
+    response:
+      'Data residency and record-level access logging are handled by default across every product — not bolted on afterwards. Identity, audit and jurisdiction are answered where the data must live.',
+    controls: [
+      'Patient data in-jurisdiction',
+      'Every record access logged',
+      'Statutory-grade audit',
+      'Governed clinical access',
+    ],
+  },
+  {
+    icon: 'lucide:shield',
+    title: 'Defence & Security',
+    anchor: 'defence',
+    tag: 'Air-gap',
+    pressure:
+      'Some networks never touch the public internet, and nothing may phone home. Critical national infrastructure demands a supply chain you can vet and systems that keep running while fully disconnected.',
+    response:
+      'The whole suite is air-gap capable — not one module you may self-host while the rest calls out. No telemetry leaves the network, and the supply chain is one you can inspect.',
+    controls: [
+      'Whole-suite air-gap',
+      'No phone-home telemetry',
+      'Runs fully disconnected',
+      'Vettable supply chain',
+    ],
+  },
+  {
+    icon: 'lucide:building',
+    title: 'Regulated Mid-Market',
+    anchor: 'mid-market',
+    tag: 'Consolidation',
+    pressure:
+      'Energy, utilities, telco and industrials carry the same compliance burden as the largest regulated players — sector regulators, audit, access control — without the same budget or team. A dozen disconnected tools multiply the audit surface you can least afford.',
+    response:
+      'One integrated suite instead of a patchwork, with compliance posture shared by every product and predictable per-deployment cost — the same controls the big players run, sized for the team you actually have.',
+    controls: [
+      'One suite, not a dozen tools',
+      'Compliance shared by every product',
+      'Predictable per-deployment cost',
+      'Scales without a per-seat penalty',
+    ],
+  },
+];
+---
+
+<!-- Hero -->
+<section class="pt-24 pb-10 lg:pt-28 lg:pb-14">
+  <div class="container-page">
+    <p class="eyebrow mb-5">Who it's for</p>
+    <h1 class="max-w-3xl text-4xl font-semibold leading-[1.08] tracking-tight text-body sm:text-5xl lg:text-6xl">
+      Built for organisations that answer to a regulator.
+    </h1>
+    <p class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
+      Government, banking, healthcare, defence and regulated industry are held to standards generic
+      software was never designed to meet — data residency, provable audit, governed access, operation
+      inside their own perimeter. g8suite is built for that standard, not a generic baseline.
+    </p>
+    <nav aria-label="Sectors" class="mt-9 flex flex-wrap gap-2.5">
+      {sectors.map((s) => (
+        <a
+          href={`#${s.anchor}`}
+          class="border border-line px-3.5 py-1.5 text-sm font-medium text-muted transition-colors hover:border-brass hover:text-body"
+        >
+          {s.title}
+        </a>
+      ))}
+    </nav>
+  </div>
+</section>
+
+<!-- Per-sector deep dives -->
+<section class="pb-6 lg:pb-10">
+  <div class="container-page space-y-16 lg:space-y-24">
+    {sectors.map((s, i) => {
+      const reverse = i % 2 === 1;
+      return (
+        <article id={s.anchor} class="grid scroll-mt-24 items-center gap-10 lg:grid-cols-12 lg:gap-16">
+          <div class={`lg:col-span-7 ${reverse ? 'lg:order-2' : ''}`}>
+            <div class="flex items-center gap-4">
+              <span class="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-brass/10 text-brass">
+                <Icon name={s.icon} class="h-6 w-6" aria-hidden="true" />
+              </span>
+              <h2 class="text-2xl font-semibold leading-tight text-body sm:text-3xl">{s.title}</h2>
+            </div>
+
+            <div class="mt-7">
+              <p class="mono-label">The pressure</p>
+              <p class="mt-2.5 text-base leading-relaxed text-muted lg:text-lg">{s.pressure}</p>
+            </div>
+
+            <div class="mt-6">
+              <p class="mono-label">What g8suite does</p>
+              <p class="mt-2.5 text-base leading-relaxed text-body lg:text-lg">{s.response}</p>
+            </div>
+          </div>
+
+          <div class={`lg:col-span-5 ${reverse ? 'lg:order-1' : ''}`}>
+            <div class="border border-line bg-card">
+              <div class="flex items-center justify-between border-b border-line px-5 py-3.5">
+                <span class="text-sm font-semibold text-body">What matters most</span>
+                <span class="mono-label">{s.tag}</span>
+              </div>
+              <ul class="divide-y divide-line">
+                {s.controls.map((c) => (
+                  <li class="flex items-start gap-3 px-5 py-3.5">
+                    <svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-green" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                      <path d="M3 8l3.5 3.5L13 4" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <span class="text-sm leading-snug text-body">{c}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </article>
+      );
+    })}
+  </div>
+</section>
+
+<!-- Closing band -->
+<section class="pb-20 lg:pb-28">
+  <div class="container-page">
+    <div class="border-l-2 border-brass bg-brass/[0.06] p-7 lg:p-9">
+      <p class="text-base leading-relaxed text-body lg:text-lg">
+        One ecosystem across IT, business and industry operations — governed to the standard your
+        sector is held to, not a generic baseline. If your organisation answers to a regulator,
+        g8suite was built for you.
+      </p>
+    </div>
+  </div>
+</section>
