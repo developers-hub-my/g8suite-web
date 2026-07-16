@@ -24,6 +24,7 @@
     --brass: 59 89 152;         /* accent = navy-500 (original brand blue) */
     --brass-soft: 30 58 111;    /* hover — navy-700, deeper */
     --on-brass: 255 255 255;    /* text on an accent fill */
+    --g8-blue: 123 179 232;     /* wordmark "g8" sky-blue — fixed in both themes */
     --green: 5 150 105;         /* the single non-negotiable callout */
     --grid: 10 22 40;           /* blueprint grid line (used at low alpha) */
     --grid-alpha: 0.05;

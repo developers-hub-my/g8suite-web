@@ -19,6 +19,7 @@ export default {
         muted: v('--text-muted'),
         faint: v('--text-faint'),
         brass: { DEFAULT: v('--brass'), soft: v('--brass-soft'), on: v('--on-brass') },
+        'g8-blue': v('--g8-blue'),
         green: v('--green'),
       },
       fontFamily: {
