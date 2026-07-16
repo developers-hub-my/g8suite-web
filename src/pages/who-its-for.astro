@@ -1,0 +1,19 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Nav from '~/components/Nav.astro';
+import BuiltFor from '~/components/BuiltFor.astro';
+import CTA from '~/components/CTA.astro';
+import Footer from '~/components/Footer.astro';
+---
+
+<BaseLayout
+  title="Who it's for"
+  description="Built for regulated organisations — government, banking, healthcare, defence and regulated mid-market across ASEAN and MENA."
+>
+  <Nav />
+  <main id="main" class="pt-24 lg:pt-28">
+    <BuiltFor />
+    <CTA />
+  </main>
+  <Footer />
+</BaseLayout>
