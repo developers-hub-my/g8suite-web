@@ -20,7 +20,7 @@ interface Item {
   lede: string;
   body: string;
   bullets: string[];
-  diagram: 'perimeter' | 'built-as-one' | 'standalone' | 'scales';
+  diagram: 'perimeter' | 'built-as-one' | 'standalone' | 'pricing';
 }
 
 const items: Item[] = [
@@ -50,7 +50,7 @@ const items: Item[] = [
     lede: 'No per-seat tax',
     body: 'No per-seat pricing that punishes growth. No surprise bills when your headcount changes. One predictable platform fee per deployment — the same whether ten people use it or ten thousand.',
     bullets: ['Predictable pricing', 'Headcount-neutral', 'Per-environment licensing'],
-    diagram: 'scales',
+    diagram: 'pricing',
   },
 ];
 ---
@@ -192,19 +192,25 @@ const items: Item[] = [
                   </svg>
                 )}
 
-                {item.diagram === 'scales' && (
+                {item.diagram === 'pricing' && (
                   <svg viewBox="0 0 320 240" class="h-auto w-full" aria-hidden="true">
-                    <line x1="40" y1="60" x2="280" y2="60" class="stroke-body" stroke-width="1.5" />
-                    <line x1="160" y1="60" x2="160" y2="200" class="stroke-body" stroke-width="1.5" />
-                    <polygon points="140,200 180,200 175,210 145,210" class="fill-body" />
-                    <line x1="60" y1="60" x2="60" y2="100" class="stroke-body" stroke-width="1" />
-                    <line x1="260" y1="60" x2="260" y2="80" class="stroke-body" stroke-width="1" />
-                    <rect x="20" y="100" width="80" height="40" rx="3" class="fill-line-strong" />
-                    <text x="60" y="125" text-anchor="middle" font-size="10" font-weight="600" class="fill-body" font-family="Inter, system-ui, sans-serif">Per seat</text>
-                    <text x="60" y="155" text-anchor="middle" font-size="9" font-family="ui-monospace, monospace" class="fill-faint">scales w/ headcount</text>
-                    <rect x="220" y="80" width="80" height="20" rx="3" class="fill-brass" />
-                    <text x="260" y="95" text-anchor="middle" font-size="10" font-weight="600" class="fill-brass-on" font-family="Inter, system-ui, sans-serif">Per deployment</text>
-                    <text x="260" y="120" text-anchor="middle" font-size="9" font-family="ui-monospace, monospace" class="fill-faint">predictable</text>
+                    {/* Axes: cost (y) against headcount (x) */}
+                    <line x1="44" y1="24" x2="44" y2="196" class="stroke-line-strong" stroke-width="1.25" />
+                    <line x1="44" y1="196" x2="300" y2="196" class="stroke-line-strong" stroke-width="1.25" />
+                    <text x="40" y="18" font-size="8" font-family="ui-monospace, monospace" class="fill-faint">Cost</text>
+                    <text x="300" y="214" text-anchor="end" font-size="8" font-family="ui-monospace, monospace" class="fill-faint">Headcount →</text>
+
+                    {/* Per seat — climbs with every added user */}
+                    <line x1="44" y1="196" x2="286" y2="44" class="stroke-line-strong" stroke-width="1.75" stroke-dasharray="4 3" />
+                    <circle cx="286" cy="44" r="3" class="fill-line-strong" />
+                    <text x="282" y="40" text-anchor="end" font-size="10" font-weight="600" font-family="Inter, system-ui, sans-serif" class="fill-body">Per seat</text>
+                    <text x="282" y="54" text-anchor="end" font-size="8" font-family="ui-monospace, monospace" class="fill-faint">rises with headcount</text>
+
+                    {/* Per deployment — one flat fee, whatever the headcount */}
+                    <line x1="44" y1="150" x2="286" y2="150" class="stroke-brass" stroke-width="2.5" />
+                    <circle cx="286" cy="150" r="3" class="fill-brass" />
+                    <text x="212" y="142" text-anchor="middle" font-size="10" font-weight="600" font-family="Inter, system-ui, sans-serif" class="fill-brass">Per deployment</text>
+                    <text x="212" y="166" text-anchor="middle" font-size="8" font-family="ui-monospace, monospace" class="fill-faint">flat — predictable</text>
                   </svg>
                 )}
               </figure>
