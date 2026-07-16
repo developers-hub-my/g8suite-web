@@ -1,10 +1,8 @@
 ---
 import { getProducts } from '~/lib/products';
-import { displayStatus } from '~/lib/taxonomy';
 
 const products = await getProducts();
 const total = products.length;
-const liveCount = products.filter((p) => displayStatus(p.status) === 'live').length;
 
 // Coverage, derived from the collection — the whole ecosystem, not a core.
 const domains = [
@@ -103,16 +101,6 @@ const readout = [
           </div>
         ))}
       </dl>
-    </div>
-
-    <div class="mt-12 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 border-t border-line pt-8 text-sm text-muted">
-      <span><strong class="font-semibold text-body">{liveCount} products</strong> live in production</span>
-      <span class="text-line-strong" aria-hidden="true">·</span>
-      <span>Across IT, business &amp; industry operations</span>
-      <span class="text-line-strong" aria-hidden="true">·</span>
-      <span>Engaged across government, banking &amp; healthcare</span>
-      <span class="text-line-strong" aria-hidden="true">·</span>
-      <span>Built by Developers Hub Sdn Bhd, Johor Bahru</span>
     </div>
   </div>
 </section>
