@@ -17,9 +17,10 @@ const withG8 = [
   'Compliance posture shared by every product',
 ];
 
-// Consolidation diagram — everyday business functions consolidated into one
-// suite. Plain-language labels, not product codes, so a business buyer reads it.
-const stacked = ['HR', 'CRM', 'Service Desk', 'Security', 'Storage', 'Identity'];
+// The "With g8suite" panel mirrors the sprawl diagram: the same boxes, now
+// aligned into one calm grid. Order, not chaos — no labels, no central funnel.
+const orderedCols = 7;
+const orderedRows = 2;
 ---
 
 <section id="problem" class="section">
@@ -95,20 +96,16 @@ const stacked = ['HR', 'CRM', 'Service Desk', 'Security', 'Storage', 'Identity']
         </div>
         <h3 class="mt-4 text-xl font-semibold text-body">One platform. One audit. One partnership.</h3>
 
-        <svg viewBox="0 0 360 180" class="mt-6 h-auto w-full" aria-hidden="true">
-          {stacked.map((l, i) => {
-            const x = 8 + (i % 3) * 118;
-            const y = i < 3 ? 12 : 60;
-            return (
-              <g>
-                <rect x={x} y={y} width="104" height="28" rx="4" class="fill-card stroke-brass" stroke-width="1" />
-                <text x={x + 52} y={y + 18} text-anchor="middle" font-size="12" font-weight="500" font-family="Inter, system-ui, sans-serif" class="fill-body">{l}</text>
-                <line x1={x + 52} y1={y + 28} x2={x + 52} y2="118" class="stroke-brass" stroke-width="1" stroke-dasharray="2 3" opacity="0.55" />
-              </g>
-            );
-          })}
-          <rect x="8" y="118" width="344" height="46" rx="5" class="fill-bg stroke-brass" stroke-width="1.5" />
-          <text x="180" y="147" text-anchor="middle" font-size="12" font-family="ui-monospace, monospace" class="fill-brass" font-weight="700">g8suite</text>
+        <svg viewBox="0 0 360 160" class="mt-6 h-auto w-full" aria-hidden="true">
+          <g class="fill-brass/10 stroke-brass" stroke-width="1">
+            {[...Array(orderedCols * orderedRows).keys()].map((i) => {
+              const col = i % orderedCols;
+              const row = Math.floor(i / orderedCols);
+              const x = 29 + col * 45;
+              const y = 51 + row * 42;
+              return <rect x={x} y={y} width="32" height="18" rx="2" />;
+            })}
+          </g>
         </svg>
 
         <ul class="mt-6 space-y-3">
