@@ -1,0 +1,254 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Nav from '~/components/Nav.astro';
+import Footer from '~/components/Footer.astro';
+import SectionHeader from '~/components/ui/SectionHeader.astro';
+import { getProducts } from '~/lib/products';
+import { displayStatus, displayStatusLabel, displayStatusPill, stageLabel } from '~/lib/taxonomy';
+import type { Stage } from '~/lib/taxonomy';
+
+const products = await getProducts();
+
+const counts = {
+  total: products.length,
+  live: products.filter((p) => displayStatus(p.status) === 'live').length,
+  inDev: products.filter((p) => displayStatus(p.status) === 'in-dev').length,
+  planned: products.filter((p) => displayStatus(p.status) === 'planned').length,
+};
+
+// Filter facets (build-time), each with its own tally — Shopee-style counts.
+const statusFacets = (['live', 'in-dev', 'planned'] as const).map((value) => ({
+  value,
+  label: displayStatusLabel[value],
+  count: products.filter((p) => displayStatus(p.status) === value).length,
+}));
+
+const stageFacets = ([1, 2, 3] as Stage[]).map((value) => ({
+  value: String(value),
+  label: stageLabel[value],
+  count: products.filter((p) => p.stage === value).length,
+}));
+
+const categoryFacets = [...new Set(products.map((p) => p.category))]
+  .sort((a, b) => a.localeCompare(b))
+  .map((value) => ({
+    value,
+    label: value,
+    count: products.filter((p) => p.category === value).length,
+  }));
+
+// Default grid order: live first, then in-development, then planned; within each
+// tier, grouped by stage → category → in-category order → title for stability.
+const liveRank = (p: (typeof products)[number]) => {
+  const ds = displayStatus(p.status);
+  return ds === 'live' ? 0 : ds === 'in-dev' ? 1 : 2;
+};
+const ordered = [...products].sort(
+  (a, b) =>
+    liveRank(a) - liveRank(b) ||
+    a.stage - b.stage ||
+    a.category.localeCompare(b.category) ||
+    a.order - b.order ||
+    a.title.localeCompare(b.title),
+);
+---
+
+<BaseLayout
+  title="Our Solutions — g8suite"
+  description="The full g8suite solutions lineup — one integrated, sovereign suite of operations products."
+>
+  <Nav />
+  <main id="main" class="pt-24 lg:pt-28">
+    <section class="pb-10 lg:pb-12">
+      <div class="container-page">
+        <SectionHeader
+          eyebrow="Solutions"
+          title="One integrated suite."
+          subtitle="Every product shares the same identity, audit and workflow — adopt what you need today, add the rest as your operating model matures. Sovereign, integrated, yours."
+        />
+      </div>
+    </section>
+
+    <section class="pb-24">
+      <div class="container-page">
+        <div data-catalogue class="grid gap-8 lg:grid-cols-[248px_1fr]">
+          <!-- Filter sidebar -->
+          <aside class="lg:sticky lg:top-24 lg:self-start">
+            <div class="flex items-center justify-between border-b border-line pb-3">
+              <h2 class="text-sm font-semibold text-body">Filters</h2>
+              <button type="button" data-reset class="text-xs font-medium text-brass hover:underline">
+                Reset
+              </button>
+            </div>
+
+            <div class="mt-5 space-y-7">
+              <fieldset>
+                <legend class="mb-3 text-xs font-semibold uppercase tracking-wide text-faint">Status</legend>
+                <ul class="space-y-1.5">
+                  {statusFacets.map((f) => (
+                    <li>
+                      <label class="flex cursor-pointer items-center gap-2.5 text-sm text-muted hover:text-body">
+                        <input type="checkbox" data-filter="status" value={f.value} class="h-4 w-4 shrink-0 rounded-sm accent-brass" />
+                        <span class="flex-1">{f.label}</span>
+                        <span class="font-mono text-xs text-faint">{f.count}</span>
+                      </label>
+                    </li>
+                  ))}
+                </ul>
+              </fieldset>
+
+              <fieldset>
+                <legend class="mb-3 text-xs font-semibold uppercase tracking-wide text-faint">Stage</legend>
+                <ul class="space-y-1.5">
+                  {stageFacets.map((f) => (
+                    <li>
+                      <label class="flex cursor-pointer items-start gap-2.5 text-sm text-muted hover:text-body">
+                        <input type="checkbox" data-filter="stage" value={f.value} class="mt-0.5 h-4 w-4 shrink-0 rounded-sm accent-brass" />
+                        <span class="flex-1 leading-snug">{f.label}</span>
+                        <span class="mt-0.5 font-mono text-xs text-faint">{f.count}</span>
+                      </label>
+                    </li>
+                  ))}
+                </ul>
+              </fieldset>
+
+              <fieldset>
+                <legend class="mb-3 text-xs font-semibold uppercase tracking-wide text-faint">Category</legend>
+                <ul class="max-h-72 space-y-1.5 overflow-y-auto pr-1">
+                  {categoryFacets.map((f) => (
+                    <li>
+                      <label class="flex cursor-pointer items-center gap-2.5 text-sm text-muted hover:text-body">
+                        <input type="checkbox" data-filter="category" value={f.value} class="h-4 w-4 shrink-0 rounded-sm accent-brass" />
+                        <span class="flex-1">{f.label}</span>
+                        <span class="font-mono text-xs text-faint">{f.count}</span>
+                      </label>
+                    </li>
+                  ))}
+                </ul>
+              </fieldset>
+            </div>
+          </aside>
+
+          <!-- Results -->
+          <div>
+            <div class="mb-6 flex flex-wrap items-center justify-between gap-4 border-b border-line pb-4">
+              <p class="text-sm text-muted">
+                <span data-count class="font-semibold text-body">{counts.total}</span> products
+              </p>
+              <label class="flex items-center gap-2 text-sm text-muted">
+                <span class="text-faint">Sort</span>
+                <select data-sort class="rounded-md border border-line bg-card px-3 py-1.5 text-sm text-body focus-visible:ring-2 focus-visible:ring-brass focus-visible:ring-offset-2">
+                  <option value="default">Live first</option>
+                  <option value="name">Name (A–Z)</option>
+                </select>
+              </label>
+            </div>
+
+            <p
+              data-empty
+              hidden
+              class="border border-dashed border-line-strong bg-soft p-10 text-center text-muted"
+            >
+              No products match those filters.
+            </p>
+
+            <div data-grid class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {ordered.map((p, i) => {
+                const ds = displayStatus(p.status);
+                return (
+                  <a
+                    href={`/our-solutions/${p.code}`}
+                    data-card
+                    data-status={ds}
+                    data-stage={String(p.stage)}
+                    data-category={p.category}
+                    data-name={p.code}
+                    data-live={ds === 'live' ? '1' : '0'}
+                    data-order={i}
+                    class={`group relative flex h-full flex-col border p-5 transition-all hover:-translate-y-0.5 hover:border-brass hover:shadow-elevated ${
+                      ds === 'live' ? 'border-brass/40 bg-card ring-1 ring-brass/10' : 'border-line bg-card'
+                    }`}
+                  >
+                    <p class="text-xs font-medium text-faint">{p.category}</p>
+                    <div class="mt-1.5 flex items-start justify-between gap-3">
+                      <div class="min-w-0">
+                        <h3 class="font-mono text-lg font-bold text-body">{p.code}</h3>
+                        {p.alias && <p class="mt-0.5 text-xs text-faint">{p.alias}</p>}
+                      </div>
+                      <span class={displayStatusPill[ds]}>{displayStatusLabel[ds]}</span>
+                    </div>
+                    <p class="mt-3 flex-1 text-sm leading-relaxed text-muted">{p.tagline}</p>
+                    <span class="mt-4 inline-flex items-center gap-1.5 border-t border-line pt-3 text-xs font-medium text-body transition-colors group-hover:text-brass">
+                      View details
+                      <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">
+                        <path d="M2 7h10M8 3l4 4-4 4" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                    </span>
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<script>
+  const panel = document.querySelector<HTMLElement>('[data-catalogue]');
+  if (panel) {
+    const cards = [...panel.querySelectorAll<HTMLElement>('[data-card]')];
+    const checks = [...panel.querySelectorAll<HTMLInputElement>('[data-filter]')];
+    const grid = panel.querySelector<HTMLElement>('[data-grid]');
+    const countEl = panel.querySelector<HTMLElement>('[data-count]');
+    const empty = panel.querySelector<HTMLElement>('[data-empty]');
+    const sortSel = panel.querySelector<HTMLSelectElement>('[data-sort]');
+    const resetBtn = panel.querySelector<HTMLButtonElement>('[data-reset]');
+
+    const checkedIn = (group: string) =>
+      checks.filter((c) => c.dataset.filter === group && c.checked).map((c) => c.value);
+
+    const applyFilters = () => {
+      const s = checkedIn('status');
+      const st = checkedIn('stage');
+      const cat = checkedIn('category');
+      let visible = 0;
+      cards.forEach((card) => {
+        const ok =
+          (s.length === 0 || s.includes(card.dataset.status ?? '')) &&
+          (st.length === 0 || st.includes(card.dataset.stage ?? '')) &&
+          (cat.length === 0 || cat.includes(card.dataset.category ?? ''));
+        card.toggleAttribute('hidden', !ok);
+        if (ok) visible++;
+      });
+      if (countEl) countEl.textContent = String(visible);
+      empty?.toggleAttribute('hidden', visible !== 0);
+    };
+
+    const applySort = () => {
+      if (!grid) return;
+      const mode = sortSel?.value ?? 'default';
+      [...cards]
+        .sort((a, b) => {
+          if (mode === 'name') return (a.dataset.name ?? '').localeCompare(b.dataset.name ?? '');
+          if (mode === 'live') {
+            const live = Number(b.dataset.live) - Number(a.dataset.live);
+            return live || (a.dataset.name ?? '').localeCompare(b.dataset.name ?? '');
+          }
+          return Number(a.dataset.order) - Number(b.dataset.order);
+        })
+        .forEach((card) => grid.appendChild(card));
+    };
+
+    checks.forEach((c) => c.addEventListener('change', applyFilters));
+    sortSel?.addEventListener('change', applySort);
+    resetBtn?.addEventListener('click', () => {
+      checks.forEach((c) => (c.checked = false));
+      if (sortSel) sortSel.value = 'default';
+      applySort();
+      applyFilters();
+    });
+  }
+</script>

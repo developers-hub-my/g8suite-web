@@ -1,59 +1,68 @@
 ---
 import SectionHeader from '~/components/ui/SectionHeader.astro';
 
+const listify = (xs: string[]) =>
+  xs.length <= 1 ? (xs[0] ?? '') : `${xs.slice(0, -1).join(', ')} and ${xs[xs.length - 1]}`;
+
+// Curated proof list for "products that stand on their own" — hand-picked, not
+// derived from the catalogue, because the marketing selection here diverges from
+// product frontmatter (g8stack.com is featured; waumail.my is not). Live rows
+// must be genuinely live in production — the copy claims it.
+const branded: { name: string; live: boolean }[] = [
+  { name: 'g8stack.com', live: true },
+  { name: 'gatherhub.app', live: true },
+  { name: 'nadi.pro', live: true },
+  { name: 'g8desk.com', live: true },
+  { name: 'warung.my', live: false },
+];
+const liveNames = branded.filter((b) => b.live).map((b) => b.name);
+
 interface Item {
   title: string;
   lede: string;
   body: string;
   bullets: string[];
-  diagram: 'perimeter' | 'converge' | 'spine' | 'stack' | 'scales';
+  diagram: 'perimeter' | 'built-as-one' | 'standalone' | 'pricing';
 }
 
 const items: Item[] = [
   {
-    title: 'On-premise, air-gappable, your infrastructure',
-    lede: 'Sovereign by deployment',
-    body: 'Deployed inside your perimeter. Runs disconnected from the public internet when your operating doctrine demands it. No phone-home telemetry. No vendor backdoors.',
+    title: 'Designed as one, not assembled from acquisitions',
+    lede: 'One team, one system',
+    body: 'Most enterprise suites are assembled — products bought from different companies and bolted together, each arriving with its own data model, its own directory, and seams nobody ever removes. g8suite was designed and built as one system by one team. There are no acquired seams to work around, because there were never any acquisitions.',
+    bullets: ['Built by one team', 'One identity model', 'No acquired seams'],
+    diagram: 'built-as-one',
+  },
+  {
+    title: 'The whole suite runs inside your perimeter',
+    lede: 'Air-gappable, not just self-hosted',
+    body: 'Not one module you may self-host while the rest phones home. Every product is deployed inside your perimeter and runs disconnected from the public internet when your operating doctrine demands it. No phone-home telemetry. No vendor backdoors.',
     bullets: ['Air-gap supported', 'No phone-home', 'No shared multi-tenant surfaces'],
     diagram: 'perimeter',
   },
   {
-    title: 'One vendor, one contract, one support relationship',
-    lede: 'Single accountability chain',
-    body: 'A single accountable counterparty for the entire operations stack. One contract to negotiate, one SLA to enforce, one number to call when something matters at 2am.',
-    bullets: ['One commercial relationship', 'One SLA', 'One escalation path'],
-    diagram: 'converge',
-  },
-  {
-    title: 'Governance-first architecture',
-    lede: 'Identity is the spine',
-    body: 'Identity governance, audit, and policy enforcement are not bolted on. They are the spine. Every product on the suite inherits them by default — through G8ID, g8audit, and g8flow.',
-    bullets: ['IGA-grade identity', 'Unified audit trail', 'Cross-product workflow'],
-    diagram: 'spine',
-  },
-  {
-    title: 'Grows with your organisation',
-    lede: 'Adopt at your pace',
-    body: 'Start with the products you need today. Add the rest as your operating model matures. The platform scales horizontally because every product shares the same foundation.',
-    bullets: ['Adopt incrementally', 'No re-platform later', 'Shared spine, every product'],
-    diagram: 'stack',
+    title: 'Products that stand on their own',
+    lede: 'Proof, not promise',
+    body: `${listify(liveNames)} are live in production today — built in the suite, sold under their own brands, on their own domains, to their own markets. A platform that can carry independent products is a platform that will not trap yours.`,
+    bullets: ['Live under their own brands', 'Own domains, own markets', 'Nothing forced inward'],
+    diagram: 'standalone',
   },
   {
     title: 'Priced per deployment, not per user',
     lede: 'No per-seat tax',
-    body: 'No per-seat pricing that punishes growth. No surprise bills when your headcount changes. One predictable platform fee per deployment.',
+    body: 'No per-seat pricing that punishes growth. No surprise bills when your headcount changes. One predictable platform fee per deployment — the same whether ten people use it or ten thousand.',
     bullets: ['Predictable pricing', 'Headcount-neutral', 'Per-environment licensing'],
-    diagram: 'scales',
+    diagram: 'pricing',
   },
 ];
 ---
 
-<section id="differentiators" class="section bg-surface">
+<section id="differentiators" class="section">
   <div class="container-page">
     <SectionHeader
       eyebrow="Differentiators"
       title="What makes g8suite different"
-      subtitle="Five differentiators no point-tool vendor can match — because each requires a platform to deliver."
+      subtitle="Four differences a competitor cannot close by rewriting their website. Each one comes from how the suite was built, not how it is sold."
     />
 
     <div class="mt-16 space-y-16 lg:space-y-24">
@@ -64,24 +73,24 @@ const items: Item[] = [
           <article class="grid items-center gap-10 lg:grid-cols-12 lg:gap-16">
             <div class={`lg:col-span-7 ${reverse ? 'lg:order-2' : ''}`}>
               <div class="flex items-center gap-4">
-                <span class="font-mono text-5xl font-bold leading-none text-sky-400 lg:text-6xl">
+                <span class="font-mono text-5xl font-bold leading-none text-brass lg:text-6xl">
                   {padded}
                 </span>
-                <span class="h-px flex-1 bg-slate-200"></span>
-                <span class="text-xs font-semibold uppercase tracking-[0.18em] text-ink-400">
+                <span class="h-px flex-1 bg-line"></span>
+                <span class="text-xs font-semibold uppercase tracking-[0.14em] text-faint">
                   {item.lede}
                 </span>
               </div>
-              <h3 class="mt-6 text-2xl font-semibold leading-tight text-navy-900 sm:text-3xl">
+              <h3 class="mt-6 text-2xl font-semibold leading-tight text-body sm:text-3xl">
                 {item.title}
               </h3>
-              <p class="mt-4 text-base leading-relaxed text-ink-600 lg:text-lg">
+              <p class="mt-4 text-base leading-relaxed text-muted lg:text-lg">
                 {item.body}
               </p>
               <ul class="mt-6 grid gap-3 sm:grid-cols-3">
                 {item.bullets.map((b) => (
-                  <li class="flex items-start gap-2 text-sm text-navy-900">
-                    <svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-accent-green" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <li class="flex items-start gap-2 text-sm text-body">
+                    <svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-green" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                       <path d="M3 8l3.5 3.5L13 4" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                     <span class="font-medium">{b}</span>
@@ -91,99 +100,118 @@ const items: Item[] = [
             </div>
 
             <div class={`lg:col-span-5 ${reverse ? 'lg:order-1' : ''}`}>
-              <figure class="rounded-2xl border border-slate-200 bg-surface-soft p-8 lg:p-10">
+              <figure class="border border-line bg-card p-8 lg:p-10">
                 {item.diagram === 'perimeter' && (
                   <svg viewBox="0 0 320 240" class="h-auto w-full" aria-hidden="true">
-                    <rect x="20" y="20" width="280" height="200" rx="10" fill="none" stroke="#7BB3E8" stroke-width="1.5" stroke-dasharray="6 6" />
-                    <g stroke="#0A1F44" stroke-width="2" fill="none">
+                    <rect x="20" y="20" width="280" height="200" rx="10" fill="none" class="stroke-brass" stroke-width="1.5" stroke-dasharray="6 6" />
+                    <g class="stroke-body" stroke-width="2" fill="none">
                       <path d="M20 40 L20 20 L40 20" />
                       <path d="M300 40 L300 20 L280 20" />
                       <path d="M20 200 L20 220 L40 220" />
                       <path d="M300 200 L300 220 L280 220" />
                     </g>
-                    <text x="160" y="14" text-anchor="middle" font-size="9" font-family="ui-monospace, monospace" fill="#475569" letter-spacing="0.18em">YOUR PERIMETER</text>
+                    <text x="160" y="14" text-anchor="middle" font-size="9" font-family="ui-monospace, monospace" class="fill-faint" letter-spacing="0.14em">YOUR PERIMETER</text>
                     <g>
-                      <rect x="80" y="80" width="160" height="20" rx="3" fill="#0A1F44" />
-                      <rect x="80" y="110" width="160" height="20" rx="3" fill="#1E3A6F" />
-                      <rect x="80" y="140" width="160" height="20" rx="3" fill="#3B5998" />
-                      <circle cx="100" cy="90" r="3" fill="#7BB3E8" />
-                      <circle cx="100" cy="120" r="3" fill="#7BB3E8" />
-                      <circle cx="100" cy="150" r="3" fill="#7BB3E8" />
+                      <rect x="80" y="80" width="160" height="20" rx="3" class="fill-body" />
+                      <rect x="80" y="110" width="160" height="20" rx="3" class="fill-line-strong" />
+                      <rect x="80" y="140" width="160" height="20" rx="3" class="fill-line" />
+                      <circle cx="100" cy="90" r="3" class="fill-brass" />
+                      <circle cx="100" cy="120" r="3" class="fill-brass" />
+                      <circle cx="100" cy="150" r="3" class="fill-brass" />
                     </g>
-                    <text x="160" y="190" text-anchor="middle" font-size="10" font-family="ui-monospace, monospace" fill="#475569">no phone-home · no backdoor</text>
+                    <text x="160" y="190" text-anchor="middle" font-size="10" font-family="ui-monospace, monospace" class="fill-faint">no phone-home · no backdoor</text>
                   </svg>
                 )}
 
-                {item.diagram === 'converge' && (
+                {item.diagram === 'built-as-one' && (
                   <svg viewBox="0 0 320 240" class="h-auto w-full" aria-hidden="true">
-                    {[40, 80, 120, 160, 200].map((y) => (
-                      <g>
-                        <rect x="20" y={y - 10} width="60" height="20" rx="3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1" />
-                        <line x1="80" y1={y} x2="200" y2="120" stroke="#7BB3E8" stroke-width="1" stroke-dasharray="2 3" />
-                      </g>
-                    ))}
-                    <rect x="200" y="100" width="100" height="40" rx="6" fill="#0A1F44" stroke="#7BB3E8" stroke-width="1" />
-                    <text x="250" y="125" text-anchor="middle" font-size="11" font-weight="600" fill="#7BB3E8" font-family="ui-monospace, monospace">g8suite</text>
-                    <text x="50" y="220" text-anchor="middle" font-size="9" font-family="ui-monospace, monospace" fill="#475569">Many vendors</text>
-                    <text x="250" y="220" text-anchor="middle" font-size="9" font-family="ui-monospace, monospace" fill="#475569">One contract</text>
-                  </svg>
-                )}
-
-                {item.diagram === 'spine' && (
-                  <svg viewBox="0 0 320 240" class="h-auto w-full" aria-hidden="true">
-                    <rect x="140" y="30" width="40" height="180" rx="6" fill="#0A1F44" />
-                    <text x="160" y="62" text-anchor="middle" font-size="9" font-weight="600" fill="#7BB3E8" font-family="ui-monospace, monospace">G8ID</text>
-                    <text x="160" y="125" text-anchor="middle" font-size="9" font-weight="600" fill="#7BB3E8" font-family="ui-monospace, monospace">g8audit</text>
-                    <text x="160" y="188" text-anchor="middle" font-size="9" font-weight="600" fill="#7BB3E8" font-family="ui-monospace, monospace">g8flow</text>
-                    <line x1="160" y1="80" x2="160" y2="100" stroke="#7BB3E8" stroke-width="1" />
-                    <line x1="160" y1="145" x2="160" y2="165" stroke="#7BB3E8" stroke-width="1" />
+                    {/* Left: assembled — mismatched blocks, visible seams */}
                     {[
-                      { x: 40, y: 60, l: 'g8stack' },
-                      { x: 240, y: 60, l: 'g8shield' },
-                      { x: 40, y: 120, l: 'g8connect' },
-                      { x: 240, y: 120, l: 'g8scope' },
-                      { x: 40, y: 180, l: 'g8hr' },
-                      { x: 240, y: 180, l: 'g8desk' },
-                    ].map((p) => (
-                      <g>
-                        <line x1={p.x === 40 ? 80 : 240} y1={p.y + 10} x2={p.x === 40 ? 140 : 180} y2={p.y + 10} stroke="#7BB3E8" stroke-width="1" stroke-dasharray="2 3" />
-                        <rect x={p.x} y={p.y} width="40" height="20" rx="3" fill="#FFFFFF" stroke="#0A1F44" stroke-width="1" />
-                        <text x={p.x + 20} y={p.y + 13} text-anchor="middle" font-size="8" font-family="ui-monospace, monospace" fill="#0A1F44">{p.l}</text>
-                      </g>
-                    ))}
-                  </svg>
-                )}
-
-                {item.diagram === 'stack' && (
-                  <svg viewBox="0 0 320 240" class="h-auto w-full" aria-hidden="true">
-                    {[
-                      { y: 200, w: 280, fill: '#FFFFFF', stroke: '#0A1F44', label: 'Foundation' },
-                      { y: 160, w: 240, fill: '#DCE9F5', stroke: '#0A1F44', label: 'Operations' },
-                      { y: 120, w: 200, fill: '#1E3A6F', stroke: '#0A1F44', label: 'Trust', text: '#FFFFFF' },
-                      { y: 80, w: 160, fill: '#0A1F44', stroke: '#0A1F44', label: 'Apex', text: '#FFFFFF' },
+                      { x: 12, y: 50, w: 56, h: 28, f: 'fill-card' },
+                      { x: 76, y: 44, w: 62, h: 22, f: 'fill-soft' },
+                      { x: 16, y: 88, w: 40, h: 34, f: 'fill-line' },
+                      { x: 64, y: 80, w: 74, h: 26, f: 'fill-card' },
+                      { x: 22, y: 132, w: 58, h: 24, f: 'fill-soft' },
+                      { x: 88, y: 126, w: 50, h: 34, f: 'fill-line' },
+                      { x: 14, y: 172, w: 76, h: 22, f: 'fill-card' },
                     ].map((b) => (
-                      <g>
-                        <rect x={(320 - b.w) / 2} y={b.y} width={b.w} height="30" rx="3" fill={b.fill} stroke={b.stroke} stroke-width="1.25" />
-                        <text x="160" y={b.y + 19} text-anchor="middle" font-size="11" font-weight="600" fill={b.text || '#0A1F44'} font-family="Inter, system-ui, sans-serif">{b.label}</text>
-                      </g>
+                      <rect x={b.x} y={b.y} width={b.w} height={b.h} rx="2" class={`${b.f} stroke-line-strong`} stroke-width="1" />
                     ))}
-                    <text x="160" y="55" text-anchor="middle" font-size="10" font-family="ui-monospace, monospace" fill="#475569" letter-spacing="0.15em">ADD UP, NOT REPLATFORM</text>
+                    {[
+                      [68, 64, 76, 55],
+                      [56, 105, 64, 93],
+                      [80, 144, 88, 143],
+                      [90, 183, 98, 160],
+                    ].map(([x1, y1, x2, y2]) => (
+                      <line x1={x1} y1={y1} x2={x2} y2={y2} class="stroke-faint" stroke-width="1" stroke-dasharray="2 2" />
+                    ))}
+                    <text x="76" y="216" text-anchor="middle" font-size="8" font-family="ui-monospace, monospace" class="fill-faint">Assembled from parts</text>
+
+                    <line x1="160" y1="40" x2="160" y2="196" class="stroke-line" stroke-width="1" />
+
+                    {/* Right: designed — one grid, every tile alike */}
+                    {[0, 1, 2, 3].map((row) =>
+                      [0, 1, 2].map((col) => (
+                        <rect
+                          x={178 + col * 46}
+                          y={50 + row * 38}
+                          width="42"
+                          height="30"
+                          rx="2"
+                          class="fill-card stroke-brass"
+                          stroke-width="1"
+                        />
+                      )),
+                    )}
+                    <text x="240" y="216" text-anchor="middle" font-size="8" font-family="ui-monospace, monospace" class="fill-faint">Designed as one</text>
                   </svg>
                 )}
 
-                {item.diagram === 'scales' && (
+                {item.diagram === 'standalone' && (
                   <svg viewBox="0 0 320 240" class="h-auto w-full" aria-hidden="true">
-                    <line x1="40" y1="60" x2="280" y2="60" stroke="#0A1F44" stroke-width="1.5" />
-                    <line x1="160" y1="60" x2="160" y2="200" stroke="#0A1F44" stroke-width="1.5" />
-                    <polygon points="140,200 180,200 175,210 145,210" fill="#0A1F44" />
-                    <line x1="60" y1="60" x2="60" y2="100" stroke="#0A1F44" stroke-width="1" />
-                    <line x1="260" y1="60" x2="260" y2="80" stroke="#0A1F44" stroke-width="1" />
-                    <rect x="20" y="100" width="80" height="40" rx="3" fill="#94A3B8" />
-                    <text x="60" y="125" text-anchor="middle" font-size="10" font-weight="600" fill="#FFFFFF" font-family="Inter, system-ui, sans-serif">Per seat</text>
-                    <text x="60" y="155" text-anchor="middle" font-size="9" font-family="ui-monospace, monospace" fill="#475569">scales w/ headcount</text>
-                    <rect x="220" y="80" width="80" height="20" rx="3" fill="#0A1F44" />
-                    <text x="260" y="95" text-anchor="middle" font-size="10" font-weight="600" fill="#FFFFFF" font-family="Inter, system-ui, sans-serif">Per deployment</text>
-                    <text x="260" y="120" text-anchor="middle" font-size="9" font-family="ui-monospace, monospace" fill="#475569">predictable</text>
+                    <text x="160" y="22" text-anchor="middle" font-size="9" font-family="ui-monospace, monospace" class="fill-faint">Their own brands, their own markets</text>
+                    {branded.map((p, i) => {
+                      const y = 40 + i * 34;
+                      return (
+                        <g>
+                          <rect
+                            x="8"
+                            y={y}
+                            width="304"
+                            height="28"
+                            rx="3"
+                            class={p.live ? 'fill-card stroke-brass' : 'fill-soft stroke-line-strong'}
+                            stroke-width="1"
+                            stroke-dasharray={p.live ? undefined : '4 3'}
+                          />
+                          <text x="18" y={y + 18} font-size="10" font-weight="600" font-family="ui-monospace, monospace" class={p.live ? 'fill-brass' : 'fill-faint'}>{p.name}</text>
+                          <text x="302" y={y + 18} text-anchor="end" font-size="8" font-family="Inter, system-ui, sans-serif" class={p.live ? 'fill-green' : 'fill-faint'}>{p.live ? 'Live' : 'In development'}</text>
+                        </g>
+                      );
+                    })}
+                    <text x="160" y="228" text-anchor="middle" font-size="8" font-family="ui-monospace, monospace" class="fill-faint">Built in g8suite · sold standalone</text>
+                  </svg>
+                )}
+
+                {item.diagram === 'pricing' && (
+                  <svg viewBox="0 0 320 240" class="h-auto w-full" aria-hidden="true">
+                    {/* Axes: cost (y) against headcount (x) */}
+                    <line x1="44" y1="24" x2="44" y2="196" class="stroke-line-strong" stroke-width="1.25" />
+                    <line x1="44" y1="196" x2="300" y2="196" class="stroke-line-strong" stroke-width="1.25" />
+                    <text x="40" y="18" font-size="8" font-family="ui-monospace, monospace" class="fill-faint">Cost</text>
+                    <text x="300" y="214" text-anchor="end" font-size="8" font-family="ui-monospace, monospace" class="fill-faint">Headcount →</text>
+
+                    {/* Per seat — climbs with every added user */}
+                    <line x1="44" y1="196" x2="286" y2="44" class="stroke-line-strong" stroke-width="1.75" stroke-dasharray="4 3" />
+                    <circle cx="286" cy="44" r="3" class="fill-line-strong" />
+                    <text x="282" y="40" text-anchor="end" font-size="10" font-weight="600" font-family="Inter, system-ui, sans-serif" class="fill-body">Per seat</text>
+                    <text x="282" y="54" text-anchor="end" font-size="8" font-family="ui-monospace, monospace" class="fill-faint">rises with headcount</text>
+
+                    {/* Per deployment — one flat fee, whatever the headcount */}
+                    <line x1="44" y1="150" x2="286" y2="150" class="stroke-brass" stroke-width="2.5" />
+                    <circle cx="286" cy="150" r="3" class="fill-brass" />
+                    <text x="212" y="142" text-anchor="middle" font-size="10" font-weight="600" font-family="Inter, system-ui, sans-serif" class="fill-brass">Per deployment</text>
+                    <text x="212" y="166" text-anchor="middle" font-size="8" font-family="ui-monospace, monospace" class="fill-faint">flat — predictable</text>
                   </svg>
                 )}
               </figure>
