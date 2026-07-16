@@ -13,7 +13,7 @@ const stageGroups = ([1, 2, 3] as const).map((s) => ({
 }));
 
 const platformLinks = [
-  { href: '/products', label: 'All products' },
+  { href: '/our-solutions', label: 'Our Solutions' },
   { href: '/why-g8suite', label: 'Why g8suite' },
   { href: '/#platform', label: 'The platform' },
   { href: '/who-its-for', label: 'Who it\'s for' },
@@ -77,8 +77,8 @@ const companyLinks = [
 
       <nav aria-label="Products" class="lg:col-span-4">
         <div class="flex items-baseline justify-between gap-4">
-          <p class="text-xs font-semibold uppercase tracking-wider text-faint">Products</p>
-          <a href="/products" class="text-xs font-medium text-body hover:text-brass">All products →</a>
+          <p class="text-xs font-semibold uppercase tracking-wider text-faint">Solutions</p>
+          <a href="/our-solutions" class="text-xs font-medium text-body hover:text-brass">All solutions →</a>
         </div>
         <div class="mt-4 space-y-5">
           {stageGroups.map((group) => (
@@ -87,7 +87,7 @@ const companyLinks = [
               <ul class="mt-2 flex flex-wrap gap-x-3 gap-y-1.5">
                 {group.items.map((p) => (
                   <li>
-                    <a href={`/products/${p.code}`} class="font-mono text-sm text-muted transition-colors hover:text-brass">
+                    <a href={`/our-solutions/${p.code}`} class="font-mono text-sm text-muted transition-colors hover:text-brass">
                       {p.code}
                     </a>
                   </li>

@@ -37,9 +37,15 @@ const categoryFacets = [...new Set(products.map((p) => p.category))]
     count: products.filter((p) => p.category === value).length,
   }));
 
-// Grid order: stage → category → in-category order → title (stable default sort).
+// Default grid order: live first, then in-development, then planned; within each
+// tier, grouped by stage → category → in-category order → title for stability.
+const liveRank = (p: (typeof products)[number]) => {
+  const ds = displayStatus(p.status);
+  return ds === 'live' ? 0 : ds === 'in-dev' ? 1 : 2;
+};
 const ordered = [...products].sort(
   (a, b) =>
+    liveRank(a) - liveRank(b) ||
     a.stage - b.stage ||
     a.category.localeCompare(b.category) ||
     a.order - b.order ||
@@ -48,8 +54,8 @@ const ordered = [...products].sort(
 ---
 
 <BaseLayout
-  title="Products — g8suite"
-  description="The full g8suite product lineup — one integrated, sovereign suite of operations products."
+  title="Our Solutions — g8suite"
+  description="The full g8suite solutions lineup — one integrated, sovereign suite of operations products."
 >
   <Nav />
   <main id="main" class="pt-24 lg:pt-28">
@@ -132,8 +138,7 @@ const ordered = [...products].sort(
               <label class="flex items-center gap-2 text-sm text-muted">
                 <span class="text-faint">Sort</span>
                 <select data-sort class="rounded-md border border-line bg-card px-3 py-1.5 text-sm text-body focus-visible:ring-2 focus-visible:ring-brass focus-visible:ring-offset-2">
-                  <option value="default">Default</option>
-                  <option value="live">Live first</option>
+                  <option value="default">Live first</option>
                   <option value="name">Name (A–Z)</option>
                 </select>
               </label>
@@ -152,7 +157,7 @@ const ordered = [...products].sort(
                 const ds = displayStatus(p.status);
                 return (
                   <a
-                    href={`/products/${p.code}`}
+                    href={`/our-solutions/${p.code}`}
                     data-card
                     data-status={ds}
                     data-stage={String(p.stage)}
