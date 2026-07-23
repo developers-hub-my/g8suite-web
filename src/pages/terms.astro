@@ -4,11 +4,22 @@ import Nav from '~/components/Nav.astro';
 import Footer from '~/components/Footer.astro';
 
 const updated = 'July 2026';
+
+// Breadcrumb JSON-LD mirroring the visible trail.
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://g8suite.com';
+const breadcrumbSchema = {
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteUrl}/` },
+    { '@type': 'ListItem', position: 2, name: 'Terms of Use' },
+  ],
+};
 ---
 
 <BaseLayout
   title="Terms of Use — g8suite"
   description="The terms governing use of the g8suite marketing website, operated by Developers Hub Sdn Bhd."
+  schemas={[breadcrumbSchema]}
 >
   <Nav />
   <main id="main" class="pt-24 lg:pt-28">

@@ -6,6 +6,8 @@ export interface Props {
   description?: string;
   canonical?: string;
   ogImage?: string;
+  /** Page-specific JSON-LD nodes (e.g. BreadcrumbList, SoftwareApplication) merged into the schema graph. */
+  schemas?: Record<string, unknown>[];
 }
 
 const {
@@ -13,6 +15,7 @@ const {
   description = 'One platform. Your whole operation. Your rules. g8suite is the sovereign, on-premise enterprise operations platform built for governments, banks, healthcare, and regulated organisations across ASEAN and MENA.',
   canonical = Astro.url.href,
   ogImage = '/og-image.png',
+  schemas = [],
 } = Astro.props;
 
 // Google Analytics — renders only when PUBLIC_GA_MEASUREMENT_ID is set at build time.
@@ -21,9 +24,14 @@ const gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
 const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://g8suite.com';
 const absoluteOg = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
 
+// JSON-LD graph — Organization, WebSite and WebPage tied together by @id,
+// plus any page-specific nodes passed in via the `schemas` prop.
+const orgId = `${siteUrl}/#organization`;
+const websiteId = `${siteUrl}/#website`;
+
 const orgSchema = {
-  '@context': 'https://schema.org',
   '@type': 'Organization',
+  '@id': orgId,
   name: 'Developers Hub Sdn Bhd',
   alternateName: 'g8suite',
   url: siteUrl,
@@ -41,6 +49,31 @@ const orgSchema = {
     areaServed: ['MY', 'SG', 'AE', 'SA'],
     availableLanguage: ['English'],
   },
+};
+
+const websiteSchema = {
+  '@type': 'WebSite',
+  '@id': websiteId,
+  name: 'g8suite',
+  url: siteUrl,
+  inLanguage: 'en-GB',
+  publisher: { '@id': orgId },
+};
+
+const webPageSchema = {
+  '@type': 'WebPage',
+  '@id': canonical,
+  name: title,
+  description,
+  url: canonical,
+  inLanguage: 'en-GB',
+  isPartOf: { '@id': websiteId },
+  about: { '@id': orgId },
+};
+
+const schemaGraph = {
+  '@context': 'https://schema.org',
+  '@graph': [orgSchema, websiteSchema, webPageSchema, ...schemas],
 };
 ---
 
@@ -82,7 +115,7 @@ const orgSchema = {
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={absoluteOg} />
 
-    <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} is:inline />
+    <script type="application/ld+json" set:html={JSON.stringify(schemaGraph)} is:inline />
 
     {
       gaId && (
