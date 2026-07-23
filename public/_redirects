@@ -8,3 +8,7 @@ g8desk.com/*        https://g8suite.com/our-solutions/g8desk    301!
 # Route renamed /products → /our-solutions; keep old links and indexed URLs alive.
 /products           /our-solutions          301!
 /products/*         /our-solutions/:splat   301!
+
+# Convenience alias — @astrojs/sitemap emits sitemap-index.xml; robots.txt points
+# there, but anyone typing the conventional name still lands on it.
+/sitemap.xml        /sitemap-index.xml      301!
