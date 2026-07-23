@@ -15,6 +15,9 @@ const {
   ogImage = '/og-image.png',
 } = Astro.props;
 
+// Google Analytics — renders only when PUBLIC_GA_MEASUREMENT_ID is set at build time.
+const gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
+
 const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://g8suite.com';
 const absoluteOg = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
 
@@ -80,6 +83,22 @@ const orgSchema = {
     <meta name="twitter:image" content={absoluteOg} />
 
     <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} is:inline />
+
+    {
+      gaId && (
+        <>
+          <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} />
+          <script is:inline define:vars={{ gaId }}>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+            gtag('config', gaId, { anonymize_ip: true });
+          </script>
+        </>
+      )
+    }
   </head>
   <body class="min-h-screen antialiased">
     <a
