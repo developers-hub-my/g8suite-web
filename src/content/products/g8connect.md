@@ -2,12 +2,14 @@
 code: g8connect
 title: Data-to-API pipelines
 tagline: No-code pipelines that turn data sources into governed APIs.
+domain: https://g8stack.com/products/connect/
 stage: 1
 category: API & Integration
 status: live
 deployment: [oss]
 revenueEngine: open-core
 pricing: Free
+screenshot: /assets/solutions/g8connect.webp
 featured: true
 order: 2
 capabilities:
