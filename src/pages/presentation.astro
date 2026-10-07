@@ -1,0 +1,584 @@
+---
+// Presentation deck — one page, one 16:9 slide per screen. Built for meetings:
+// full screen (F), up/down navigation, print to PDF (P). Not linked from the
+// nav, noindex, and excluded from the sitemap (see astro.config.mjs).
+// Copy is lifted from the site's own sections; products come from the collection.
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { getProducts } from '~/lib/products';
+import {
+  stageLabel,
+  stageBlurb,
+  displayStatus,
+  displayStatusLabel,
+  type Stage,
+  type DisplayStatus,
+} from '~/lib/taxonomy';
+
+const products = await getProducts();
+const total = products.length;
+const byStage = (s: Stage) => products.filter((p) => p.stage === s);
+const live = products.filter((p) => p.status === 'live');
+const host = (url?: string) => (url ? new URL(url).host : undefined);
+
+const statusCount = (['live', 'in-dev', 'planned'] as DisplayStatus[]).map((s) => ({
+  s,
+  label: displayStatusLabel[s],
+  n: products.filter((p) => displayStatus(p.status) === s).length,
+}));
+
+const domains = [
+  { label: 'IT Operations', note: 'The software your organisation runs on', stage: 1 as Stage },
+  { label: 'Business Operations', note: 'How the organisation runs, day to day', stage: 2 as Stage },
+  { label: 'Industry Applications', note: 'Built for your sector, on your terms', stage: 3 as Stage },
+].map((d) => ({ ...d, count: byStage(d.stage).length }));
+
+const without = [
+  'Fifty disconnected SaaS tools, each with its own login',
+  'Identity scattered across every vendor directory',
+  "Audit trails that don't reconcile across systems",
+  'Access governance debt nobody owns',
+  'Half a dozen support contracts at 2am',
+  'Compliance posture only as strong as the weakest vendor',
+];
+const withG8 = [
+  'One integrated platform, one operations model',
+  'One identity model across every product',
+  'One unified audit trail that actually reconciles',
+  'Joiner-mover-leaver wired across the whole suite',
+  'One accountable partnership — one contract, one SLA',
+  'Compliance posture shared by every product',
+];
+
+const pillars = [
+  { title: 'One Platform', body: 'A single, coherent system replacing dozens of disconnected tools — designed and built as one suite, not assembled from acquisitions.' },
+  { title: 'Clear Accountability', body: 'One contract, one SLA, one point of contact. No finger-pointing between suppliers when something needs owning.' },
+  { title: 'One Source of Truth', body: 'Deployed inside your perimeter. Answerable to you — not a cloud provider. Identity, audit, and operations live where your data lives.' },
+];
+
+const differentiators = [
+  { lede: 'One team, one system', title: 'Designed as one, not assembled from acquisitions', bullets: ['Built by one team', 'One identity model', 'No acquired seams'] },
+  { lede: 'Air-gappable, not just self-hosted', title: 'The whole suite runs inside your perimeter', bullets: ['Air-gap supported', 'No phone-home', 'No shared multi-tenant surfaces'] },
+  { lede: 'Proof, not promise', title: 'Products that stand on their own', bullets: ['Live under their own brands', 'Own domains, own markets', 'Nothing forced inward'] },
+  { lede: 'No per-seat tax', title: 'Priced per deployment, not per user', bullets: ['Predictable pricing', 'Headcount-neutral', 'Per-environment licensing'] },
+];
+
+const sectors = [
+  { title: 'Government', tag: 'Sovereignty', controls: ['Data stays in-country', 'In-perimeter, air-gap capable', 'Every citizen-record access audited', 'Governed, provable access'] },
+  { title: 'Banking & Finance', tag: 'Audit & access', controls: ['Audit that reconciles across systems', 'Access certification & segregation of duties', 'IGA-grade identity governance', 'Runs inside your perimeter'] },
+  { title: 'Healthcare', tag: 'Residency', controls: ['Patient data in-jurisdiction', 'Every record access logged', 'Statutory-grade audit', 'Governed clinical access'] },
+  { title: 'Defence & Security', tag: 'Air-gap', controls: ['Whole-suite air-gap', 'No phone-home telemetry', 'Runs fully disconnected', 'Vettable supply chain'] },
+  { title: 'Regulated Mid-Market', tag: 'Consolidation', controls: ['One suite, not a dozen tools', 'Compliance shared by every product', 'Predictable per-deployment cost', 'Scales without a per-seat penalty'] },
+];
+
+const principles = [
+  { title: 'Sovereignty', body: 'Every product runs inside your perimeter. No phone-home telemetry, no external dependencies, no shared multi-tenant surfaces.' },
+  { title: 'Shared Identity', body: 'One identity model flows through every product. No federated stitching, no per-tool user directories.' },
+  { title: 'Shared Audit', body: 'Every action across every product writes to one unified audit trail. One source of evidence for every regulator.' },
+  { title: 'Shared Workflow', body: 'Approvals, escalations, and orchestrations are first-class across the suite. Cross-product processes are designed in.' },
+  { title: 'Event-Driven Integration', body: 'Products communicate over a typed event bus, not point-to-point integrations. Adding a product extends the suite without breaking it.' },
+];
+
+const actions = [
+  { n: '01', title: 'Request a Demo', body: 'See g8suite in a regulated deployment context — built around your sovereignty and compliance requirements.', href: 'mailto:hello@devhub.my?subject=g8suite%20demo%20request' },
+  { n: '02', title: 'Become a Partner', body: 'Join the anchored partner network across ASEAN, MENA, and aligned sovereignty markets.', href: 'mailto:hello@devhub.my?subject=g8suite%20partner%20enquiry' },
+  { n: '03', title: 'Start a Conversation', body: "Tell us what you're working on — we'll respond within one business day.", href: 'mailto:hello@devhub.my' },
+];
+
+const stages: { stage: Stage; cols: number; detail: boolean }[] = [
+  { stage: 1, cols: 4, detail: false },
+  { stage: 2, cols: 3, detail: true },
+  { stage: 3, cols: 2, detail: true },
+];
+---
+
+<BaseLayout
+  title="g8suite — Presentation"
+  description="g8suite presentation deck — the sovereign enterprise operations platform."
+  noindex
+>
+  <div class="bar" data-deck-bar aria-hidden="true"></div>
+
+  <main id="main">
+    <!-- 1 · Cover -->
+    <section class="slide" id="s-1" aria-label="Cover">
+      <div class="frame frame-cover">
+        <div class="grid-ground ground" aria-hidden="true"></div>
+        <div class="perimeter cover">
+          <span class="corner-bl" aria-hidden="true"></span>
+          <span class="corner-br" aria-hidden="true"></span>
+          <div class="cover-rail">
+            <span class="wordmark"><span class="g8">g8</span>suite</span>
+            <span class="mono">01°28′N&nbsp;103°45′E · Johor Bahru</span>
+          </div>
+          <div class="cover-body">
+            <p class="kicker">Sovereign · Integrated · Yours</p>
+            <h1>Run your whole operation<br />inside <span class="accent">your own walls.</span></h1>
+            <p class="lead">
+              An integrated operations suite for regulated organisations — designed and built as one
+              system, and run entirely inside your perimeter. Answerable to you, not to a cloud provider.
+            </p>
+          </div>
+          <dl class="readout">
+            <div><dt>Deployment</dt><dd>On-prem / air-gapped</dd></div>
+            <div><dt>Ecosystem</dt><dd>{total} products, one suite</dd></div>
+            <div><dt>Coverage</dt><dd>IT, business &amp; industry</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 · Problem -->
+    <section class="slide" id="s-2" aria-label="The problem">
+      <div class="frame">
+        <p class="kicker">The problem</p>
+        <h2>Most organisations don't have a software problem.<br />They have a software <span class="accent">sprawl</span> problem.</h2>
+        <div class="body">
+          <div class="g2">
+            <div class="card">
+              <span class="tag tag-faint">Without g8suite</span>
+              <h3>Tool sprawl, vendor sprawl, audit sprawl</h3>
+              <ul class="list list-x">{without.map((t) => <li>{t}</li>)}</ul>
+            </div>
+            <div class="card card-accent">
+              <span class="tag">With g8suite</span>
+              <h3>One platform. One audit. One partnership.</h3>
+              <ul class="list list-check">{withG8.map((t) => <li>{t}</li>)}</ul>
+            </div>
+          </div>
+        </div>
+        <div class="foot"><span class="wordmark"><span class="g8">g8</span>suite</span><span class="pg"></span></div>
+      </div>
+    </section>
+
+    <!-- 3 · Platform -->
+    <section class="slide" id="s-3" aria-label="The platform">
+      <div class="frame">
+        <p class="kicker">The platform</p>
+        <h2>One suite that completes your operations ecosystem.</h2>
+        <p class="lead">
+          Identity, audit and workflow shared across all {total} products — spanning IT, business and
+          industry operations. Built as one, not assembled from a dozen vendors.
+        </p>
+        <div class="body">
+          <div class="g3">
+            {pillars.map((p) => (
+              <div class="card"><h3>{p.title}</h3><p>{p.body}</p></div>
+            ))}
+          </div>
+          <div class="g3">
+            {domains.map((d) => (
+              <div class="domain">
+                <span class="num">{d.count}</span>
+                <div><b>{d.label}</b><span>{d.note}</span></div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div class="foot"><span class="wordmark"><span class="g8">g8</span>suite</span><span class="pg"></span></div>
+      </div>
+    </section>
+
+    <!-- 4 · Differentiators -->
+    <section class="slide" id="s-4" aria-label="Differentiators">
+      <div class="frame">
+        <p class="kicker">Differentiators</p>
+        <h2>What makes g8suite different</h2>
+        <div class="body">
+          <div class="g2">
+            {differentiators.map((d, i) => (
+              <div class="card">
+                <span class="tag"><span class="mono">{String(i + 1).padStart(2, '0')}</span> · {d.lede}</span>
+                <h3>{d.title}</h3>
+                <ul class="chips">{d.bullets.map((b) => <li>{b}</li>)}</ul>
+              </div>
+            ))}
+          </div>
+          <p class="callout">
+            g8stack.com, gatherhub.app, nadi.pro, g8desk.com, waumail.my and g8deck.app are live in
+            production today — built in the suite, sold under their own brands, on their own domains.
+          </p>
+        </div>
+        <div class="foot"><span class="wordmark"><span class="g8">g8</span>suite</span><span class="pg"></span></div>
+      </div>
+    </section>
+
+    <!-- 5 · Who it's for -->
+    <section class="slide" id="s-5" aria-label="Who it's for">
+      <div class="frame">
+        <p class="kicker">Who it's for</p>
+        <h2>Built for organisations that answer to a regulator.</h2>
+        <div class="body">
+          <div class="g5">
+            {sectors.map((s) => (
+              <div class="card">
+                <span class="tag">{s.tag}</span>
+                <h3>{s.title}</h3>
+                <ul class="list list-check list-sm">{s.controls.map((c) => <li>{c}</li>)}</ul>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div class="foot"><span class="wordmark"><span class="g8">g8</span>suite</span><span class="pg"></span></div>
+      </div>
+    </section>
+
+    <!-- 6–8 · The three stages, straight from the products collection -->
+    {stages.map(({ stage, cols, detail }, i) => (
+      <section class="slide" id={`s-${6 + i}`} aria-label={stageLabel[stage]}>
+        <div class="frame">
+          <p class="kicker">{stageLabel[stage]} · {byStage(stage).length} products</p>
+          <h2 class="h2-sm">{stageBlurb[stage]}</h2>
+          <div class="body">
+            <div class={`tiles ${detail ? 'tiles-detail' : ''}`} style={`grid-template-columns:repeat(${cols},1fr)`}>
+              {byStage(stage).map((p) => {
+                const ds = displayStatus(p.status);
+                return (
+                  <a class="tile" href={`/our-solutions/${p.code}`}>
+                    <span class="tile-top">
+                      <span class="mono code">{p.code}</span>
+                      <span class={`status status-${ds}`}>{displayStatusLabel[ds]}</span>
+                    </span>
+                    <b>{p.title}</b>
+                    {detail && <span class="tile-line">{p.tagline}</span>}
+                    {p.domain && <span class="mono tile-domain">{host(p.domain)}</span>}
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+          <div class="foot"><span class="wordmark"><span class="g8">g8</span>suite</span><span class="pg"></span></div>
+        </div>
+      </section>
+    ))}
+
+    <!-- 9 · Live today -->
+    <section class="slide" id="s-9" aria-label="Live today">
+      <div class="frame">
+        <p class="kicker">Proof, not promise</p>
+        <h2>Live in production today</h2>
+        <div class="body">
+          <div class="live-grid">
+            {live.map((p) => (
+              <a class="live-row" href={`/our-solutions/${p.code}`}>
+                <span class="mono code">{p.code}</span>
+                <b>{p.title}</b>
+                <span class="mono tile-domain">{host(p.domain) ?? ''}</span>
+              </a>
+            ))}
+          </div>
+          <div class="counts">
+            {statusCount.map((c) => (
+              <span><span class={`status status-${c.s}`}>{c.label}</span> <b>{c.n}</b></span>
+            ))}
+            <span class="faint">of {total} products</span>
+          </div>
+        </div>
+        <div class="foot"><span class="wordmark"><span class="g8">g8</span>suite</span><span class="pg"></span></div>
+      </div>
+    </section>
+
+    <!-- 10 · Principles -->
+    <section class="slide" id="s-10" aria-label="Architectural principles">
+      <div class="frame">
+        <p class="kicker">Architectural principles</p>
+        <h2>Why the suite holds together.</h2>
+        <div class="body">
+          <ol class="g5 principles">
+            {principles.map((p, i) => (
+              <li class="card">
+                <span class="num">{String(i + 1).padStart(2, '0')}</span>
+                <h3>{p.title}</h3>
+                <p>{p.body}</p>
+              </li>
+            ))}
+          </ol>
+          <p class="callout callout-green">
+            These five principles are non-negotiable. Every product that joins the suite must observe all
+            five — or it doesn't join the suite.
+          </p>
+        </div>
+        <div class="foot"><span class="wordmark"><span class="g8">g8</span>suite</span><span class="pg"></span></div>
+      </div>
+    </section>
+
+    <!-- 11 · Contact -->
+    <section class="slide" id="s-11" aria-label="Contact">
+      <div class="frame frame-cover">
+        <div class="grid-ground ground" aria-hidden="true"></div>
+        <div class="perimeter cover">
+          <span class="corner-bl" aria-hidden="true"></span>
+          <span class="corner-br" aria-hidden="true"></span>
+          <div class="g2 contact">
+            <div>
+              <p class="kicker">Contact</p>
+              <h2>Ready to consolidate your stack?</h2>
+              <p class="lead">
+                Let's talk about what g8suite looks like inside your organisation — your perimeter, your
+                compliance posture, your operating doctrine.
+              </p>
+              <p class="tagline">Sovereign. <span class="accent">Integrated.</span> Yours.</p>
+            </div>
+            <div class="actions">
+              {actions.map((a) => (
+                <a class="card action" href={a.href}>
+                  <span class="mono code">{a.n}</span>
+                  <span><b>{a.title}</b><span class="tile-line">{a.body}</span></span>
+                </a>
+              ))}
+              <p class="faint company">hello@devhub.my · Developers Hub Sdn Bhd · Johor Bahru, Malaysia</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="help" data-deck-help>
+    <kbd>↑</kbd> <kbd>↓</kbd> or <kbd>PgUp</kbd> <kbd>PgDn</kbd> to move · <kbd>F</kbd> full screen · <kbd>P</kbd> print to PDF
+  </div>
+  <div class="ctrl">
+    <span class="count" data-deck-count aria-live="polite"></span>
+    <button type="button" data-deck-prev aria-label="Previous slide">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="18 15 12 9 6 15" /></svg>
+    </button>
+    <button type="button" data-deck-next aria-label="Next slide">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9" /></svg>
+    </button>
+    <button type="button" data-deck-theme aria-label="Toggle colour theme">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>
+    </button>
+    <button type="button" data-deck-full aria-label="Toggle full screen">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3" /></svg>
+    </button>
+  </div>
+</BaseLayout>
+
+<style>
+  /* ── Stage & 16:9 frame — everything inside scales with the frame (em) ── */
+  :global(html) { scroll-snap-type: y mandatory; }
+  :global(body) { background: rgb(var(--soft)); counter-reset: pg; }
+
+  .slide {
+    height: 100vh; height: 100dvh;
+    display: grid; place-items: center;
+    scroll-snap-align: start; scroll-snap-stop: always;
+  }
+  .frame {
+    position: relative; overflow: hidden;
+    width: min(100vw, 177.78dvh); height: min(56.25vw, 100dvh);
+    font-size: calc(min(100vw, 177.78dvh) / 51);
+    padding: 2.4em 3em 2.4em;
+    display: flex; flex-direction: column;
+    background: rgb(var(--bg)); color: rgb(var(--text));
+    line-height: 1.45; counter-increment: pg;
+    print-color-adjust: exact; -webkit-print-color-adjust: exact;
+  }
+  .frame-cover { padding: 2em 2.4em; }
+  .ground { position: absolute; inset: 0; background-size: 2.4em 2.4em; }
+  .frame-cover::after {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(60% 50% at 80% 0%, rgb(var(--brass) / 0.08), transparent 60%);
+  }
+
+  /* ── Type ── */
+  h1 { font-size: 3.2em; font-weight: 700; line-height: 1.03; letter-spacing: -0.02em; margin: 0; }
+  h2 { font-size: 1.8em; font-weight: 600; line-height: 1.1; margin: 0; }
+  h3 { font-size: 0.95em; font-weight: 600; margin: 0 0 0.45em; }
+  p { margin: 0; }
+  .h2-sm { font-size: 1.45em; }
+  .accent { color: rgb(var(--brass)); }
+  .faint { color: rgb(var(--text-faint)); }
+  .mono { font-family: theme('fontFamily.mono'); }
+  .code { color: rgb(var(--brass)); font-size: 0.78em; font-weight: 500; }
+  .lead { font-size: 0.95em; color: rgb(var(--text-muted)); max-width: 40em; margin-top: 0.6em; }
+  .kicker {
+    display: inline-flex; align-items: center; gap: 0.5em; margin: 0 0 0.8em;
+    font-size: 0.68em; font-weight: 600; color: rgb(var(--brass));
+  }
+  .kicker::before {
+    content: ''; width: 0.7em; height: 0.7em; background: rgb(var(--brass));
+    clip-path: polygon(0 0, 100% 0, 100% 100%);
+  }
+  .wordmark { font-family: theme('fontFamily.display'); font-weight: 700; letter-spacing: -0.01em; }
+  .wordmark .g8 { color: rgb(var(--g8-blue)); }
+
+  /* ── Layout ── */
+  .body { flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: safe center; gap: 0.9em; margin-top: 1em; padding-bottom: 0.6em; }
+  .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1em; }
+  .g3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.9em; }
+  .g5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.7em; margin: 0; padding: 0; list-style: none; }
+
+  .card { background: rgb(var(--card)); border: 1px solid rgb(var(--line)); padding: 1em 1.1em; }
+  .card p { font-size: 0.78em; color: rgb(var(--text-muted)); }
+  .card-accent { background: rgb(var(--card-2)); border: 2px solid rgb(var(--brass) / 0.4); }
+  .tag { display: block; font-size: 0.62em; font-weight: 600; color: rgb(var(--brass)); margin-bottom: 0.5em; }
+  .tag-faint { color: rgb(var(--text-faint)); }
+  .num { font-family: theme('fontFamily.mono'); font-weight: 700; font-size: 1.6em; line-height: 1; color: rgb(var(--brass)); }
+
+  .list { margin: 0; padding: 0; list-style: none; }
+  .list li { position: relative; padding-left: 1.4em; font-size: 0.78em; margin-top: 0.5em; color: rgb(var(--text-muted)); }
+  .list-check li { color: rgb(var(--text)); }
+  .list li::before { position: absolute; left: 0; font-weight: 700; }
+  .list-x li::before { content: '×'; color: rgb(var(--text-faint)); }
+  .list-check li::before { content: '✓'; color: rgb(var(--green)); }
+  .list-sm li { font-size: 0.66em; margin-top: 0.4em; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 0.4em; margin: 0.4em 0 0; padding: 0; list-style: none; }
+  .chips li { font-size: 0.66em; border: 1px solid rgb(var(--line)); background: rgb(var(--soft)); padding: 0.25em 0.7em; }
+
+  .callout { border-left: 0.14em solid rgb(var(--brass)); background: rgb(var(--brass) / 0.06); padding: 0.8em 1em; font-size: 0.8em; }
+  .callout-green { border-color: rgb(var(--green)); background: rgb(var(--green) / 0.06); }
+
+  .domain { display: flex; align-items: center; gap: 0.8em; border-top: 2px solid rgb(var(--brass)); padding-top: 0.7em; }
+  .domain b { display: block; font-size: 0.85em; }
+  .domain span:not(.num) { font-size: 0.7em; color: rgb(var(--text-muted)); }
+
+  /* ── Product tiles ── */
+  .tiles { display: grid; gap: 0.5em; }
+  .tiles:not(.tiles-detail) .tile { padding: 0.45em 0.7em; }
+  .tile, .live-row {
+    display: flex; flex-direction: column; gap: 0.2em; padding: 0.6em 0.8em;
+    background: rgb(var(--card)); border: 1px solid rgb(var(--line)); color: inherit; text-decoration: none;
+    transition: border-color 0.15s;
+  }
+  .tile:hover, .live-row:hover, .action:hover { border-color: rgb(var(--brass)); }
+  .tile b { font-size: 0.74em; font-weight: 600; line-height: 1.25; }
+  .tiles-detail .tile { padding: 1em 1.1em; gap: 0.35em; }
+  .tiles-detail .tile b { font-size: 0.95em; }
+  .tile-top { display: flex; justify-content: space-between; align-items: center; gap: 0.5em; }
+  .tile-line { display: block; font-size: 0.7em; color: rgb(var(--text-muted)); }
+  .tiles-detail .tile-line { font-size: 0.78em; }
+  .tile-domain { font-size: 0.66em; color: rgb(var(--text-faint)); }
+
+  .status { font-size: 0.56em; font-weight: 600; padding: 0.15em 0.6em; border: 1px solid; white-space: nowrap; }
+  .status-live { color: rgb(var(--green)); border-color: rgb(var(--green) / 0.5); background: rgb(var(--green) / 0.1); }
+  .status-in-dev { color: rgb(var(--brass)); border-color: rgb(var(--brass) / 0.5); background: rgb(var(--brass) / 0.1); }
+  .status-planned { color: rgb(var(--text-muted)); border-color: rgb(var(--line-strong)); background: rgb(var(--soft)); }
+
+  .live-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.55em; }
+  .live-row { flex-direction: row; align-items: center; gap: 1em; }
+  .live-row > .code { width: 6em; flex-shrink: 0; }
+  .live-row > b { flex: 1; }
+  .live-row { padding: 0.7em 0.9em; }
+  .live-row b { font-size: 0.85em; }
+  .counts { display: flex; align-items: center; gap: 1.4em; font-size: 0.85em; }
+  .counts .status { font-size: 0.7em; }
+
+  .principles .card { display: flex; flex-direction: column; gap: 0.5em; padding: 0.9em; }
+  .principles h3 { margin: 0; font-size: 0.85em; }
+  .principles p { font-size: 0.66em; }
+  .principles .num { font-size: 1.2em; }
+
+  /* ── Cover & contact ── */
+  .cover { position: relative; z-index: 1; flex: 1; display: flex; flex-direction: column; background: rgb(var(--soft) / 0.5); }
+  .cover-rail { display: flex; justify-content: space-between; align-items: center; padding: 0.8em 1.4em; border-bottom: 1px solid rgb(var(--line)); }
+  .cover-rail .wordmark { font-size: 1.1em; }
+  .cover-rail .mono { font-size: 0.6em; color: rgb(var(--text-faint)); }
+  .cover-body { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 0 1.4em; }
+  .cover-body .lead { font-size: 1em; max-width: 32em; margin-top: 1em; }
+  .readout { display: grid; grid-template-columns: repeat(3, 1fr); margin: 0; border-top: 1px solid rgb(var(--line)); }
+  .readout div { padding: 0.8em 1.4em; }
+  .readout div + div { border-left: 1px solid rgb(var(--line)); }
+  .readout dt { font-size: 0.6em; color: rgb(var(--text-faint)); }
+  .readout dd { margin: 0.2em 0 0; font-size: 0.8em; font-weight: 600; }
+
+  .contact { flex: 1; align-items: center; gap: 2em; padding: 0 1.8em; }
+  .contact .tagline { font-family: theme('fontFamily.display'); font-weight: 700; font-size: 1.2em; margin-top: 1.2em; }
+  .actions { display: flex; flex-direction: column; gap: 0.6em; }
+  .action { display: flex; gap: 1em; color: inherit; text-decoration: none; transition: border-color 0.15s; }
+  .action b { font-size: 0.85em; }
+  .company { font-size: 0.6em; margin-top: 0.4em; }
+
+  .foot {
+    position: absolute; left: 3em; right: 3em; bottom: 1em;
+    display: flex; justify-content: space-between; font-size: 0.55em; color: rgb(var(--text-faint));
+  }
+  .foot .pg::after { content: counter(pg); }
+
+  /* ── Screen chrome ── */
+  .bar { position: fixed; top: 0; left: 0; height: 3px; width: 0; background: rgb(var(--brass)); z-index: 20; transition: width 0.15s linear; }
+  .ctrl { position: fixed; right: 1rem; bottom: 1rem; z-index: 20; display: flex; gap: 0.4rem; align-items: center; }
+  .ctrl button {
+    width: 40px; height: 40px; display: grid; place-items: center; cursor: pointer;
+    border: 1px solid rgb(var(--line)); background: rgb(var(--card) / 0.92); color: rgb(var(--text-muted));
+    border-radius: 6px; transition: border-color 0.15s, color 0.15s;
+  }
+  .ctrl button:hover { border-color: rgb(var(--brass)); color: rgb(var(--text)); }
+  .ctrl svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .count { font: 500 12px/1 theme('fontFamily.mono'); color: rgb(var(--text-faint)); padding: 0 0.4rem; }
+  .help {
+    position: fixed; left: 50%; bottom: 1rem; transform: translateX(-50%); z-index: 20;
+    font-size: 12px; color: rgb(var(--text-muted)); background: rgb(var(--card) / 0.95);
+    border: 1px solid rgb(var(--line)); border-radius: 999px; padding: 0.5em 1.1em; transition: opacity 0.4s;
+  }
+  .help.gone { opacity: 0; pointer-events: none; }
+  .help kbd { font: 500 11px theme('fontFamily.mono'); border: 1px solid rgb(var(--line)); border-radius: 4px; padding: 0.1em 0.4em; }
+
+  /* ── Print: one 16:9 page per slide ── */
+  @media print {
+    @page { size: 338.67mm 190.5mm; margin: 0; }
+    :global(html) { scroll-snap-type: none; }
+    .slide { height: auto; display: block; break-after: page; }
+    .slide:last-child { break-after: auto; }
+    .frame { width: 338.67mm; height: 190.5mm; font-size: 6.64mm; }
+    .bar, .ctrl, .help { display: none; }
+  }
+</style>
+
+<script>
+  const slides = Array.from(document.querySelectorAll<HTMLElement>('.slide'));
+  const bar = document.querySelector<HTMLElement>('[data-deck-bar]')!;
+  const count = document.querySelector<HTMLElement>('[data-deck-count]')!;
+  const help = document.querySelector<HTMLElement>('[data-deck-help]');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const total = slides.length;
+  let i = 0;
+
+  const paint = () => {
+    bar.style.width = `${((i + 1) / total) * 100}%`;
+    count.textContent = `${i + 1} / ${total}`;
+    history.replaceState(null, '', `#s-${i + 1}`);
+  };
+  const go = (n: number) => {
+    i = Math.max(0, Math.min(total - 1, n));
+    slides[i].scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    paint();
+  };
+  const toggleFull = () =>
+    document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+
+  // Keep the counter honest when the presenter scrolls or swipes instead.
+  const io = new IntersectionObserver(
+    (entries) => entries.forEach((e) => {
+      if (e.isIntersecting) { i = slides.indexOf(e.target as HTMLElement); paint(); }
+    }),
+    { threshold: 0.55 },
+  );
+  slides.forEach((s) => io.observe(s));
+
+  document.addEventListener('keydown', (e) => {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    const k = e.key;
+    const act: Record<string, () => void> = {
+      ArrowDown: () => go(i + 1), ArrowRight: () => go(i + 1), PageDown: () => go(i + 1), ' ': () => go(i + 1), j: () => go(i + 1),
+      ArrowUp: () => go(i - 1), ArrowLeft: () => go(i - 1), PageUp: () => go(i - 1), k: () => go(i - 1),
+      Home: () => go(0), End: () => go(total - 1),
+      f: toggleFull, F: toggleFull, p: () => window.print(), P: () => window.print(),
+    };
+    if (act[k]) { e.preventDefault(); act[k](); }
+    help?.classList.add('gone');
+  });
+
+  document.querySelector('[data-deck-next]')!.addEventListener('click', () => go(i + 1));
+  document.querySelector('[data-deck-prev]')!.addEventListener('click', () => go(i - 1));
+  document.querySelector('[data-deck-full]')!.addEventListener('click', toggleFull);
+  document.querySelector('[data-deck-theme]')!.addEventListener('click', () => {
+    const isDark = document.documentElement.classList.toggle('dark');
+    try { localStorage.setItem('theme', isDark ? 'dark' : 'light'); } catch {}
+  });
+  setTimeout(() => help?.classList.add('gone'), 9000);
+
+  // Deep link: /presentation#s-4 opens on slide 4.
+  const start = Number(location.hash.match(/^#s-(\d+)$/)?.[1] ?? 1) - 1;
+  if (start > 0) go(start); else paint();
+</script>

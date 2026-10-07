@@ -9,7 +9,7 @@ export default defineConfig({
   integrations: [
     tailwind({ applyBaseStyles: false }),
     icon({ include: { lucide: ['*'] } }),
-    sitemap(),
+    sitemap({ filter: (page) => !page.includes('/presentation') }),
   ],
   build: {
     inlineStylesheets: 'auto',

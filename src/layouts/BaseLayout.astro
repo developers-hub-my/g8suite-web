@@ -8,6 +8,8 @@ export interface Props {
   ogImage?: string;
   /** Page-specific JSON-LD nodes (e.g. BreadcrumbList, SoftwareApplication) merged into the schema graph. */
   schemas?: Record<string, unknown>[];
+  /** Keep the page out of search results (e.g. the /presentation deck). */
+  noindex?: boolean;
 }
 
 const {
@@ -16,6 +18,7 @@ const {
   canonical = Astro.url.href,
   ogImage = '/og-image.png',
   schemas = [],
+  noindex = false,
 } = Astro.props;
 
 // Google Analytics — renders only when PUBLIC_GA_MEASUREMENT_ID is set at build time.
@@ -99,6 +102,7 @@ const schemaGraph = {
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
