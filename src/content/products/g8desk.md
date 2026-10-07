@@ -2,9 +2,11 @@
 code: g8desk
 title: Service desk & ticketing
 tagline: Service desk and ticketing across the organisation.
+domain: https://g8desk.com
 stage: 1
 category: Service Management
 status: live
+screenshot: /assets/solutions/g8desk.webp
 deployment: [hybrid]
 revenueEngine: managed-saas
 pricing: Seat SaaS or perpetual + support

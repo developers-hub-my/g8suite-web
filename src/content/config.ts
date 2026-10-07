@@ -48,6 +48,7 @@ const products = defineCollection({
     capabilities: z.array(z.string()).default([]),
     spine: z.array(z.string()).default([]), // spine services consumed/emitted: g8id, g8audit, g8flow, g8scope
     note: z.string().optional(), // sovereignty / architecture caveat
+    screenshot: z.string().optional(), // '/assets/solutions/<code>.webp' — 1280×720 capture of the live site
 
     // presentation control
     featured: z.boolean().default(false), // surface on homepage lineup

@@ -7,6 +7,7 @@ domain: https://waumail.my
 stage: 1
 category: Dev Tooling
 status: live
+screenshot: /assets/solutions/g8mail.webp
 deployment: [saas]
 revenueEngine: managed-saas
 pricing: Free → RM 149/mo

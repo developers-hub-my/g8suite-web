@@ -2,13 +2,14 @@
 code: g8deck
 title: Provisioning & deployment
 tagline: Provisioning and platform operations for the whole suite.
+domain: https://g8deck.app
 stage: 1
 category: Infrastructure & Deployment
-status: upcoming
-statusDate: This quarter
+status: live
 deployment: [hybrid]
 revenueEngine: managed-saas
 pricing: SaaS or perpetual + support
+screenshot: /assets/solutions/g8deck.webp
 featured: true
 order: 1
 capabilities:

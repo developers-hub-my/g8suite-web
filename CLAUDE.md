@@ -64,7 +64,7 @@ src/
 - **Stage 3 · Industry Applications (4):** g8member, g8gather (gatherhub), g8pos (warung.my), g8research (kajian.space) — built in the suite, sold standalone under their own brands.
 - **Status** is one of `live | upcoming | in_progress | roadmap | brd`; the detail-page **tier** (Full/Preview/Interest) and every badge derive from it — never store a separate tier. `live` gets the green pill.
 - **g8desk** is live and classified as a **Stage 1** service-management product (it was previously sequenced under business operations).
-- **External-brand products** (`alias` + `domain`: g8scope→nadi.pro, g8mail→waumail.my, g8gather→gatherhub.app, g8pos→warung.my, g8research→kajian.space) **link out** to their own domain from their detail page — never redirect inward, so brand equity stays with them. `g8scope` is the observability product delivered as the **nadi.pro** app.
+- **Products with their own live site** set `domain` (g8deck→g8deck.app, g8stack→g8stack.com, g8desk→g8desk.com); external brands also set `alias` (g8scope→nadi.pro, g8mail→waumail.my, g8gather→gatherhub.app, g8pos→warung.my, g8research→kajian.space). Every product keeps its own detail page here, which **links out** (new tab) to the domain — never redirect a product domain inward, so brand equity stays with it. g8desk.com is live and open to the public (also used internally by Developers Hub). `g8scope` is the observability product delivered as the **nadi.pro** app.
 - **Pricing is never displayed.** The `pricing` frontmatter field is internal record only; every price surface renders "Contact us for more details" (enterprise sales motion).
 
 ## Design system — "Sovereign Instrument"

@@ -7,6 +7,7 @@ domain: https://gatherhub.app
 stage: 3
 category: Events
 status: live
+screenshot: /assets/solutions/g8gather.webp
 deployment: [saas]
 revenueEngine: managed-saas
 pricing: 3% + RM 1 / txn

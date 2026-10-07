@@ -2,9 +2,11 @@
 code: g8stack
 title: API platform & gateway
 tagline: One governed API layer every deployed system routes through.
+domain: https://g8stack.com
 stage: 1
 category: API & Integration
 status: live
+screenshot: /assets/solutions/g8stack.webp
 deployment: [on-prem]
 revenueEngine: enterprise-licence
 pricing: From RM 65k + support
