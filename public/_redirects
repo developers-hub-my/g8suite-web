@@ -1,6 +1,6 @@
 # Legacy paths → canonical solution pages.
-# Product domains (g8deck.app, g8stack.com, g8desk.com, gatherhub.app, waumail.my,
-# nadi.pro, warung.my, kajian.space) deliberately DO NOT redirect inward — each
+# Product domains (g8deck.com, g8stack.com, g8desk.com, g8id.com, gatherhub.app, waumail.my,
+# bliptrace.com, warung.my, janesweeper.g8deck.com, academy.devhub.my) deliberately DO NOT redirect inward — each
 # product has its own detail page here that links OUT to its live site.
 
 # Route renamed /products → /our-solutions; keep old links and indexed URLs alive.

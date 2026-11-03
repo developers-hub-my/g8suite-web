@@ -1,20 +1,26 @@
 ---
 code: g8pos
 title: Point of sale
-tagline: Point of sale and retail operations.
-alias: warung.my
+tagline: Offline-first point of sale for food and beverage businesses.
+alias: Warung
 domain: https://warung.my
 stage: 3
 category: Retail / POS
-status: in_progress
+status: upcoming
+statusDate: Public beta
+screenshot: /assets/solutions/g8pos.webp
 deployment: [saas]
 revenueEngine: managed-saas
-pricing: TBC
+pricing: Free / Pro / Business
 order: 1
+capabilities:
+  - "Phone-based till that keeps taking orders offline"
+  - "Receipts by thermal print, link, email or WhatsApp"
+  - "Table management and kitchen display"
+  - "Self-serve sign-up and plans"
+  - "Malay and English interface"
 ---
 
-<!-- TODO: replace with approved marketing copy. Structural facts only from
-     spec §9; capabilities left empty pending sign-off — do not invent claims. -->
-
-g8pos is delivered as the warung.my application — point of sale and retail
-operations. Open it there to sign in and use it.
+g8pos is delivered as Warung (warung.my), an offline-first point of sale for
+small food and beverage businesses. It runs on a phone, keeps taking orders
+when the connection drops, and is in public beta.

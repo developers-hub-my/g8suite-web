@@ -1,20 +1,26 @@
 ---
 code: g8member
 title: Membership management
-tagline: Membership management for member-based organisations.
+tagline: Membership management for associations, societies and member-based organisations.
+alias: Homelor
 stage: 3
 category: Membership
-status: upcoming
-statusDate: Jul 2026
+status: live
 deployment: [hybrid]
 revenueEngine: enterprise-licence
 pricing: From RM 20k
 order: 1
-spine: [g8id, g8audit]
+capabilities:
+  - "Member portal — status, fees, digital member card and profile"
+  - "Applications and committee review"
+  - "Invoices, reminders and arrears tracking"
+  - "Broadcasts to member segments"
+  - "Governance calendar and leadership dashboard"
+spine: []
+note: "Sold standalone as Homelor; each organisation runs its own dedicated instance."
 ---
 
-<!-- TODO: replace with approved marketing copy. Structural facts only from
-     spec §9; capabilities left empty pending sign-off — do not invent claims. -->
-
-g8member manages membership for member-based organisations, built in the
-suite and sold standalone.
+g8member is sold standalone as Homelor. Each organisation gets its own
+dedicated instance — a member portal, applications, fees and arrears,
+broadcasts and a leadership view of the organisation's health. Live in
+production.
