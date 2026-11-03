@@ -21,3 +21,9 @@ export async function getProducts(): Promise<Product[]> {
 export async function getStageProducts(stage: Stage): Promise<Product[]> {
   return (await getProducts()).filter((p) => p.stage === stage);
 }
+
+// Standalone brands (Bliptrace, Homelor, GatherHub…) show their real name; suite
+// modules (g8stack, g8deck…) keep the code. The code stays the URL slug either way.
+export const productName = (p: Pick<Product, 'code' | 'alias'>): string => p.alias ?? p.code;
+// Codes are data → mono; brand names are names → display face.
+export const nameFont = (p: Pick<Product, 'alias'>): string => (p.alias ? 'font-display' : 'font-mono');

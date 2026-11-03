@@ -14,12 +14,15 @@ featured: true
 order: 1
 capabilities:
   - "Consumers, services, routes and rate limits under one control plane"
-  - "Central API governance and policy"
+  - "Gateway sync console with orphan clean-up and a full audit trail"
+  - "Import APIs from OpenAPI specifications and other gateways"
+  - "WebSocket APIs alongside REST"
+  - "API usage reporting"
   - "Runs entirely on your own infrastructure"
-spine: [g8id, g8audit]
+spine: [g8connect, g8desk]
 ---
 
-g8stack manages consumers, services, routes, and rate limits with central
+g8stack manages consumers, services, routes and rate limits with central
 governance layered on top. It runs entirely inside your perimeter — the
-integration layer of the suite, not a hosted gateway you rent. Admin identity
-uses the shared identity model; every action writes to the shared audit trail.
+integration layer of the suite, not a hosted gateway you rent. Every action
+writes to the audit trail.

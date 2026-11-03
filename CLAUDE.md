@@ -45,7 +45,7 @@ src/
 │   └── ui/  → SectionHeader, PrincipleCard
 ├── content/
 │   ├── config.ts               # Zod schema for the `products` collection
-│   └── products/<code>.md      # one file per product — single source of truth (26 files)
+│   └── products/<code>.md      # one file per product — single source of truth (31 files)
 ├── lib/
 │   ├── taxonomy.ts             # stage/status/tier/deployment/engine → label + badge maps
 │   └── products.ts             # getProducts() / getStageProducts() — the shared fetch
@@ -58,13 +58,15 @@ src/
 
 **Product data is a typed Astro content collection.** One Markdown file per product under `src/content/products/`, validated by the Zod schema in `src/content/config.ts`; the filename **is** the `code` **is** the slug. Nav, Footer, `Stage1Products`, `Stage2Products` and both `/products` pages all read it via `src/lib/products.ts` — never hard-code product names/status in components, and add a product by dropping in a Markdown file (no template edits). The build fails on any schema violation. See `documentation/products.md` for the full content-model spec.
 
-**Three-stage product model** (26 products):
-- **Stage 1 · IT Operations (16):** g8stack, g8connect, g8id, g8shield, g8vault, g8key, g8scope, g8monitor, g8deck, g8flow, g8work, g8test, g8mail, g8audit, g8board, g8desk.
-- **Stage 2 · Business Operations (6):** g8hr, g8finance, g8docs, g8procure, g8crm, g8cdp.
-- **Stage 3 · Industry Applications (4):** g8member, g8gather (gatherhub), g8pos (warung.my), g8research (kajian.space) — built in the suite, sold standalone under their own brands.
+**Three-stage product model** (31 products, last refreshed 2026-11-03 from the repos under ~/Products):
+- **Stage 1 · IT Operations (18):** g8stack, g8connect, g8id, g8shield, g8vault, g8key, g8scope, g8monitor, g8deck, g8sweep, g8secure, g8flow, g8work, g8test, g8mail, g8audit, g8board, g8desk.
+- **Stage 2 · Business Operations (8):** g8hr, g8finance, g8docs, g8procure, g8crm, g8cdp, g8asset, g8hours.
+- **Stage 3 · Industry Applications (5):** g8member, g8gather, g8pos, g8research, g8academy — built in the suite, sold standalone under their own brands.
+- **Real names over codes.** When a product has its own brand, `alias` holds it and the site shows that name (via `productName()` in `src/lib/products.ts`) with the code as a small mono sub-line: g8scope→Bliptrace, g8mail→Wau, g8member→Homelor, g8gather→GatherHub, g8pos→Warung, g8research→Kajian.Space, g8sweep→JaneSweeper, g8secure→Tenggi, g8hours→Workprint, g8academy→DevHub Academy. g8stack, g8deck and the other g8* products keep their code as the name. The code stays the URL slug.
 - **Status** is one of `live | upcoming | in_progress | roadmap | brd`; the detail-page **tier** (Full/Preview/Interest) and every badge derive from it — never store a separate tier. `live` gets the green pill.
 - **g8desk** is live and classified as a **Stage 1** service-management product (it was previously sequenced under business operations).
-- **Products with their own live site** set `domain` (g8deck→g8deck.app, g8stack→g8stack.com, g8desk→g8desk.com); external brands also set `alias` (g8scope→nadi.pro, g8mail→waumail.my, g8gather→gatherhub.app, g8pos→warung.my, g8research→kajian.space). Every product keeps its own detail page here, which **links out** (new tab) to the domain — never redirect a product domain inward, so brand equity stays with it. g8desk.com is live and open to the public (also used internally by Developers Hub). `g8scope` is the observability product delivered as the **nadi.pro** app.
+- **Products with their own live site** set `domain` (g8deck→g8deck.com — g8deck.app is the console, g8stack→g8stack.com, g8desk→g8desk.com, g8id→g8id.com, g8scope→bliptrace.com, g8mail→waumail.my, g8gather→gatherhub.app, g8pos→warung.my, g8sweep→janesweeper.g8deck.com, g8hours→workprint.devhub.my, g8academy→academy.devhub.my). Netlify preview hosts (tenggi.netlify.app) are not linked. G8Pitch is internal-only and deliberately not listed. Every product keeps its own detail page here, which **links out** (new tab) to the domain — never redirect a product domain inward, so brand equity stays with it. g8desk.com is live and open to the public (also used internally by Developers Hub). `g8scope` is delivered as **Bliptrace**; nadi.pro is archived. g8monitor is an Elastic Stack set-up (consulting), not an app. Screenshots in `public/assets/solutions/<code>.webp` are 1280×720 crops of each live site.
+- **Catalogue layout (`/our-solutions`).** Showcase first: live products as screenshot cards (no screenshot → a name plate on the grid ground), then one "Building next" table for in-development and planned. No filter sidebar — the lineup is small enough to scan. g8crm shows as "CRM" for now.
 - **Pricing is never displayed.** The `pricing` frontmatter field is internal record only; every price surface renders "Contact us for more details" (enterprise sales motion).
 
 ## Design system — "Sovereign Instrument"

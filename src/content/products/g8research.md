@@ -2,8 +2,7 @@
 code: g8research
 title: Market research
 tagline: Market research and survey operations.
-alias: kajian.space
-domain: https://kajian.space
+alias: Kajian.Space
 stage: 3
 category: Market Research
 status: in_progress
@@ -11,11 +10,11 @@ deployment: [hybrid]
 revenueEngine: managed-saas
 pricing: TBC
 order: 1
-note: "Open decision D-02 — whether g8research is branded under g8suite or retains kajian.space. Currently links out to kajian.space."
+capabilities:
+  - "Survey engine with questionnaires, quotas and disqualification"
+  - "Public survey flow for respondents"
 ---
 
-<!-- TODO: replace with approved marketing copy. Structural facts only from
-     spec §9; capabilities left empty pending sign-off — do not invent claims. -->
-
-g8research is delivered as the kajian.space application — market research and
-survey operations. Open it there to sign in and use it.
+g8research is being built as Kajian.Space — market research and survey
+operations, starting with a survey engine for questionnaires, quotas and
+respondent management.

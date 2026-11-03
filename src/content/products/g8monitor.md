@@ -1,19 +1,17 @@
 ---
 code: g8monitor
 title: Infrastructure monitoring
-tagline: Uptime and infrastructure monitoring, on-premise.
+tagline: Logs, metrics and uptime on an Elastic Stack set up inside your perimeter.
 stage: 1
 category: Observability
-status: live
+status: in_progress
 deployment: [on-prem]
-revenueEngine: enterprise-licence
-pricing: Licence + support
+revenueEngine: consulting
+pricing: Setup + support
 order: 2
-spine: [g8id, g8audit]
+spine: [g8stack]
 ---
 
-<!-- TODO: replace with approved marketing copy. Only the structural facts from
-     the product spec (§9) are asserted here; capabilities intentionally left
-     empty pending sign-off — do not invent claims. -->
-
-g8monitor watches infrastructure health and uptime from inside the perimeter.
+g8monitor is a monitoring set-up built on the Elastic Stack and installed inside
+your own perimeter, watching infrastructure health, logs and uptime. It is
+delivered as a configured deployment rather than a separate application.

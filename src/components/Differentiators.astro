@@ -10,12 +10,14 @@ const listify = (xs: string[]) =>
 // must be genuinely live in production — the copy claims it.
 const branded: { name: string; live: boolean }[] = [
   { name: 'g8stack.com', live: true },
-  { name: 'gatherhub.app', live: true },
-  { name: 'nadi.pro', live: true },
+  { name: 'g8deck.com', live: true },
   { name: 'g8desk.com', live: true },
+  { name: 'g8id.com', live: true },
+  { name: 'gatherhub.app', live: true },
   { name: 'waumail.my', live: true },
-  { name: 'g8deck.app', live: true },
+  { name: 'janesweeper.g8deck.com', live: true },
   { name: 'warung.my', live: false },
+  { name: 'bliptrace.com', live: false },
 ];
 const liveNames = branded.filter((b) => b.live).map((b) => b.name);
 
@@ -79,7 +81,7 @@ const items: Item[] = [
                   {padded}
                 </span>
                 <span class="h-px flex-1 bg-line"></span>
-                <span class="text-xs font-semibold uppercase tracking-[0.14em] text-faint">
+                <span class="text-xs font-semibold text-faint">
                   {item.lede}
                 </span>
               </div>

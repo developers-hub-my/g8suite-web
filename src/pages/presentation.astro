@@ -4,7 +4,7 @@
 // nav, noindex, and excluded from the sitemap (see astro.config.mjs).
 // Copy is lifted from the site's own sections; products come from the collection.
 import BaseLayout from '~/layouts/BaseLayout.astro';
-import { getProducts } from '~/lib/products';
+import { getProducts, productName, nameFont } from '~/lib/products';
 import {
   stageLabel,
   stageBlurb,
@@ -194,7 +194,7 @@ const stages: { stage: Stage; cols: number; detail: boolean }[] = [
             ))}
           </div>
           <p class="callout">
-            g8stack.com, gatherhub.app, nadi.pro, g8desk.com, waumail.my and g8deck.app are live in
+            g8stack.com, g8deck.com, g8desk.com, g8id.com, gatherhub.app, waumail.my and janesweeper.g8deck.com are live in
             production today — built in the suite, sold under their own brands, on their own domains.
           </p>
         </div>
@@ -235,7 +235,7 @@ const stages: { stage: Stage; cols: number; detail: boolean }[] = [
                 return (
                   <a class="tile" href={`/our-solutions/${p.code}`}>
                     <span class="tile-top">
-                      <span class="mono code">{p.code}</span>
+                      <span class={p.alias ? "code" : "mono code"}>{productName(p)}</span>
                       <span class={`status status-${ds}`}>{displayStatusLabel[ds]}</span>
                     </span>
                     <b>{p.title}</b>
@@ -260,7 +260,7 @@ const stages: { stage: Stage; cols: number; detail: boolean }[] = [
           <div class="live-grid">
             {live.map((p) => (
               <a class="live-row" href={`/our-solutions/${p.code}`}>
-                <span class="mono code">{p.code}</span>
+                <span class={p.alias ? "code" : "mono code"}>{productName(p)}</span>
                 <b>{p.title}</b>
                 <span class="mono tile-domain">{host(p.domain) ?? ''}</span>
               </a>

@@ -1,23 +1,28 @@
 ---
 code: g8scope
-title: Observability
-tagline: Metrics, logs and distributed traces for the whole estate.
-alias: nadi
-domain: https://nadi.pro
+title: Error capture & observability
+tagline: Every error from every runtime, fingerprinted into one inbox.
+alias: Bliptrace
+domain: https://bliptrace.com
 stage: 1
 category: Observability
-status: live
-deployment: [hybrid]
+status: in_progress
+deployment: [saas]
 revenueEngine: managed-saas
 pricing: Tiers; on-prem for B2G
+screenshot: /assets/solutions/g8scope.webp
 order: 1
 capabilities:
-  - "Metrics, logs and distributed traces"
-  - "Application observability"
-spine: [g8id]
-note: "Delivered as the nadi.pro application. g8suite links out to nadi.pro rather than redirecting inward — brand equity stays with nadi.pro."
+  - "Runtime-agnostic ingest with PII scrubbing and sampling"
+  - "Fingerprinted issue inbox — resolve, mute, acknowledge, assign"
+  - "Laravel and PHP SDK"
+  - "MCP server for operator tooling"
+spine: []
+note: "Delivered under its own brand, Bliptrace (bliptrace.com). The earlier nadi.pro application is archived."
 ---
 
-g8scope is the observability layer of the suite — metrics, logs and distributed
-traces for the systems you run. It is delivered today as the nadi.pro
-application; open it there to sign in and use it.
+g8scope is a central, multi-tenant error-capture and observability platform,
+delivered under its own brand as Bliptrace. Any runtime can send to it; errors
+are scrubbed of personal data, fingerprinted and grouped into one inbox where a
+team resolves, mutes or assigns them. The landing site is live; the hosted
+application is in development.
